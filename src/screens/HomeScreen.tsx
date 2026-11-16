@@ -2,22 +2,23 @@ import { Card } from "../components/Card"
 import { CalendarIcon } from "../components/Icons"
 import type { DrinkRecord } from "../data/mock"
 import { useT } from "../i18n"
-import { isToday } from "../lib/date"
 
 export function HomeScreen({
   waterPercentage,
-  records,
+  todayRecords,
   newMessageCount,
   onOpenCalendar,
   onOpenMessages,
   onOpenAddWater,
+  onEditRecord,
 }: {
   waterPercentage: number
-  records: DrinkRecord[]
+  todayRecords: DrinkRecord[]
   newMessageCount: number
   onOpenCalendar: () => void
   onOpenMessages: () => void
   onOpenAddWater: () => void
+  onEditRecord: (record: DrinkRecord) => void
 }) {
   const t = useT()
 
@@ -58,19 +59,30 @@ export function HomeScreen({
       </Card>
       <Card className="records-card drink-records-card">
         <p className="card-label recent-records-label">
-          {t.home.recentRecords}
+          {t.home.todayRecords}
         </p>
-        <div className="drink-record-list">
-          {records.map((record) => {
-            const date = new Date(record.time)
-            return (
-              <div className="record-row" key={record.id}>
-                <span>{t.common.dayTime(date, isToday(date))}</span>
+        {todayRecords.length === 0 && (
+          <p className="records-empty">{t.home.noRecords}</p>
+        )}
+        {todayRecords.map((record) => {
+          const time = t.common.dayTime(new Date(record.time), true)
+          return (
+            <div className="record-row" key={record.id}>
+              <div>
+                <span>{time}</span>
                 <strong>{t.home.recordAmount(record.amountMl)}</strong>
               </div>
-            )
-          })}
-        </div>
+              <button
+                className="edit-button"
+                type="button"
+                aria-label={t.home.editAria(time)}
+                onClick={() => onEditRecord(record)}
+              >
+                {t.home.edit}
+              </button>
+            </div>
+          )
+        })}
       </Card>
     </section>
   )

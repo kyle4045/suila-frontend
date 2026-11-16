@@ -12,24 +12,26 @@ const at = (daysAgo: number, time: string) => {
 
 export type DrinkRecord = { id: string; time: string; amountMl: number }
 
+// Newest first. Today's six records add up to 1260 毫升.
 export const drinkRecords: DrinkRecord[] = [
-  { id: "r01", time: at(0, "14:10"), amountMl: 220 },
-  { id: "r02", time: at(0, "11:35"), amountMl: 180 },
-  { id: "r03", time: at(0, "09:20"), amountMl: 250 },
-  { id: "r04", time: at(0, "07:45"), amountMl: 200 },
-  { id: "r05", time: at(1, "20:30"), amountMl: 180 },
-  { id: "r06", time: at(1, "18:10"), amountMl: 220 },
-  { id: "r07", time: at(1, "15:40"), amountMl: 200 },
-  { id: "r08", time: at(1, "12:15"), amountMl: 250 },
-  { id: "r09", time: at(1, "09:50"), amountMl: 180 },
-  { id: "r10", time: at(1, "07:30"), amountMl: 200 },
+  { id: "r01", time: at(0, "16:25"), amountMl: 210 },
+  { id: "r02", time: at(0, "14:10"), amountMl: 220 },
+  { id: "r03", time: at(0, "13:00"), amountMl: 200 },
+  { id: "r04", time: at(0, "11:35"), amountMl: 180 },
+  { id: "r05", time: at(0, "09:20"), amountMl: 250 },
+  { id: "r06", time: at(0, "07:45"), amountMl: 200 },
+  { id: "r07", time: at(1, "20:30"), amountMl: 180 },
+  { id: "r08", time: at(1, "18:10"), amountMl: 220 },
+  { id: "r09", time: at(1, "15:40"), amountMl: 200 },
+  { id: "r10", time: at(1, "12:15"), amountMl: 250 },
+  { id: "r11", time: at(1, "09:50"), amountMl: 180 },
+  { id: "r12", time: at(1, "07:30"), amountMl: 200 },
 ]
 
 export const dailyGoalMl = 2000
 
-// shortcut: a fixed number that does not match the records above (they add
-// up to 850). To be derived from the records when records become editable.
-export const todayTotalMl = 1260
+/** Smallest and largest amount one drink record may hold. */
+export const drinkAmountLimits = { min: 1, max: 2000 }
 
 export type ReminderDay = { date: string; times: string[] }
 

@@ -176,3 +176,41 @@ changed yet.
   If the group records real clips later, they can replace the browser voice
   with a small change.
 - Three sample messages: two new (女兒 雅婷, 兒子 志明) and one already played.
+
+### Item 4: correcting a drink record
+
+**喝水 (home)**
+- The list is now 「今天的紀錄」 and shows today's records only. Before, it mixed
+  today and yesterday.
+- The list no longer scrolls inside a small box. The whole page scrolls
+  instead, so there is one scroll area. (This is Priority 2 item 11, done
+  early because the 修改 buttons would not fit in the small box.)
+- Each record shows the time on top and the amount below, with a visible
+  「修改」 button (56px tall) on the right.
+- Today's total is now added up from the records. Before, it was a fixed
+  number (1260) that did not match the list (850). The sample records were
+  adjusted so today's six records add up to 1260 毫升, still 63%.
+- Adding water with 補水 now creates a record at the top of the list and shows
+  「已加入 200 毫升」.
+
+**修改紀錄 (new page)**
+- Shows which record it is (for example 「下午 4:25 的紀錄」) and the amount in
+  毫升, which can be changed. 儲存 only works for a whole number from 1 to 2000.
+- 「刪除這筆紀錄」 asks first: 「確定要刪除「下午 4:25　210 毫升」這筆紀錄嗎？」
+  with 刪除 and 取消.
+- After saving or deleting, a message confirms it (「已更新紀錄」, 「已刪除紀錄」)
+  and the ring updates.
+- Pressing 返回 after changing the amount asks 「還沒有儲存，要離開嗎？」 with
+  「離開不儲存」 and 「繼續修改」. Without changes it just goes back.
+
+**Whole app**
+- New shared question screen for anything that needs a yes or no. It covers
+  the whole screen with a solid background (nothing see-through), and the safe
+  choice (取消 / 繼續修改) is the one selected by default.
+
+**Known limits**
+- The sample records use fixed times of day (up to 下午 4:25). A record added
+  during the demo gets the real current time and is placed on top, so the
+  times may look out of order if you present in the morning.
+- 基本資料 and 夜間靜音 still apply changes as you type, so they do not ask
+  before leaving yet.

@@ -4,18 +4,20 @@ import { Toast } from "./components/Toast"
 import {
   dailyGoalMl,
   drinkRecords,
+  type DrinkRecord,
   familyMembers,
   initialCalendarSelection,
   initialLineConnected,
   initialNightMute,
   initialProfile,
   reminderDays,
-  todayTotalMl,
   voiceMessages,
 } from "./data/mock"
 import { useT } from "./i18n"
+import { isToday } from "./lib/date"
 import { useVoicePlayer } from "./lib/useVoicePlayer"
 import { AddWaterScreen } from "./screens/AddWaterScreen"
+import { EditRecordScreen } from "./screens/EditRecordScreen"
 import { CalendarScreen } from "./screens/CalendarScreen"
 import { FamilyScreen } from "./screens/FamilyScreen"
 import { HomeScreen } from "./screens/HomeScreen"
@@ -24,14 +26,27 @@ import { NightMuteScreen } from "./screens/NightMuteScreen"
 import { ProScreen } from "./screens/ProScreen"
 import { ProfileScreen } from "./screens/ProfileScreen"
 
-type Overlay = "calendar" | "addWater" | "profile" | "nightMute" | "pro" | null
+type Overlay =
+  | "calendar"
+  | "addWater"
+  | "editRecord"
+  | "profile"
+  | "nightMute"
+  | "pro"
+  | null
 
 export default function App() {
   const t = useT()
   const [currentPage, setCurrentPage] = useState(0)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [overlay, setOverlay] = useState<Overlay>(null)
-  const [todayWater, setTodayWater] = useState(todayTotalMl)
+  const [records, setRecords] = useState(drinkRecords)
+  const [editingRecord, setEditingRecord] = useState<DrinkRecord | null>(null)
+  const todayRecords = records.filter((record) => isToday(new Date(record.time)))
+  const todayWater = todayRecords.reduce(
+    (total, record) => total + record.amountMl,
+    0,
+  )
   const [profile, setProfile] = useState(() =>
     initialProfile(t.profile.defaultName),
   )
@@ -96,7 +111,11 @@ export default function App() {
           >
             <HomeScreen
               waterPercentage={waterPercentage}
-              records={drinkRecords}
+              todayRecords={todayRecords}
+              onEditRecord={(record) => {
+                setEditingRecord(record)
+                setOverlay("editRecord")
+              }}
               newMessageCount={newMessageCount}
               onOpenCalendar={() => setOverlay("calendar")}
               onOpenMessages={() => moveToPage(familyPage)}
@@ -147,7 +166,41 @@ export default function App() {
         {overlay === "addWater" && (
           <AddWaterScreen
             onAdd={(amountMl) => {
-              setTodayWater((amount) => amount + amountMl)
+              // shortcut: new records go on top without re-sorting by time.
+              setRecords((current) => [
+                {
+                  id: `r${Date.now()}`,
+                  time: new Date().toISOString(),
+                  amountMl,
+                },
+                ...current,
+              ])
+              setToast(t.home.addedToast(amountMl))
+              closeOverlay()
+            }}
+            onClose={closeOverlay}
+          />
+        )}
+
+        {overlay === "editRecord" && editingRecord && (
+          <EditRecordScreen
+            record={editingRecord}
+            onSave={(amountMl) => {
+              setRecords((current) =>
+                current.map((record) =>
+                  record.id === editingRecord.id
+                    ? { ...record, amountMl }
+                    : record,
+                ),
+              )
+              setToast(t.editRecord.updatedToast)
+              closeOverlay()
+            }}
+            onDelete={() => {
+              setRecords((current) =>
+                current.filter((record) => record.id !== editingRecord.id),
+              )
+              setToast(t.editRecord.deletedToast)
               closeOverlay()
             }}
             onClose={closeOverlay}
