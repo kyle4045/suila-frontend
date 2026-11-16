@@ -237,3 +237,32 @@ changed yet.
 **Small fix**
 - Row buttons whose text wraps onto two lines (for example the new-messages
   row on a 320px phone) now align left instead of centering.
+
+### Item 6 (part 1): reminder settings
+
+**我的**
+- New 「提醒設定」 row between 基本資料 and 夜間靜音.
+
+**提醒設定 (new page)**
+- 每日喝水目標: shows the goal in large text (for example 「2000 毫升」) with
+  「－ 100」 and 「＋ 100」 buttons. The goal can go from 500 to 4000 毫升. The
+  buttons grey out at the limits. (The range and step are an assumption; the
+  group can change them in one place.)
+- 提醒時間: the exact times the base reminds the owner, shown as 上午 8:00,
+  上午 10:00 and so on. Each has a 「移除」 button. A new time is picked from a
+  list in 30-minute steps and added with 「新增」; times already in use are not
+  offered again, and the list stays in time order.
+- 底座燈光亮度: 低 / 中 / 高. The chosen one is filled in and marked with a
+  tick, so it does not depend on color alone.
+- Nothing changes until 儲存 is pressed. Then 「已儲存提醒設定」 appears and the
+  ring on home uses the new goal. Pressing 返回 with unsaved changes asks
+  first.
+
+**Health note (Priority 2 item 15, done here)**
+- If 心臟病 or 腎臟病 is selected in 基本資料, the goal card shows
+  「飲水目標請依醫護人員建議調整」. It is a neutral note only; the app gives no
+  medical advice and does not change the goal by itself.
+
+**Small fix**
+- Times between midnight and 5:59 are now written 凌晨 (for example
+  「凌晨 12:00」) instead of 上午, which could be confused with noon.

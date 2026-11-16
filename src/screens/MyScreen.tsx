@@ -2,10 +2,12 @@ import { useT } from "../i18n"
 
 export function MyScreen({
   onOpenProfile,
+  onOpenReminders,
   onOpenNightMute,
   onOpenPro,
 }: {
   onOpenProfile: () => void
+  onOpenReminders: () => void
   onOpenNightMute: () => void
   onOpenPro: () => void
 }) {
@@ -15,6 +17,11 @@ export function MyScreen({
     <section className="swipe-page my-page" aria-label={t.my.aria}>
       <button className="my-menu-row" type="button" onClick={onOpenProfile}>
         <strong>{t.my.profile}</strong>
+        <span aria-hidden="true">＞</span>
+      </button>
+
+      <button className="my-menu-row" type="button" onClick={onOpenReminders}>
+        <strong>{t.my.reminders}</strong>
         <span aria-hidden="true">＞</span>
       </button>
 

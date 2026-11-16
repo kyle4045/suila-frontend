@@ -2,15 +2,16 @@ import { useEffect, useState } from "react"
 import { BottomNav, familyPage, pageCount } from "./components/BottomNav"
 import { Toast } from "./components/Toast"
 import {
-  dailyGoalMl,
   deviceStatus,
   drinkRecords,
   type DrinkRecord,
   familyMembers,
+  fluidSensitiveConditions,
   initialCalendarSelection,
   initialLineConnected,
   initialNightMute,
   initialProfile,
+  initialReminderSettings,
   reminderDays,
   voiceMessages,
 } from "./data/mock"
@@ -26,12 +27,14 @@ import { MyScreen } from "./screens/MyScreen"
 import { NightMuteScreen } from "./screens/NightMuteScreen"
 import { ProScreen } from "./screens/ProScreen"
 import { ProfileScreen } from "./screens/ProfileScreen"
+import { ReminderSettingsScreen } from "./screens/ReminderSettingsScreen"
 
 type Overlay =
   | "calendar"
   | "addWater"
   | "editRecord"
   | "profile"
+  | "reminders"
   | "nightMute"
   | "pro"
   | null
@@ -52,12 +55,13 @@ export default function App() {
     initialProfile(t.profile.defaultName),
   )
   const [night, setNight] = useState(initialNightMute)
+  const [reminders, setReminders] = useState(initialReminderSettings)
   const [calendarSelection, setCalendarSelection] = useState(
     initialCalendarSelection,
   )
   const waterPercentage = Math.min(
     100,
-    Math.round((todayWater / dailyGoalMl) * 100),
+    Math.round((todayWater / reminders.dailyGoalMl) * 100),
   )
   const [lineConnected, setLineConnected] = useState(initialLineConnected)
   const [messages, setMessages] = useState(voiceMessages)
@@ -150,6 +154,7 @@ export default function App() {
             />
             <MyScreen
               onOpenProfile={() => setOverlay("profile")}
+              onOpenReminders={() => setOverlay("reminders")}
               onOpenNightMute={() => setOverlay("nightMute")}
               onOpenPro={() => setOverlay("pro")}
             />
@@ -213,6 +218,21 @@ export default function App() {
           <ProfileScreen
             profile={profile}
             onChange={setProfile}
+            onClose={closeOverlay}
+          />
+        )}
+
+        {overlay === "reminders" && (
+          <ReminderSettingsScreen
+            settings={reminders}
+            showHealthNote={profile.conditions.some((condition) =>
+              fluidSensitiveConditions.includes(condition),
+            )}
+            onSave={(settings) => {
+              setReminders(settings)
+              setToast(t.reminders.savedToast)
+              closeOverlay()
+            }}
             onClose={closeOverlay}
           />
         )}

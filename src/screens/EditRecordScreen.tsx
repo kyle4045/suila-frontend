@@ -88,9 +88,9 @@ export function EditRecordScreen({
 
       {asking === "leave" && (
         <ConfirmDialog
-          message={t.editRecord.unsaved}
-          confirmLabel={t.editRecord.leave}
-          cancelLabel={t.editRecord.stay}
+          message={t.common.unsaved}
+          confirmLabel={t.common.leave}
+          cancelLabel={t.common.stay}
           onConfirm={onClose}
           onCancel={() => setAsking(null)}
         />

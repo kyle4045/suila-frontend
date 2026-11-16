@@ -5,11 +5,15 @@ const pad2 = (value: number) => String(value).padStart(2, "0")
 
 // shortcut: anything not from today is labelled 昨天; the mock data only
 // covers two days. Needs real dates once older items are shown.
+const clock = (hour: number, minute: number) => {
+  const period =
+    hour < 6 ? "凌晨" : hour < 12 ? "上午" : hour === 12 ? "中午" : "下午"
+  return `${period} ${hour % 12 || 12}:${pad2(minute)}`
+}
+
 const dayTime = (date: Date, isToday: boolean) => {
-  const hour = date.getHours()
-  const period = hour < 12 ? "上午" : hour === 12 ? "中午" : "下午"
-  const clock = `${period} ${hour % 12 || 12}:${pad2(date.getMinutes())}`
-  return isToday ? clock : `昨天 ${clock}`
+  const time = clock(date.getHours(), date.getMinutes())
+  return isToday ? time : `昨天 ${time}`
 }
 
 export const zhTW = {
@@ -30,7 +34,11 @@ export const zhTW = {
     back: "返回",
     listSeparator: "、",
     mlShort: "ml",
+    clock,
     dayTime,
+    unsaved: "還沒有儲存，要離開嗎？",
+    leave: "離開不儲存",
+    stay: "繼續修改",
     speechLang: "zh-TW",
   },
   home: {
@@ -65,9 +73,6 @@ export const zhTW = {
     deleteNo: "取消",
     updatedToast: "已更新紀錄",
     deletedToast: "已刪除紀錄",
-    unsaved: "還沒有儲存，要離開嗎？",
-    leave: "離開不儲存",
-    stay: "繼續修改",
   },
   family: {
     aria: "家人",
@@ -101,10 +106,30 @@ export const zhTW = {
   my: {
     aria: "我的",
     profile: "基本資料",
+    reminders: "提醒設定",
     nightMute: "夜間靜音",
     about: "關於我們",
     proTitle: "升級 Pro",
     proSubtitle: "解鎖習慣分析、連結更多家人",
+  },
+  reminders: {
+    title: "提醒設定",
+    goalLabel: "每日喝水目標",
+    goalValue: (ml: number) => `${ml} 毫升`,
+    decrease: (step: number) => `－ ${step}`,
+    increase: (step: number) => `＋ ${step}`,
+    decreaseAria: (step: number) => `減少 ${step} 毫升`,
+    increaseAria: (step: number) => `增加 ${step} 毫升`,
+    healthNote: "飲水目標請依醫護人員建議調整",
+    timesLabel: "提醒時間",
+    noTimes: "還沒有提醒時間",
+    remove: "移除",
+    removeAria: (time: string) => `移除${time}的提醒`,
+    addTimeAria: "選擇要新增的提醒時間",
+    add: "新增",
+    brightnessLabel: "底座燈光亮度",
+    brightness: { low: "低", medium: "中", high: "高" },
+    savedToast: "已儲存提醒設定",
   },
   pro: {
     title: "水啦 Pro",

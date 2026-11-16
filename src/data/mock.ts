@@ -45,7 +45,23 @@ export const drinkRecords: DrinkRecord[] = [
   { id: "r12", time: at(1, "07:30"), amountMl: 200 },
 ]
 
-export const dailyGoalMl = 2000
+export type Brightness = "low" | "medium" | "high"
+
+export type ReminderSettings = {
+  dailyGoalMl: number
+  /** 24-hour "HH:MM" times, earliest first. */
+  times: string[]
+  brightness: Brightness
+}
+
+export const initialReminderSettings: ReminderSettings = {
+  dailyGoalMl: 2000,
+  times: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
+  brightness: "medium",
+}
+
+/** Range and step of the daily goal, in 毫升. */
+export const goalLimits = { min: 500, max: 4000, step: 100 }
 
 /** Smallest and largest amount one drink record may hold. */
 export const drinkAmountLimits = { min: 1, max: 2000 }
@@ -122,6 +138,9 @@ export const voiceMessages: VoiceMessage[] = [
 ]
 
 export type ConditionId = "hypertension" | "diabetes" | "heart" | "kidney" | "none" | "other"
+
+/** Conditions where how much to drink is a medical question. */
+export const fluidSensitiveConditions: ConditionId[] = ["heart", "kidney"]
 
 export const conditionOptions: ConditionId[] = [
   "hypertension",
