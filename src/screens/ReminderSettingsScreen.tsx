@@ -9,15 +9,9 @@ import {
   type ReminderSettings,
 } from "../data/mock"
 import { useT } from "../i18n"
+import { halfHours, splitTime } from "../lib/time"
 
 const brightnessLevels: Brightness[] = ["low", "medium", "high"]
-
-// Every half hour of the day, "00:00" to "23:30".
-const halfHours = Array.from(
-  { length: 48 },
-  (_, index) =>
-    `${String(Math.floor(index / 2)).padStart(2, "0")}:${index % 2 ? "30" : "00"}`,
-)
 
 export function ReminderSettingsScreen({
   settings,
@@ -36,10 +30,7 @@ export function ReminderSettingsScreen({
   const available = halfHours.filter((time) => !draft.times.includes(time))
   const [newTime, setNewTime] = useState(available[0] ?? "")
   const changed = JSON.stringify(draft) !== JSON.stringify(settings)
-  const label = (time: string) => {
-    const [hour, minute] = time.split(":").map(Number)
-    return t.common.clock(hour, minute)
-  }
+  const label = (time: string) => t.common.clock(...splitTime(time))
 
   const changeGoal = (difference: number) =>
     setDraft((current) => ({

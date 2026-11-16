@@ -1,129 +1,95 @@
+import { useState } from "react"
 import { Card } from "../components/Card"
+import { ConfirmDialog } from "../components/ConfirmDialog"
 import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
-import type { Dispatch, SetStateAction } from "react"
 import type { NightMute } from "../data/mock"
 import { useT } from "../i18n"
-
-const hourOptions = Array.from({ length: 24 }, (_, hour) =>
-  String(hour).padStart(2, "0"),
-)
-const minuteOptions = Array.from({ length: 60 }, (_, minute) =>
-  String(minute).padStart(2, "0"),
-)
-
-function TimeRow({
-  label,
-  hour,
-  minute,
-  hourLabel,
-  minuteLabel,
-  onHourChange,
-  onMinuteChange,
-}: {
-  label: string
-  hour: string
-  minute: string
-  hourLabel: string
-  minuteLabel: string
-  onHourChange: (hour: string) => void
-  onMinuteChange: (minute: string) => void
-}) {
-  return (
-    <label>
-      <span>{label}</span>
-      <div className="time-select-row">
-        <select
-          value={hour}
-          onChange={(event) => onHourChange(event.target.value)}
-          aria-label={hourLabel}
-        >
-          {hourOptions.map((option) => (
-            <option value={option} key={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-        <b aria-hidden="true">：</b>
-        <select
-          value={minute}
-          onChange={(event) => onMinuteChange(event.target.value)}
-          aria-label={minuteLabel}
-        >
-          {minuteOptions.map((option) => (
-            <option value={option} key={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
-    </label>
-  )
-}
+import { halfHours, splitTime } from "../lib/time"
 
 export function NightMuteScreen({
   night,
-  onChange,
+  onSave,
   onClose,
 }: {
   night: NightMute
-  onChange: Dispatch<SetStateAction<NightMute>>
+  onSave: (night: NightMute) => void
   onClose: () => void
 }) {
   const t = useT()
+  const [draft, setDraft] = useState(night)
+  const [asking, setAsking] = useState(false)
+  const changed = JSON.stringify(draft) !== JSON.stringify(night)
+
+  const timeSelect = (field: "start" | "end") => (
+    <label>
+      <span>{t.night[field]}</span>
+      <select
+        value={draft[field]}
+        onChange={(event) =>
+          setDraft((current) => ({ ...current, [field]: event.target.value }))
+        }
+      >
+        {halfHours.map((time) => (
+          <option value={time} key={time}>
+            {t.common.clock(...splitTime(time))}
+          </option>
+        ))}
+      </select>
+    </label>
+  )
 
   return (
     <section className="settings-screen" aria-label={t.night.aria}>
-      <ScreenHeader title={t.night.title} onBack={onClose} />
+      <ScreenHeader
+        title={t.night.title}
+        onBack={() => (changed ? setAsking(true) : onClose())}
+      />
 
       <div className="settings-content">
-        <Card className="setting-card">
-          <strong>{t.night.enable}</strong>
-          <button
-            className={`compact-switch ${night.enabled ? "is-on" : ""}`}
-            type="button"
-            role="switch"
-            aria-checked={night.enabled}
-            aria-label={t.night.switchAria}
-            onClick={() =>
-              onChange((current) => ({ ...current, enabled: !current.enabled }))
-            }
+        {/* The whole row is the switch, so it is easy to hit. */}
+        <button
+          className="info-card setting-card switch-row"
+          type="button"
+          role="switch"
+          aria-checked={draft.enabled}
+          onClick={() =>
+            setDraft((current) => ({ ...current, enabled: !current.enabled }))
+          }
+        >
+          <div>
+            <strong>{t.night.enable}</strong>
+            <span className="switch-state">
+              {draft.enabled ? t.common.on : t.common.off}
+            </span>
+          </div>
+          <span
+            className={`compact-switch ${draft.enabled ? "is-on" : ""}`}
+            aria-hidden="true"
           >
             <span />
-          </button>
-        </Card>
+          </span>
+        </button>
 
         <Card className="expanded-setting time-setting">
-          <TimeRow
-            label={t.night.start}
-            hour={night.startHour}
-            minute={night.startMinute}
-            hourLabel={t.night.startHour}
-            minuteLabel={t.night.startMinute}
-            onHourChange={(startHour) =>
-              onChange((current) => ({ ...current, startHour }))
-            }
-            onMinuteChange={(startMinute) =>
-              onChange((current) => ({ ...current, startMinute }))
-            }
-          />
-          <TimeRow
-            label={t.night.end}
-            hour={night.endHour}
-            minute={night.endMinute}
-            hourLabel={t.night.endHour}
-            minuteLabel={t.night.endMinute}
-            onHourChange={(endHour) =>
-              onChange((current) => ({ ...current, endHour }))
-            }
-            onMinuteChange={(endMinute) =>
-              onChange((current) => ({ ...current, endMinute }))
-            }
-          />
+          {timeSelect("start")}
+          {timeSelect("end")}
         </Card>
       </div>
 
-      <FloatingButton onClick={onClose}>{t.common.save}</FloatingButton>
+      <FloatingButton onClick={() => onSave(draft)}>
+        {t.common.save}
+      </FloatingButton>
+
+      {asking && (
+        <ConfirmDialog
+          message={t.common.unsaved}
+          confirmLabel={t.common.leave}
+          cancelLabel={t.common.stay}
+          onConfirm={onClose}
+          onCancel={() => setAsking(false)}
+        />
+      )}
     </section>
   )
 }

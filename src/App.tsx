@@ -18,6 +18,7 @@ import {
 import { useT } from "./i18n"
 import { isToday } from "./lib/date"
 import { useVoicePlayer } from "./lib/useVoicePlayer"
+import { AboutScreen } from "./screens/AboutScreen"
 import { AddWaterScreen } from "./screens/AddWaterScreen"
 import { EditRecordScreen } from "./screens/EditRecordScreen"
 import { DeviceScreen } from "./screens/DeviceScreen"
@@ -40,13 +41,13 @@ type Overlay =
   | "nightMute"
   | "device"
   | "pairing"
+  | "about"
   | "pro"
   | null
 
 export default function App() {
   const t = useT()
   const [currentPage, setCurrentPage] = useState(0)
-  const [touchStart, setTouchStart] = useState<number | null>(null)
   const [overlay, setOverlay] = useState<Overlay>(null)
   const [records, setRecords] = useState(drinkRecords)
   const [editingRecord, setEditingRecord] = useState<DrinkRecord | null>(null)
@@ -95,15 +96,6 @@ export default function App() {
     setCurrentPage(Math.max(0, Math.min(pageCount - 1, page)))
   }
 
-  const handleTouchEnd = (event: React.TouchEvent) => {
-    if (touchStart === null) return
-    const distance = touchStart - event.changedTouches[0].clientX
-    if (Math.abs(distance) > 50) {
-      moveToPage(currentPage + (distance > 0 ? 1 : -1))
-    }
-    setTouchStart(null)
-  }
-
   return (
     <main className="app-shell">
       <div className="page">
@@ -116,11 +108,7 @@ export default function App() {
           </div>
         </header>
 
-        <div
-          className="swipe-window"
-          onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
-          onTouchEnd={handleTouchEnd}
-        >
+        <div className="swipe-window">
           <div
             className="swipe-track"
             style={{ transform: `translateX(-${currentPage * 100}%)` }}
@@ -171,6 +159,7 @@ export default function App() {
               onOpenReminders={() => setOverlay("reminders")}
               onOpenNightMute={() => setOverlay("nightMute")}
               onOpenDevice={() => setOverlay("device")}
+              onOpenAbout={() => setOverlay("about")}
               onOpenPro={() => setOverlay("pro")}
             />
           </div>
@@ -255,7 +244,11 @@ export default function App() {
         {overlay === "nightMute" && (
           <NightMuteScreen
             night={night}
-            onChange={setNight}
+            onSave={(saved) => {
+              setNight(saved)
+              setToast(t.night.savedToast)
+              closeOverlay()
+            }}
             onClose={closeOverlay}
           />
         )}
@@ -281,6 +274,8 @@ export default function App() {
             onClose={() => setOverlay(pairingBack)}
           />
         )}
+
+        {overlay === "about" && <AboutScreen onClose={closeOverlay} />}
 
         {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
 

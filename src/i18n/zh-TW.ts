@@ -32,6 +32,8 @@ export const zhTW = {
   common: {
     save: "儲存",
     back: "返回",
+    on: "已開啟",
+    off: "已關閉",
     listSeparator: "、",
     ml: "毫升",
     clock,
@@ -213,13 +215,16 @@ export const zhTW = {
   night: {
     aria: "夜間靜音時間設定",
     title: "夜間靜音",
-    enable: "開啟夜間靜音",
-    switchAria: "夜間靜音",
-    start: "開始時間（24 小時制）",
-    end: "結束時間（24 小時制）",
-    startHour: "開始小時",
-    startMinute: "開始分鐘",
-    endHour: "結束小時",
-    endMinute: "結束分鐘",
+    enable: "夜間靜音",
+    start: "開始時間",
+    end: "結束時間",
+    savedToast: "已儲存夜間靜音設定",
+  },
+  about: {
+    title: "關於我們",
+    description:
+      "水啦是放在水瓶下面的智慧底座，搭配手機 App 使用。喝完水把水瓶放回去，它會自動記下喝了多少；太久沒喝水時，會用柔和的燈光提醒。",
+    demoTitle: "課程專題示範版",
+    demoBody: "這是創業課程的專題作品，畫面中的資料都是示範用的。",
   },
 }

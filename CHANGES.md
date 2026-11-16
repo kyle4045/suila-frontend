@@ -338,3 +338,30 @@ reminder settings).
 **Confirmation message**
 - It now appears at the top, just below the header, instead of above the
   navigation, so it never covers the new 手動加水 button.
+
+### Item 10: no more swiping between tabs
+
+**Whole app**
+- Swiping left or right no longer changes tab. Tabs change only through the
+  bottom navigation, which is always visible. A swipe was easy to trigger by
+  accident while scrolling and had no visible hint.
+
+### Item 12: night mute in 30-minute steps
+
+**夜間靜音**
+- 開始時間 and 結束時間 are now one list each, in 30-minute steps, written
+  the same way as everywhere else (下午 10:00, 上午 7:00). Before, each time
+  needed two lists, and the minute list had 60 entries.
+- The on/off switch is now the whole row (about 130px tall) instead of a small
+  38px switch, and it says 「已開啟」 or 「已關閉」 in words next to the switch.
+- Nothing changes until 儲存 is pressed; then 「已儲存夜間靜音設定」 appears.
+  Pressing 返回 with unsaved changes asks first. Before, changes applied as
+  you touched them and 儲存 did nothing different from closing.
+
+### Item 14: 關於我們
+
+**關於我們 (new page)**
+- The row used to do nothing. It now opens a page with a short description of
+  水啦 and a note that this is a course project demo with sample data.
+- No team or school names are shown; add them to the text file if the group
+  wants them.

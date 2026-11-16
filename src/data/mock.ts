@@ -177,16 +177,13 @@ export const initialProfile = (name: string): Profile => ({
 
 export type NightMute = {
   enabled: boolean
-  startHour: string
-  startMinute: string
-  endHour: string
-  endMinute: string
+  /** 24-hour "HH:MM", in 30-minute steps. */
+  start: string
+  end: string
 }
 
 export const initialNightMute: NightMute = {
   enabled: true,
-  startHour: "22",
-  startMinute: "00",
-  endHour: "07",
-  endMinute: "00",
+  start: "22:00",
+  end: "07:00",
 }

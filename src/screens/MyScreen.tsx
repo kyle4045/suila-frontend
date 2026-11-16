@@ -5,12 +5,14 @@ export function MyScreen({
   onOpenReminders,
   onOpenNightMute,
   onOpenDevice,
+  onOpenAbout,
   onOpenPro,
 }: {
   onOpenProfile: () => void
   onOpenReminders: () => void
   onOpenNightMute: () => void
   onOpenDevice: () => void
+  onOpenAbout: () => void
   onOpenPro: () => void
 }) {
   const t = useT()
@@ -37,7 +39,7 @@ export function MyScreen({
         <span aria-hidden="true">＞</span>
       </button>
 
-      <button className="my-menu-row" type="button">
+      <button className="my-menu-row" type="button" onClick={onOpenAbout}>
         <strong>{t.my.about}</strong>
         <span aria-hidden="true">＞</span>
       </button>
