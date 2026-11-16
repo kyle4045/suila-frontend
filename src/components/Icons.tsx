@@ -149,3 +149,25 @@ export function BatteryIcon() {
     </svg>
   )
 }
+
+export function CheckIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M4.5 12.5l5 5 10-11"
+        stroke="currentColor"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function DotIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+      <circle cx="12" cy="12" r="5.5" />
+    </svg>
+  )
+}

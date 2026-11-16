@@ -365,3 +365,39 @@ reminder settings).
   水啦 and a note that this is a course project demo with sample data.
 - No team or school names are shown; add them to the text file if the group
   wants them.
+
+### Item 9: the calendar shows drinking, not reminder counts
+
+**日曆**
+- It now uses the real date. It opens on the current month with today
+  outlined and selected. Before, it was fixed to 2025 and opened on 22 May.
+- The 12-month dropdown is replaced by 「上個月」 and 「下個月」 buttons.
+  「下個月」 is greyed out on the current month, and future days cannot be
+  selected.
+- Each day shows a mark under the number: a tick when the goal was met, a dot
+  when there are records but the goal was not met, nothing when there are no
+  records. A legend under the grid explains the two marks. The meaning comes
+  from the shape, not the color.
+- Day numbers are 22px (were 19px) and each day cell is 60px tall.
+- Below the grid, the selected day shows the date and weekday
+  (「11 月 17 日 星期二（今天）」), 「已喝 1260 / 2000 毫升」, 「已達標」 or
+  「未達標」, and that day's records. Before, it showed how many reminders
+  fired, which says nothing about drinking.
+- 「前一天」 and 「後一天」 buttons under the details, 64px tall. On a 320px
+  phone a day cell is only about 35px wide, so these give an easy way to move
+  between days without hitting a small target.
+- Nothing scrolls inside the page any more; the old reminder list had its own
+  scrolling box.
+
+**Sample data**
+- Records now cover the past six weeks: today (6 records, 1260 毫升),
+  yesterday (1230 毫升), and 40 generated days with 6 to 10 drinks each and an
+  occasional day with nothing. The generated numbers are the same every time.
+- Today's figures in the calendar come from the same records as the home
+  screen, so the two always agree.
+
+**Known limits**
+- Past days are judged against the current goal, because the app does not
+  store what the goal was on each day.
+- Records can only be corrected from the home screen (today's). The calendar
+  is read-only.

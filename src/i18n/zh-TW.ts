@@ -171,17 +171,37 @@ export const zhTW = {
     bluetoothFree: "藍牙連結底座永遠免費",
   },
   calendar: {
-    aria: "喝水提醒日曆",
+    aria: "喝水日曆",
     title: "日曆",
-    year: (year: number) => `${year} 年`,
-    month: (month: number) => `${month} 月`,
-    selectMonth: "選擇月份",
+    monthTitle: (year: number, month: number) => `${year} 年 ${month} 月`,
+    prevMonth: "上個月",
+    nextMonth: "下個月",
     weekdays: ["日", "一", "二", "三", "四", "五", "六"],
-    dayAria: (month: number, day: number, hasReminders: boolean) =>
-      `${month} 月 ${day} 日${hasReminders ? "，有提醒紀錄" : ""}`,
-    reminderCount: (count: number) => `提醒 ${count} 次`,
-    reminderIndex: (index: number) => `${index}.`,
-    empty: "這天沒有提醒紀錄",
+    weekdayNames: [
+      "星期日",
+      "星期一",
+      "星期二",
+      "星期三",
+      "星期四",
+      "星期五",
+      "星期六",
+    ],
+    dayAria: (month: number, day: number, total: number | null, met: boolean) =>
+      `${month} 月 ${day} 日，${
+        total === null
+          ? "沒有紀錄"
+          : `已喝 ${total} 毫升，${met ? "已達標" : "未達標"}`
+      }`,
+    dayTitle: (month: number, day: number, weekday: string, isToday: boolean) =>
+      `${month} 月 ${day} 日 ${weekday}${isToday ? "（今天）" : ""}`,
+    drunk: (ml: number, goal: number) => `已喝 ${ml} / ${goal} 毫升`,
+    met: "已達標",
+    notMet: "未達標",
+    noRecords: "這天沒有紀錄",
+    legendMet: "達標",
+    legendSome: "有紀錄，未達標",
+    prevDay: "前一天",
+    nextDay: "後一天",
   },
   addWater: {
     title: "手動加水",

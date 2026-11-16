@@ -36,7 +36,7 @@ export const lowBatteryPercent = 20
 export type DrinkRecord = { id: string; time: string; amountMl: number }
 
 // Newest first. Today's six records add up to 1260 毫升.
-export const drinkRecords: DrinkRecord[] = [
+const recentRecords: DrinkRecord[] = [
   { id: "r01", time: at(0, "16:25"), amountMl: 210 },
   { id: "r02", time: at(0, "14:10"), amountMl: 220 },
   { id: "r03", time: at(0, "13:00"), amountMl: 200 },
@@ -50,6 +50,27 @@ export const drinkRecords: DrinkRecord[] = [
   { id: "r11", time: at(1, "09:50"), amountMl: 180 },
   { id: "r12", time: at(1, "07:30"), amountMl: 200 },
 ]
+
+// Days 2 to 41 ago are generated so the calendar has six weeks to show. The
+// numbers are the same every time (nothing random): 6 to 10 drinks a day of
+// 180 to 330 毫升, and now and then a day with nothing recorded.
+const earlierRecords: DrinkRecord[] = Array.from(
+  { length: 40 },
+  (_, index) => index + 2,
+).flatMap((daysAgo) => {
+  if (daysAgo % 11 === 5) return []
+  const count = 6 + ((daysAgo * 7) % 5)
+  return Array.from({ length: count }, (_, n) => ({
+    id: `d${daysAgo}-${n}`,
+    time: at(
+      daysAgo,
+      `${String(21 - Math.round((n * 14) / count)).padStart(2, "0")}:${n % 2 ? "30" : "10"}`,
+    ),
+    amountMl: 180 + ((daysAgo * 13 + n * 37) % 6) * 30,
+  }))
+})
+
+export const drinkRecords: DrinkRecord[] = [...recentRecords, ...earlierRecords]
 
 export type Brightness = "low" | "medium" | "high"
 
@@ -74,48 +95,6 @@ export const quickAmountsMl = [100, 200, 300]
 
 /** Smallest and largest amount one drink record may hold. */
 export const drinkAmountLimits = { min: 1, max: 2000 }
-
-export type ReminderDay = { date: string; times: string[] }
-
-// shortcut: fixed to 2025 like the original; the calendar moves to the real
-// date when it is reworked.
-export const calendarYear = 2025
-
-export const reminderDays: ReminderDay[] = [
-  {
-    date: "2025-05-22",
-    times: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  {
-    date: "2025-05-21",
-    times: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30", "19:30"],
-  },
-  {
-    date: "2025-05-20",
-    times: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  { date: "2025-05-19", times: ["08:30", "11:00", "13:30", "16:00", "18:30"] },
-  {
-    date: "2025-05-18",
-    times: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30", "19:30"],
-  },
-  {
-    date: "2025-05-17",
-    times: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  { date: "2025-05-16", times: ["09:00", "12:00", "15:00", "18:00"] },
-  {
-    date: "2025-05-15",
-    times: ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00"],
-  },
-  { date: "2025-05-14", times: ["08:30", "11:00", "13:30", "16:00", "18:30"] },
-  {
-    date: "2025-05-13",
-    times: ["07:30", "09:30", "11:30", "13:30", "15:30", "17:30", "19:30"],
-  },
-]
-
-export const initialCalendarSelection = { month: 5, day: 22 }
 
 export type FamilyMemberId = "daughter" | "son"
 export type FamilyMember = { id: FamilyMemberId; color: string }

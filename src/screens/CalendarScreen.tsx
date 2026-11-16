@@ -1,61 +1,82 @@
+import { useState } from "react"
+import { Card } from "../components/Card"
+import { CheckIcon, DotIcon } from "../components/Icons"
 import { ScreenHeader } from "../components/ScreenHeader"
-import { calendarYear, type ReminderDay } from "../data/mock"
+import type { DrinkRecord } from "../data/mock"
 import { useT } from "../i18n"
-
-const months = Array.from({ length: 12 }, (_, index) => index + 1)
-const dateKey = (month: number, day: number) =>
-  `${calendarYear}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
-
-export type CalendarSelection = { month: number; day: number }
+import { dayKey, isToday, startOfDay } from "../lib/date"
 
 export function CalendarScreen({
-  reminderDays,
-  selection,
-  onSelect,
+  records,
+  goalMl,
   onClose,
 }: {
-  reminderDays: ReminderDay[]
-  selection: CalendarSelection
-  onSelect: (selection: CalendarSelection) => void
+  records: DrinkRecord[]
+  goalMl: number
   onClose: () => void
 }) {
   const t = useT()
-  const { month, day: selectedDay } = selection
-  const recordFor = (day: number) =>
-    reminderDays.find((record) => record.date === dateKey(month, day))
-  const selectedRecord = recordFor(selectedDay)
+  const today = startOfDay(new Date())
+  const [selected, setSelected] = useState(today)
+  // The month on screen follows the selected day.
+  const year = selected.getFullYear()
+  const month = selected.getMonth()
+
+  const byDay = new Map<string, DrinkRecord[]>()
+  for (const record of records) {
+    const key = dayKey(new Date(record.time))
+    byDay.set(key, [...(byDay.get(key) ?? []), record])
+  }
+  const totalOf = (date: Date) => {
+    const dayRecords = byDay.get(dayKey(date))
+    return dayRecords
+      ? dayRecords.reduce((total, record) => total + record.amountMl, 0)
+      : null
+  }
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const leadingBlanks = new Date(year, month, 1).getDay()
   const days = Array.from(
-    { length: new Date(calendarYear, month, 0).getDate() },
-    (_, index) => index + 1,
+    { length: daysInMonth },
+    (_, index) => new Date(year, month, index + 1),
   )
-  const leadingBlanks = Array.from(
-    { length: new Date(calendarYear, month - 1, 1).getDay() },
-    (_, index) => index,
-  )
+
+  // Never past today: there is nothing to show in the future.
+  const select = (date: Date) => setSelected(date > today ? today : date)
+  const moveDay = (difference: number) =>
+    select(new Date(year, month, selected.getDate() + difference))
+  const onCurrentMonth =
+    year === today.getFullYear() && month === today.getMonth()
+
+  const selectedRecords = byDay.get(dayKey(selected)) ?? []
+  const selectedTotal = totalOf(selected)
 
   return (
     <section className="calendar-screen" aria-label={t.calendar.aria}>
       <ScreenHeader title={t.calendar.title} onBack={onClose} />
 
       <div className="calendar-content">
-        <div className="calendar-month-picker">
-          <span>{t.calendar.year(calendarYear)}</span>
-          <label>
-            <select
-              value={month}
-              onChange={(event) =>
-                onSelect({ month: Number(event.target.value), day: 1 })
-              }
-              aria-label={t.calendar.selectMonth}
-            >
-              {months.map((option) => (
-                <option value={option} key={option}>
-                  {t.calendar.month(option)}
-                </option>
-              ))}
-            </select>
-          </label>
+        <h2 className="month-title" aria-live="polite">
+          {t.calendar.monthTitle(year, month + 1)}
+        </h2>
+        <div className="stepper-row">
+          <button
+            className="outline-button"
+            type="button"
+            onClick={() => select(new Date(year, month, 0))}
+          >
+            {t.calendar.prevMonth}
+          </button>
+          <button
+            className="outline-button"
+            type="button"
+            disabled={onCurrentMonth}
+            onClick={() => select(new Date(year, month + 1, 1))}
+          >
+            {t.calendar.nextMonth}
+          </button>
         </div>
+
         <div className="calendar-card">
           <div className="calendar-weekdays" aria-hidden="true">
             {t.calendar.weekdays.map((weekday) => (
@@ -63,52 +84,109 @@ export function CalendarScreen({
             ))}
           </div>
           <div className="calendar-grid">
-            {leadingBlanks.map((blank) => (
-              <span key={`blank-${blank}`} aria-hidden="true" />
+            {Array.from({ length: leadingBlanks }, (_, index) => (
+              <span key={`blank-${index}`} aria-hidden="true" />
             ))}
-            {days.map((day) => {
-              const hasReminders = recordFor(day) !== undefined
+            {days.map((date) => {
+              const total = totalOf(date)
+              const met = total !== null && total >= goalMl
+              const isSelected = dayKey(date) === dayKey(selected)
               return (
                 <button
                   className={[
-                    selectedDay === day ? "is-selected" : "",
-                    hasReminders ? "has-reminders" : "",
+                    isSelected ? "is-selected" : "",
+                    isToday(date) ? "is-today" : "",
                   ]
                     .filter(Boolean)
                     .join(" ")}
                   type="button"
-                  key={day}
-                  aria-label={t.calendar.dayAria(month, day, hasReminders)}
-                  aria-pressed={selectedDay === day}
-                  onClick={() => onSelect({ month, day })}
+                  key={date.getDate()}
+                  disabled={date > today}
+                  aria-label={t.calendar.dayAria(
+                    month + 1,
+                    date.getDate(),
+                    total,
+                    met,
+                  )}
+                  aria-pressed={isSelected}
+                  onClick={() => select(date)}
                 >
-                  {day}
+                  {date.getDate()}
+                  {total !== null && (met ? <CheckIcon /> : <DotIcon />)}
                 </button>
               )
             })}
           </div>
+          <p className="calendar-legend">
+            <span>
+              <CheckIcon />
+              {t.calendar.legendMet}
+            </span>
+            <span>
+              <DotIcon />
+              {t.calendar.legendSome}
+            </span>
+          </p>
         </div>
 
-        <div className="calendar-day-details" aria-live="polite">
-          <div className="calendar-day-heading">
-            <div>
-              <strong>
-                {t.calendar.reminderCount(selectedRecord?.times.length ?? 0)}
-              </strong>
-            </div>
-          </div>
-          {selectedRecord ? (
-            <div className="calendar-reminder-times">
-              {selectedRecord.times.map((time, index) => (
-                <div key={time}>
-                  <span>{t.calendar.reminderIndex(index + 1)}</span>
-                  <strong>{time}</strong>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="calendar-empty">{t.calendar.empty}</p>
-          )}
+        <div aria-live="polite">
+          <Card className="day-details">
+            <p className="card-label">
+              {t.calendar.dayTitle(
+                month + 1,
+                selected.getDate(),
+                t.calendar.weekdayNames[selected.getDay()],
+                isToday(selected),
+              )}
+            </p>
+            {selectedTotal === null ? (
+              <p className="records-empty">{t.calendar.noRecords}</p>
+            ) : (
+              <>
+                <p className="day-total">
+                  {t.calendar.drunk(selectedTotal, goalMl)}
+                </p>
+                <p
+                  className={`status-line ${selectedTotal >= goalMl ? "is-ok" : ""}`.trim()}
+                >
+                  {selectedTotal >= goalMl ? <CheckIcon /> : <DotIcon />}
+                  {selectedTotal >= goalMl
+                    ? t.calendar.met
+                    : t.calendar.notMet}
+                </p>
+                {selectedRecords.map((record) => {
+                  const time = new Date(record.time)
+                  return (
+                    <div className="time-row" key={record.id}>
+                      <span>
+                        {t.common.clock(time.getHours(), time.getMinutes())}
+                      </span>
+                      <strong>{t.home.recordAmount(record.amountMl)}</strong>
+                    </div>
+                  )
+                })}
+              </>
+            )}
+          </Card>
+        </div>
+
+        {/* Large buttons, because the day cells above are small on narrow phones. */}
+        <div className="stepper-row day-nav">
+          <button
+            className="outline-button"
+            type="button"
+            onClick={() => moveDay(-1)}
+          >
+            {t.calendar.prevDay}
+          </button>
+          <button
+            className="outline-button"
+            type="button"
+            disabled={isToday(selected)}
+            onClick={() => moveDay(1)}
+          >
+            {t.calendar.nextDay}
+          </button>
         </div>
       </div>
     </section>

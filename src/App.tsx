@@ -7,12 +7,10 @@ import {
   type DrinkRecord,
   familyMembers,
   fluidSensitiveConditions,
-  initialCalendarSelection,
   initialLineConnected,
   initialNightMute,
   initialProfile,
   initialReminderSettings,
-  reminderDays,
   voiceMessages,
 } from "./data/mock"
 import { useT } from "./i18n"
@@ -68,9 +66,6 @@ export default function App() {
     setOverlay("pairing")
   }
   const [reminders, setReminders] = useState(initialReminderSettings)
-  const [calendarSelection, setCalendarSelection] = useState(
-    initialCalendarSelection,
-  )
   const waterPercentage = Math.min(
     100,
     Math.round((todayWater / reminders.dailyGoalMl) * 100),
@@ -167,9 +162,8 @@ export default function App() {
 
         {overlay === "calendar" && (
           <CalendarScreen
-            reminderDays={reminderDays}
-            selection={calendarSelection}
-            onSelect={setCalendarSelection}
+            records={records}
+            goalMl={reminders.dailyGoalMl}
             onClose={closeOverlay}
           />
         )}
