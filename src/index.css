@@ -15,6 +15,17 @@
   --float-gap: 12px;
   --float-header-height: 64px;
   --float-nav-height: 92px;
+  --float-overlay-header-height: 76px;
+  --float-action-height: 72px;
+  /* Space a full-screen view keeps free for its floating header / button. */
+  --float-overlay-top: calc(
+    var(--float-overlay-header-height) + var(--float-gap) * 2 +
+      env(safe-area-inset-top)
+  );
+  --float-action-bottom: calc(
+    var(--float-action-height) + var(--float-gap) * 2 +
+      env(safe-area-inset-bottom)
+  );
 }
 
 html::-webkit-scrollbar {
@@ -148,7 +159,7 @@ button:focus-visible {
   border: 2px solid #cbd8e6;
   border-radius: 16px;
   background: #fff;
-  box-shadow: 0 5px 18px rgba(16, 40, 76, 0.06);
+  box-shadow: var(--shadow-card);
 }
 
 .card-label {
@@ -246,7 +257,7 @@ button:focus-visible {
   color: #fff;
   border: 0;
   background: #2866be;
-  box-shadow: 0 10px 24px rgba(18, 61, 114, 0.2);
+  box-shadow: var(--shadow-card);
 }
 
 .today-summary-row {
@@ -396,7 +407,7 @@ button:focus-visible {
   height: 28px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 2px 5px rgba(16, 40, 76, 0.25);
+  box-shadow: var(--shadow-card);
   transition: transform 160ms ease;
 }
 
@@ -433,7 +444,7 @@ button:focus-visible {
   border-radius: 16px;
   color: #17384f;
   background: #fff;
-  box-shadow: 0 6px 18px rgba(36, 96, 123, 0.07);
+  box-shadow: var(--shadow-card);
   cursor: pointer;
 }
 
@@ -461,7 +472,7 @@ button:focus-visible {
   border-radius: 18px;
   color: #fff;
   background: #2866be;
-  box-shadow: 0 10px 24px rgba(40, 102, 190, 0.22);
+  box-shadow: var(--shadow-card);
   text-align: left;
   cursor: pointer;
 }
@@ -490,7 +501,7 @@ button:focus-visible {
   border-radius: 20px;
   color: #fff;
   background: #06c755;
-  box-shadow: 0 10px 24px rgba(6, 160, 71, 0.22);
+  box-shadow: var(--shadow-card);
   cursor: pointer;
 }
 
@@ -719,7 +730,7 @@ body {
   overflow: hidden;
   border: 0;
   background: #2866be;
-  box-shadow: 0 12px 28px rgba(33, 126, 169, 0.22);
+  box-shadow: var(--shadow-card);
 }
 
 .drink-records-card {
@@ -732,7 +743,7 @@ body {
 
 .water-ring {
   background: conic-gradient(#6ed7ff 0 63%, #fff 63% 100%);
-  box-shadow: 0 8px 24px rgba(14, 77, 117, 0.2);
+  box-shadow: var(--shadow-card);
 }
 
 .water-ring > div {
@@ -808,15 +819,25 @@ body {
   background: #fbfdfd;
 }
 
+/* Floating header of a full-screen view */
+.settings-header,
+.calendar-header,
 .extra-water-header {
-  flex: 0 0 94px;
+  position: absolute;
+  z-index: 2;
+  top: calc(var(--float-gap) + env(safe-area-inset-top));
+  right: var(--float-gap);
+  left: var(--float-gap);
+  height: var(--float-overlay-header-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 18px 20px;
-  border-bottom: 2px solid #d9e8ee;
+  gap: 12px;
+  padding: 0 8px 0 18px;
+  border: 2px solid #d5e5ec;
+  border-radius: 20px;
   background: #fff;
+  box-shadow: var(--shadow-float);
 }
 
 .extra-water-header h1 {
@@ -848,7 +869,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   overflow-y: auto;
-  padding: 34px 20px 24px;
+  padding: var(--float-overlay-top) 20px var(--float-action-bottom);
 }
 
 .water-cup-area {
@@ -871,7 +892,7 @@ body {
   background: #edf7fc;
   box-shadow:
     inset 0 0 0 5px #fff,
-    0 14px 30px rgba(40, 102, 190, 0.14);
+    var(--shadow-card);
 }
 
 .water-cup::before {
@@ -922,7 +943,7 @@ body {
   border: 2px solid #cce3eb;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 7px 20px rgba(36, 96, 123, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .extra-water-form label {
@@ -974,44 +995,13 @@ body {
   font-size: 24px;
 }
 
-.add-water-button {
-  width: 100%;
-  min-height: 70px;
-  margin-top: 16px;
-  border: 0;
-  border-radius: 14px;
-  color: #fff;
-  background: #2866be;
-  box-shadow: 0 7px 16px rgba(40, 102, 190, 0.2);
-  font-size: 26px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.add-water-button:disabled {
-  color: #e8eef3;
-  background: #9eafbb;
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-.calendar-header {
-  flex: 0 0 calc(158px + env(safe-area-inset-top));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  padding: calc(60px + env(safe-area-inset-top)) 20px 16px;
-  border-bottom: 2px solid #d9e8ee;
-  background: #fff;
-}
-
 .calendar-header p,
 .calendar-header h1 {
   margin: 0;
 }
 
 .calendar-month-picker {
+  white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1035,6 +1025,26 @@ body {
   font-size: 30px;
   font-weight: 800;
   cursor: pointer;
+}
+
+/* Keeps year, month and close button on one line on narrow phones. */
+@media (max-width: 370px) {
+  .calendar-header {
+    padding-left: 12px;
+  }
+
+  .calendar-month-picker {
+    gap: 8px;
+  }
+
+  .calendar-month-picker,
+  .calendar-month-picker select {
+    font-size: 22px;
+  }
+  .calendar-month-picker select {
+    padding-right: 26px;
+    padding-left: 10px;
+  }
 }
 
 .calendar-header p {
@@ -1069,7 +1079,8 @@ body {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding: 20px;
+  padding: var(--float-overlay-top) 20px
+    calc(20px + env(safe-area-inset-bottom));
   scrollbar-width: none;
 }
 
@@ -1082,7 +1093,7 @@ body {
   border: 2px solid #cce3eb;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 7px 20px rgba(36, 96, 123, 0.07);
+  box-shadow: var(--shadow-card);
 }
 
 .calendar-weekdays,
@@ -1138,7 +1149,7 @@ body {
 .calendar-grid button.is-selected {
   color: #fff;
   background: #2866be;
-  box-shadow: 0 5px 12px rgba(40, 102, 190, 0.25);
+  box-shadow: var(--shadow-card);
 }
 
 .calendar-grid button.is-selected::after {
@@ -1151,7 +1162,7 @@ body {
   border: 2px solid #cce3eb;
   border-radius: 20px;
   background: #fff;
-  box-shadow: 0 7px 20px rgba(36, 96, 123, 0.07);
+  box-shadow: var(--shadow-card);
 }
 
 .calendar-day-heading {
@@ -1217,16 +1228,6 @@ body {
   font-weight: 700;
 }
 
-.settings-header {
-  flex: 0 0 94px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 20px;
-  border-bottom: 2px solid #d9e8ee;
-  background: #fff;
-}
-
 .settings-header h1 {
   margin: 0;
   color: #2866be;
@@ -1254,7 +1255,7 @@ body {
   flex-direction: column;
   gap: 18px;
   overflow-y: auto;
-  padding: 20px;
+  padding: var(--float-overlay-top) 20px var(--float-action-bottom);
   scrollbar-width: none;
 }
 
@@ -1337,18 +1338,28 @@ body {
   accent-color: #2866be;
 }
 
-.save-settings-button {
-  flex: 0 0 72px;
-  min-height: 72px;
-  margin: 14px 20px 22px;
+/* Floating main action of a full-screen view */
+.floating-action {
+  position: absolute;
+  z-index: 2;
+  right: var(--float-gap);
+  bottom: calc(var(--float-gap) + env(safe-area-inset-bottom));
+  left: var(--float-gap);
+  height: var(--float-action-height);
   border: 0;
-  border-radius: 14px;
+  border-radius: 20px;
   color: #fff;
   background: #2866be;
-  box-shadow: 0 7px 16px rgba(40, 102, 190, 0.2);
+  box-shadow: var(--shadow-float);
   font-size: 26px;
   font-weight: 800;
   cursor: pointer;
+}
+
+.floating-action:disabled {
+  color: #e8eef3;
+  background: #9eafbb;
+  cursor: not-allowed;
 }
 
 .bottom-navigation {

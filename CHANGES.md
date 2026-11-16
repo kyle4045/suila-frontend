@@ -44,7 +44,7 @@ later changes are small and easy to explain.
 - The `npm run format` command uses an early formatter that breaks some lines.
   Do not run it.
 
-## Phase 2b — floating layer sample (awaiting approval)
+## Phase 2b — floating layer sample (approved)
 
 Applied to the shared top bar, the bottom navigation and the three tab pages
 only. Full-screen views (calendar, add water, profile, night mute) are not
@@ -71,3 +71,34 @@ changed yet.
   `--shadow-float`), plus the gap and bar heights. The floating bars and the
   cards use them. Other screens still have their own older shadows until the
   floating layer is rolled out.
+
+## Phase 2b — floating layer on every screen
+
+**Full-screen views (日曆, 補水, 基本資料, 夜間靜音)**
+- The header is now the same kind of floating bar as the top bar: solid white,
+  rounded, 12px from the edges, soft shadow. Content scrolls underneath.
+- The main button (儲存 / 加入) floats at the bottom of the screen, always in
+  the same place, instead of sitting at the end of the page.
+- Content keeps enough space at the top and bottom that nothing ends up hidden
+  behind the header or the button.
+
+**補水**
+- The 加入 button moved out of the input box to the floating position, so all
+  full-screen views have their main button in the same spot.
+
+**日曆**
+- The header used to have a lot of empty space above it and wrapped onto two
+  lines on 320px phones. It is now one compact bar, and on narrow phones the
+  year and month use slightly smaller text (22px) so everything stays on one
+  line.
+
+**Whole app**
+- Every shadow now uses one of the two shared levels: a light one for cards
+  and a stronger one for floating bars and buttons. Before, there were more
+  than ten slightly different shadows.
+- 儲存 and 加入 are now the same shared button, so they look identical.
+
+**How it was checked**
+- A script opened every full-screen view at 390px and 320px and confirmed that
+  the first item sits below the header, the last item sits above the button,
+  the header content fits inside its bar, and nothing scrolls sideways.

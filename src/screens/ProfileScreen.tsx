@@ -1,6 +1,6 @@
 import { useState, type Dispatch, type SetStateAction } from "react"
 import { Card } from "../components/Card"
-import { SaveButton } from "../components/SaveButton"
+import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
 import { conditionOptions, type ConditionId, type Profile } from "../data/mock"
 import { useT } from "../i18n"
@@ -131,7 +131,7 @@ export function ProfileScreen({
         </Card>
       </div>
 
-      <SaveButton onClick={onClose} />
+      <FloatingButton onClick={onClose}>{t.common.save}</FloatingButton>
     </section>
   )
 }

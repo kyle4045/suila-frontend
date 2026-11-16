@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
 import { useT } from "../i18n"
 
@@ -59,18 +60,17 @@ export function AddWaterScreen({
               <strong>{t.common.mlShort}</strong>
             </div>
           </label>
-          <button
-            className="add-water-button"
-            type="button"
-            disabled={!canAdd}
-            onClick={() => {
-              if (canAdd) onAdd(parsedAmount)
-            }}
-          >
-            {t.addWater.add}
-          </button>
         </div>
       </div>
+
+      <FloatingButton
+        disabled={!canAdd}
+        onClick={() => {
+          if (canAdd) onAdd(parsedAmount)
+        }}
+      >
+        {t.addWater.add}
+      </FloatingButton>
     </section>
   )
 }

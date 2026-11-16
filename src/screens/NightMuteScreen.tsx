@@ -1,5 +1,5 @@
 import { Card } from "../components/Card"
-import { SaveButton } from "../components/SaveButton"
+import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
 import type { Dispatch, SetStateAction } from "react"
 import type { NightMute } from "../data/mock"
@@ -127,7 +127,7 @@ export function NightMuteScreen({
         </Card>
       </div>
 
-      <SaveButton onClick={onClose} />
+      <FloatingButton onClick={onClose}>{t.common.save}</FloatingButton>
     </section>
   )
 }
