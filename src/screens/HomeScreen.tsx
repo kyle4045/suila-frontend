@@ -89,7 +89,10 @@ export function HomeScreen({
           </button>
         </div>
         {todayRecords.length === 0 && (
-          <p className="records-empty">{t.home.noRecords}</p>
+          <>
+            <p className="records-empty">{t.home.noRecords}</p>
+            <p className="field-hint">{t.home.noRecordsHint}</p>
+          </>
         )}
         {todayRecords.map((record) => {
           const time = t.common.dayTime(new Date(record.time), true)

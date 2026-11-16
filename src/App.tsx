@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { BottomNav, familyPage, pageCount } from "./components/BottomNav"
 import { Toast } from "./components/Toast"
 import {
+  demoValues,
   deviceStatus,
   drinkRecords,
   type DrinkRecord,
@@ -20,6 +21,10 @@ import { useVoicePlayer } from "./lib/useVoicePlayer"
 import { AboutScreen } from "./screens/AboutScreen"
 import { AddWaterScreen } from "./screens/AddWaterScreen"
 import { EditRecordScreen } from "./screens/EditRecordScreen"
+import {
+  DemoPanelScreen,
+  type DemoData,
+} from "./screens/DemoPanelScreen"
 import { DeviceScreen } from "./screens/DeviceScreen"
 import { PairingScreen } from "./screens/PairingScreen"
 import { CalendarScreen } from "./screens/CalendarScreen"
@@ -43,6 +48,7 @@ type Overlay =
   | "pairing"
   | "about"
   | "habits"
+  | "demo"
   | "pro"
   | null
 
@@ -74,7 +80,20 @@ export default function App() {
     Math.round((todayWater / reminders.dailyGoalMl) * 100),
   )
   const [lineConnected, setLineConnected] = useState(initialLineConnected)
-  const [isPro] = useState(initialIsPro)
+  const [isPro, setIsPro] = useState(initialIsPro)
+  const [demoData, setDemoData] = useState<DemoData>("normal")
+  // Hidden way into the demo panel: five quick taps on the app name.
+  const brandTaps = useRef({ count: 0, last: 0 })
+  const handleBrandTap = () => {
+    const now = Date.now()
+    const taps = brandTaps.current
+    taps.count = now - taps.last < 600 ? taps.count + 1 : 1
+    taps.last = now
+    if (taps.count >= 5) {
+      taps.count = 0
+      setOverlay("demo")
+    }
+  }
   const [messages, setMessages] = useState(voiceMessages)
   const voice = useVoicePlayer()
   // New messages only count while LINE is linked.
@@ -99,7 +118,11 @@ export default function App() {
     <main className="app-shell">
       <div className="page">
         <header className="topbar">
-          <div className="brand" aria-label={t.brand.aria}>
+          <div
+            className="brand"
+            aria-label={t.brand.aria}
+            onClick={handleBrandTap}
+          >
             <span className="brand-name">
               {t.brand.name}
               <small>{t.brand.latin}</small>
@@ -284,6 +307,52 @@ export default function App() {
         )}
 
         {overlay === "about" && <AboutScreen onClose={closeOverlay} />}
+
+        {overlay === "demo" && (
+          <DemoPanelScreen
+            data={demoData}
+            device={
+              !device.paired
+                ? "unpaired"
+                : device.connected
+                  ? "connected"
+                  : "offline"
+            }
+            batteryLow={
+              device.batteryPercent === demoValues.lowBatteryPercent
+            }
+            lineConnected={lineConnected}
+            isPro={isPro}
+            onData={(value) => {
+              voice.stop()
+              setDemoData(value)
+              setRecords(value === "dayOne" ? [] : drinkRecords)
+              setMessages(value === "dayOne" ? [] : voiceMessages)
+            }}
+            onDevice={(value) =>
+              setDevice((current) => ({
+                ...current,
+                paired: value !== "unpaired",
+                connected: value === "connected",
+                pendingSyncCount:
+                  value === "offline" ? demoValues.offlinePendingCount : 0,
+              }))
+            }
+            onBatteryLow={(low) =>
+              setDevice((current) => ({
+                ...current,
+                batteryPercent: low
+                  ? demoValues.lowBatteryPercent
+                  : demoValues.normalBatteryPercent,
+              }))
+            }
+            onLine={setLineConnected}
+            onPro={setIsPro}
+            // Nothing is stored, so reloading puts every screen back to the start.
+            onReset={() => window.location.reload()}
+            onClose={closeOverlay}
+          />
+        )}
 
         {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
 

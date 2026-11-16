@@ -30,6 +30,13 @@ export const deviceStatus: DeviceStatus = {
 /** Colors the light on the base can show. Their meanings are in the translation file. */
 export const baseLightColors = ["blue", "white", "red"] as const
 
+/** Values the hidden demo panel switches between. */
+export const demoValues = {
+  normalBatteryPercent: 82,
+  lowBatteryPercent: 15,
+  offlinePendingCount: 3,
+}
+
 /** At or below this the app warns about the battery. */
 export const lowBatteryPercent = 20
 

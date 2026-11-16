@@ -433,3 +433,49 @@ reminder settings).
 - The calculations have a small self-check: `npm test`.
 
 Priority 2 is now complete.
+
+## Phase 5 — states and the hidden demo panel
+
+### How to open the demo panel
+
+Tap the 「水啦 SuiLa」 name in the top bar **five times quickly** (within about
+half a second between taps). Nothing in the normal app shows or hints at it.
+It opens a page called 「示範控制」. Press 返回 to leave it.
+
+### What the panel switches
+
+| Group | Choices |
+|---|---|
+| 資料 | 一般（六週紀錄） / 第一天（沒有紀錄） |
+| 底座 | 已連線 / 未連線（3 筆等待同步） / 尚未配對 |
+| 電量 | 正常 82% / 偏低 15% |
+| LINE | 已連結 / 未連結 |
+| Pro | 關 / 開 |
+
+The current choice in each group is filled in and ticked. The choices can be
+combined (for example offline and low battery together).
+
+「全部重設」 reloads the app, which puts every screen back to how the demo
+starts (nothing is stored between visits).
+
+### What each state looks like
+
+- **第一天 (no records):** the ring shows 「已喝 0 / 2000 毫升」 and
+  「完成 0%」. The records card says 「今天還沒有紀錄」 with a new hint:
+  「喝完水把水瓶放回底座，就會自動記下來。也可以按「手動加水」。」 The calendar
+  says 「這天沒有紀錄」, 語音留言 says 「還沒有語音留言」, and 習慣分析 (with
+  Pro) says 「紀錄還不夠，過幾天再來看看。」 instead of seven empty rows.
+- **未連線:** the status card on home and on 底座裝置 says 「底座未連線」 and
+  「3 筆紀錄等待同步」.
+- **電量偏低:** both say 「電量偏低 15%，請充電」.
+- **尚未配對:** both say 「尚未配對底座」 with a 「配對底座」 button.
+- **LINE 未連結:** the 家人 tab shows the explanation and 「加入 LINE」; the
+  new-message row on home and the number on the 家人 tab disappear.
+- **Pro 開:** 習慣分析 opens the analysis page instead of the Pro page.
+
+### How it was checked
+
+A script switched through every state and opened every screen in each one
+(home, calendar, 家人, 我的, 底座裝置, 習慣分析) at 390px and 320px, checking
+that nothing scrolls sideways, no button outside the calendar grid is under
+56px tall, and nothing scrolls inside a page. No problems were found.

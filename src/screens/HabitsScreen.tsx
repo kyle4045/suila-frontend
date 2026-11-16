@@ -27,6 +27,20 @@ export function HabitsScreen({
   // Bars are drawn against the larger of the goal and the best day.
   const scale = Math.max(goalMl, ...week.map((day) => day.totalMl))
 
+  if (!period) {
+    return (
+      <section className="settings-screen" aria-label={t.habits.title}>
+        <ScreenHeader title={t.habits.title} onBack={onClose} />
+        <div className="settings-content">
+          <Card>
+            <p className="card-label">{t.habits.weekTitle}</p>
+            <p className="records-empty">{t.habits.notEnough}</p>
+          </Card>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="settings-screen" aria-label={t.habits.title}>
       <ScreenHeader title={t.habits.title} onBack={onClose} />
@@ -79,26 +93,20 @@ export function HabitsScreen({
 
         <Card>
           <p className="card-label">{t.habits.forgetTitle}</p>
-          {period ? (
-            <>
-              <p className="habit-period">
-                {t.habits.period(
-                  t.common.clock(period.from, 0),
-                  t.common.clock(period.to, 0),
-                )}
-              </p>
-              <p className="habit-body">{t.habits.forgetBody}</p>
-              <button
-                className="outline-button is-wide"
-                type="button"
-                onClick={onAddReminder}
-              >
-                {t.habits.addReminder}
-              </button>
-            </>
-          ) : (
-            <p className="records-empty">{t.habits.notEnough}</p>
-          )}
+          <p className="habit-period">
+            {t.habits.period(
+              t.common.clock(period.from, 0),
+              t.common.clock(period.to, 0),
+            )}
+          </p>
+          <p className="habit-body">{t.habits.forgetBody}</p>
+          <button
+            className="outline-button is-wide"
+            type="button"
+            onClick={onAddReminder}
+          >
+            {t.habits.addReminder}
+          </button>
         </Card>
       </div>
     </section>

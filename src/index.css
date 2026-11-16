@@ -1913,6 +1913,26 @@ body {
   font-size: 22px;
 }
 
+/* Demo panel */
+.demo-hint {
+  margin: 0;
+  color: #17384f;
+  font-size: 20px;
+}
+
+.choice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.choice-list .choice-button {
+  padding: 8px 14px;
+  font-size: 22px;
+  text-align: left;
+}
+
 /* Pro page */
 .pro-feature h2 {
   margin: 0 0 8px;
