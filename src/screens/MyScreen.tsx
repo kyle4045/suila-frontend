@@ -5,6 +5,7 @@ export function MyScreen({
   onOpenReminders,
   onOpenNightMute,
   onOpenDevice,
+  onOpenHabits,
   onOpenAbout,
   onOpenPro,
 }: {
@@ -12,6 +13,7 @@ export function MyScreen({
   onOpenReminders: () => void
   onOpenNightMute: () => void
   onOpenDevice: () => void
+  onOpenHabits: () => void
   onOpenAbout: () => void
   onOpenPro: () => void
 }) {
@@ -36,6 +38,14 @@ export function MyScreen({
 
       <button className="my-menu-row" type="button" onClick={onOpenDevice}>
         <strong>{t.my.device}</strong>
+        <span aria-hidden="true">＞</span>
+      </button>
+
+      <button className="my-menu-row" type="button" onClick={onOpenHabits}>
+        <strong>
+          {t.my.habits}
+          <b className="pro-tag">{t.my.proTag}</b>
+        </strong>
         <span aria-hidden="true">＞</span>
       </button>
 

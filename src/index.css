@@ -1811,6 +1811,108 @@ body {
   margin-top: 18px;
 }
 
+/* Habit analysis */
+.pro-tag {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 0 10px;
+  border-radius: 10px;
+  color: #fff;
+  background: #2866be;
+  font-size: 20px;
+  font-weight: 800;
+  vertical-align: 2px;
+}
+
+.habit-day {
+  padding: 10px 0;
+  border-bottom: 1px solid #dcebf0;
+}
+
+.habit-day-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #3e596b;
+  font-size: 22px;
+}
+
+.habit-day-head strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #17384f;
+  font-size: 22px;
+}
+
+.habit-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.habit-mark {
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+}
+
+.habit-mark svg,
+.habit-note svg {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  color: #176a43;
+}
+
+.habit-bar {
+  height: 14px;
+  flex: 1 1 auto;
+  overflow: hidden;
+  border-radius: 7px;
+  background: #dcebf0;
+}
+
+.habit-bar span {
+  height: 100%;
+  display: block;
+  border-radius: 7px;
+  background: #2866be;
+}
+
+.habit-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 0 0;
+  color: #3e596b;
+  font-size: 20px;
+}
+
+.habit-summary {
+  margin: 10px 0 0;
+  color: #17384f;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.habit-period {
+  margin: 6px 0 8px;
+  color: #17384f;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.habit-body {
+  margin: 0;
+  color: #17384f;
+  font-size: 22px;
+}
+
 /* Pro page */
 .pro-feature h2 {
   margin: 0 0 8px;

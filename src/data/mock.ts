@@ -102,6 +102,9 @@ export type FamilyMember = { id: FamilyMemberId; color: string }
 /** Whether the owner has linked LINE when the demo starts. */
 export const initialLineConnected = true
 
+/** Whether the owner has Pro when the demo starts. */
+export const initialIsPro = false
+
 /** Family members allowed without Pro. */
 export const freeFamilyLimit = 2
 

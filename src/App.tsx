@@ -7,6 +7,7 @@ import {
   type DrinkRecord,
   familyMembers,
   fluidSensitiveConditions,
+  initialIsPro,
   initialLineConnected,
   initialNightMute,
   initialProfile,
@@ -23,6 +24,7 @@ import { DeviceScreen } from "./screens/DeviceScreen"
 import { PairingScreen } from "./screens/PairingScreen"
 import { CalendarScreen } from "./screens/CalendarScreen"
 import { FamilyScreen } from "./screens/FamilyScreen"
+import { HabitsScreen } from "./screens/HabitsScreen"
 import { HomeScreen } from "./screens/HomeScreen"
 import { MyScreen } from "./screens/MyScreen"
 import { NightMuteScreen } from "./screens/NightMuteScreen"
@@ -40,6 +42,7 @@ type Overlay =
   | "device"
   | "pairing"
   | "about"
+  | "habits"
   | "pro"
   | null
 
@@ -71,6 +74,7 @@ export default function App() {
     Math.round((todayWater / reminders.dailyGoalMl) * 100),
   )
   const [lineConnected, setLineConnected] = useState(initialLineConnected)
+  const [isPro] = useState(initialIsPro)
   const [messages, setMessages] = useState(voiceMessages)
   const voice = useVoicePlayer()
   // New messages only count while LINE is linked.
@@ -154,6 +158,7 @@ export default function App() {
               onOpenReminders={() => setOverlay("reminders")}
               onOpenNightMute={() => setOverlay("nightMute")}
               onOpenDevice={() => setOverlay("device")}
+              onOpenHabits={() => setOverlay(isPro ? "habits" : "pro")}
               onOpenAbout={() => setOverlay("about")}
               onOpenPro={() => setOverlay("pro")}
             />
@@ -266,6 +271,15 @@ export default function App() {
               setOverlay(pairingBack)
             }}
             onClose={() => setOverlay(pairingBack)}
+          />
+        )}
+
+        {overlay === "habits" && (
+          <HabitsScreen
+            records={records}
+            goalMl={reminders.dailyGoalMl}
+            onAddReminder={() => setOverlay("reminders")}
+            onClose={closeOverlay}
           />
         )}
 

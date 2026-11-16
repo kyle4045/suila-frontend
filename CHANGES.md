@@ -401,3 +401,35 @@ reminder settings).
   store what the goal was on each day.
 - Records can only be corrected from the home screen (today's). The calendar
   is read-only.
+
+### Item 13: habit analysis
+
+**我的**
+- New 「習慣分析」 row with a 「Pro」 tag, above 關於我們.
+- Habit analysis is a Pro feature. Without Pro, tapping the row opens the
+  水啦 Pro page. The demo starts without Pro; a switch to turn Pro on will be
+  in the demo panel.
+
+**習慣分析 (new page, Pro only)**
+- 過去 7 天: one row per day for the seven full days before today (today is
+  left out because it is not over). Each row shows the date and weekday, the
+  amount in 毫升, a bar, and a tick after the bar on days that met the goal.
+- Two plain sentences sum it up, for example 「7 天中有 3 天達標」 and
+  「平均每天 1787 毫升」.
+- 最容易忘記喝水的時段: the part of the day with the fewest drink records in
+  those seven days, for example 「上午 6:00 到 上午 9:00」, with a
+  「新增提醒時間」 button that opens 提醒設定.
+- The page describes what was recorded and offers a reminder. It gives no
+  health advice.
+- If there are no records in the seven days, it says 「紀錄還不夠，過幾天再來
+  看看。」.
+
+**How the forgetful period is chosen**
+- The day is split into five parts: 6–9, 9–12, 12–14, 14–18 and 18–22. The
+  part with the fewest records per hour wins. The parts are a simple
+  assumption and are defined in one place (`src/lib/habits.ts`).
+
+**For the group's developers**
+- The calculations have a small self-check: `npm test`.
+
+Priority 2 is now complete.
