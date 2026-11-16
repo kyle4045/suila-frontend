@@ -66,3 +66,17 @@ export function NavigationIcon({ type }: { type: NavigationIconType }) {
     </svg>
   )
 }
+
+export function BackIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M15 5l-7 7 7 7"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}

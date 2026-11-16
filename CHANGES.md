@@ -102,3 +102,25 @@ changed yet.
 - A script opened every full-screen view at 390px and 320px and confirmed that
   the first item sits below the header, the last item sits above the button,
   the header content fits inside its bar, and nothing scrolls sideways.
+
+## Phase 3 — Priority 1
+
+### Item 1: Pro no longer locks Bluetooth
+
+**我的**
+- The Pro button used to say 「解鎖藍牙裝置連結」. Pairing the base by Bluetooth
+  is free, so it now says 「解鎖習慣分析、連結更多家人」.
+- Tapping it used to do nothing. It now opens the 水啦 Pro page.
+
+**水啦 Pro (new page)**
+- Explains the two things Pro adds: 習慣分析 and 更多家人 (the free version
+  allows 2 family members).
+- States clearly: 「藍牙連結底座永遠免費」.
+- No payment step. This is a demo, so the page only informs.
+
+**Every full-screen view (日曆, 補水, 基本資料, 夜間靜音, 水啦 Pro)**
+- Each one now has a title in its header. 基本資料 and 夜間靜音 had none.
+- The bare "X" is replaced by a labeled 「返回」 button with an arrow, placed
+  on the left where phone users expect it. It is 56px tall.
+- 日曆: the year and month picker moved from the header into the page, just
+  above the calendar, so the header can hold the title like every other view.

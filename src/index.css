@@ -820,9 +820,7 @@ body {
 }
 
 /* Floating header of a full-screen view */
-.settings-header,
-.calendar-header,
-.extra-water-header {
+.screen-header {
   position: absolute;
   z-index: 2;
   top: calc(var(--float-gap) + env(safe-area-inset-top));
@@ -831,35 +829,12 @@ body {
   height: var(--float-overlay-header-height);
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  padding: 0 8px 0 18px;
+  padding: 0 18px 0 8px;
   border: 2px solid #d5e5ec;
   border-radius: 20px;
   background: #fff;
   box-shadow: var(--shadow-float);
-}
-
-.extra-water-header h1 {
-  margin: 0;
-  color: #2866be;
-  font-size: 34px;
-}
-
-.extra-water-header button {
-  width: 56px;
-  height: 56px;
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  border-radius: 12px;
-  color: #fff;
-  background: #2866be;
-  font-size: 24px;
-  font-weight: 800;
-  cursor: pointer;
 }
 
 .extra-water-content {
@@ -995,12 +970,8 @@ body {
   font-size: 24px;
 }
 
-.calendar-header p,
-.calendar-header h1 {
-  margin: 0;
-}
-
 .calendar-month-picker {
+  margin: 0 4px 16px;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -1023,54 +994,6 @@ body {
   background: #fff;
   font: inherit;
   font-size: 30px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-/* Keeps year, month and close button on one line on narrow phones. */
-@media (max-width: 370px) {
-  .calendar-header {
-    padding-left: 12px;
-  }
-
-  .calendar-month-picker {
-    gap: 8px;
-  }
-
-  .calendar-month-picker,
-  .calendar-month-picker select {
-    font-size: 22px;
-  }
-  .calendar-month-picker select {
-    padding-right: 26px;
-    padding-left: 10px;
-  }
-}
-
-.calendar-header p {
-  color: #54768e;
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.calendar-header h1 {
-  color: #2866be;
-  font-size: 30px;
-  line-height: 1.3;
-}
-
-.calendar-header button {
-  width: 56px;
-  height: 56px;
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  padding: 0;
-  border: 0;
-  border-radius: 12px;
-  color: #fff;
-  background: #2866be;
-  font-size: 24px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -1228,26 +1151,6 @@ body {
   font-weight: 700;
 }
 
-.settings-header h1 {
-  margin: 0;
-  color: #2866be;
-  font-size: 38px;
-}
-
-.settings-header button {
-  width: 56px;
-  height: 56px;
-  padding: 0;
-  border: 0;
-  border-radius: 12px;
-  color: #fff;
-  background: #2866be;
-  font-size: 24px;
-  font-weight: 800;
-  cursor: pointer;
-  margin-left: auto;
-}
-
 .settings-content {
   flex: 1 1 auto;
   min-height: 0;
@@ -1336,6 +1239,69 @@ body {
   flex: 0 0 auto;
   margin: 0;
   accent-color: #2866be;
+}
+
+.screen-header h1 {
+  min-width: 0;
+  margin: 0;
+  color: #2866be;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.back-button {
+  height: 56px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  padding: 0 16px 0 8px;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  background: #2866be;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.back-button svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Pro page */
+.pro-feature h2 {
+  margin: 0 0 8px;
+  color: #2866be;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.pro-feature p {
+  margin: 0;
+  color: #17384f;
+  font-size: 22px;
+}
+
+.pro-note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 18px 22px;
+  border: 2px solid #bfe4d8;
+  border-radius: 20px;
+  color: #176a43;
+  background: #effaf4;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.pro-note span {
+  font-size: 26px;
+  font-weight: 800;
 }
 
 /* Floating main action of a full-screen view */

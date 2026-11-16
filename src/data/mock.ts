@@ -76,6 +76,9 @@ export const initialCalendarSelection = { month: 5, day: 22 }
 export type FamilyMemberId = "daughter" | "son" | "carer"
 export type FamilyMember = { id: FamilyMemberId; color: string }
 
+/** Family members allowed without Pro. */
+export const freeFamilyLimit = 2
+
 export const familyMembers: FamilyMember[] = [
   { id: "daughter", color: "coral" },
   { id: "son", color: "blue" },

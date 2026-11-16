@@ -3,9 +3,11 @@ import { useT } from "../i18n"
 export function MyScreen({
   onOpenProfile,
   onOpenNightMute,
+  onOpenPro,
 }: {
   onOpenProfile: () => void
   onOpenNightMute: () => void
+  onOpenPro: () => void
 }) {
   const t = useT()
 
@@ -26,7 +28,7 @@ export function MyScreen({
         <span aria-hidden="true">＞</span>
       </button>
 
-      <button className="pro-upgrade-button" type="button">
+      <button className="pro-upgrade-button" type="button" onClick={onOpenPro}>
         <span>{t.my.proTitle}</span>
         <strong>{t.my.proSubtitle}</strong>
       </button>

@@ -1,23 +1,22 @@
-import type { ReactNode } from "react"
+import { useT } from "../i18n"
+import { BackIcon } from "./Icons"
 
-/** Header of a full-screen view: optional content on the left, close button on the right. */
+/** Floating header of a full-screen view: labeled 返回 button, then the title. */
 export function ScreenHeader({
-  className,
-  closeLabel,
-  onClose,
-  children,
+  title,
+  onBack,
 }: {
-  className: string
-  closeLabel: string
-  onClose: () => void
-  children?: ReactNode
+  title: string
+  onBack: () => void
 }) {
+  const t = useT()
   return (
-    <header className={className}>
-      {children}
-      <button type="button" aria-label={closeLabel} onClick={onClose}>
-        X
+    <header className="screen-header">
+      <button className="back-button" type="button" onClick={onBack}>
+        <BackIcon />
+        {t.common.back}
       </button>
+      <h1>{title}</h1>
     </header>
   )
 }

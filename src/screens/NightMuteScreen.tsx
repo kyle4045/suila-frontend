@@ -74,11 +74,7 @@ export function NightMuteScreen({
 
   return (
     <section className="settings-screen" aria-label={t.night.aria}>
-      <ScreenHeader
-        className="settings-header"
-        closeLabel={t.night.close}
-        onClose={onClose}
-      />
+      <ScreenHeader title={t.night.title} onBack={onClose} />
 
       <div className="settings-content">
         <Card className="setting-card">

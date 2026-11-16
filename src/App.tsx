@@ -17,9 +17,10 @@ import { FamilyScreen } from "./screens/FamilyScreen"
 import { HomeScreen } from "./screens/HomeScreen"
 import { MyScreen } from "./screens/MyScreen"
 import { NightMuteScreen } from "./screens/NightMuteScreen"
+import { ProScreen } from "./screens/ProScreen"
 import { ProfileScreen } from "./screens/ProfileScreen"
 
-type Overlay = "calendar" | "addWater" | "profile" | "nightMute" | null
+type Overlay = "calendar" | "addWater" | "profile" | "nightMute" | "pro" | null
 
 export default function App() {
   const t = useT()
@@ -84,6 +85,7 @@ export default function App() {
             <MyScreen
               onOpenProfile={() => setOverlay("profile")}
               onOpenNightMute={() => setOverlay("nightMute")}
+              onOpenPro={() => setOverlay("pro")}
             />
           </div>
         </div>
@@ -122,6 +124,8 @@ export default function App() {
             onClose={closeOverlay}
           />
         )}
+
+        {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
 
         <BottomNav currentPage={currentPage} onSelect={moveToPage} />
       </div>

@@ -39,11 +39,7 @@ export function ProfileScreen({
 
   return (
     <section className="settings-screen" aria-label={t.profile.aria}>
-      <ScreenHeader
-        className="settings-header"
-        closeLabel={t.profile.close}
-        onClose={onClose}
-      />
+      <ScreenHeader title={t.profile.title} onBack={onClose} />
 
       <div className="settings-content">
         <Card className="settings-profile-card">

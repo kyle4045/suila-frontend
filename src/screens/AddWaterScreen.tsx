@@ -21,13 +21,7 @@ export function AddWaterScreen({
 
   return (
     <section className="extra-water-screen" aria-label={t.addWater.aria}>
-      <ScreenHeader
-        className="extra-water-header"
-        closeLabel={t.addWater.close}
-        onClose={onClose}
-      >
-        <h1>{t.addWater.title}</h1>
-      </ScreenHeader>
+      <ScreenHeader title={t.addWater.title} onBack={onClose} />
 
       <div className="extra-water-content">
         <div className="water-cup-area">

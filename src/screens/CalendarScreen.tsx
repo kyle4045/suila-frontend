@@ -35,11 +35,9 @@ export function CalendarScreen({
 
   return (
     <section className="calendar-screen" aria-label={t.calendar.aria}>
-      <ScreenHeader
-        className="calendar-header"
-        closeLabel={t.calendar.close}
-        onClose={onClose}
-      >
+      <ScreenHeader title={t.calendar.title} onBack={onClose} />
+
+      <div className="calendar-content">
         <div className="calendar-month-picker">
           <span>{t.calendar.year(calendarYear)}</span>
           <label>
@@ -58,9 +56,6 @@ export function CalendarScreen({
             </select>
           </label>
         </div>
-      </ScreenHeader>
-
-      <div className="calendar-content">
         <div className="calendar-card">
           <div className="calendar-weekdays" aria-hidden="true">
             {t.calendar.weekdays.map((weekday) => (

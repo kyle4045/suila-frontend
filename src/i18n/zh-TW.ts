@@ -17,6 +17,7 @@ export const zhTW = {
   },
   common: {
     save: "儲存",
+    back: "返回",
     listSeparator: "、",
     mlShort: "ml",
   },
@@ -56,14 +57,23 @@ export const zhTW = {
     nightMute: "夜間靜音",
     about: "關於我們",
     proTitle: "升級 Pro",
-    proSubtitle: "解鎖藍牙裝置連結",
+    proSubtitle: "解鎖習慣分析、連結更多家人",
+  },
+  pro: {
+    title: "水啦 Pro",
+    habitTitle: "習慣分析",
+    habitBody: "查看每週喝水紀錄，以及最容易忘記喝水的時段。",
+    familyTitle: "更多家人",
+    familyBody: (freeLimit: number) =>
+      `免費版可連結 ${freeLimit} 位家人，Pro 可連結更多家人。`,
+    bluetoothFree: "藍牙連結底座永遠免費",
   },
   calendar: {
     aria: "喝水提醒日曆",
+    title: "日曆",
     year: (year: number) => `${year} 年`,
     month: (month: number) => `${month} 月`,
     selectMonth: "選擇月份",
-    close: "關閉日曆",
     weekdays: ["日", "一", "二", "三", "四", "五", "六"],
     dayAria: (month: number, day: number, hasReminders: boolean) =>
       `${month} 月 ${day} 日${hasReminders ? "，有提醒紀錄" : ""}`,
@@ -74,7 +84,6 @@ export const zhTW = {
   addWater: {
     aria: "額外補水",
     title: "補水",
-    close: "關閉額外補水",
     cupAria: (percent: number) => `水杯水位百分之${percent}`,
     ready: (ml: number) => `準備加入 ${ml} ml`,
     prompt: "請輸入這次喝水量",
@@ -84,7 +93,7 @@ export const zhTW = {
   },
   profile: {
     aria: "基本資料",
-    close: "關閉基本資料",
+    title: "基本資料",
     defaultName: "美玲",
     name: "姓名",
     namePlaceholder: "請輸入姓名",
@@ -103,7 +112,7 @@ export const zhTW = {
   },
   night: {
     aria: "夜間靜音時間設定",
-    close: "關閉夜間靜音設定",
+    title: "夜間靜音",
     enable: "開啟夜間靜音",
     switchAria: "夜間靜音",
     start: "開始時間（24 小時制）",
