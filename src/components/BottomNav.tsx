@@ -8,12 +8,15 @@ const items: { key: "water" | "family" | "my"; icon: NavigationIconType }[] = [
 ]
 
 export const pageCount = items.length
+export const familyPage = items.findIndex((item) => item.key === "family")
 
 export function BottomNav({
   currentPage,
+  newMessageCount,
   onSelect,
 }: {
   currentPage: number
+  newMessageCount: number
   onSelect: (page: number) => void
 }) {
   const t = useT()
@@ -29,6 +32,16 @@ export function BottomNav({
         >
           <NavigationIcon type={item.icon} />
           <span>{t.nav[item.key]}</span>
+          {item.key === "family" && newMessageCount > 0 && (
+            <>
+              <b className="nav-badge" aria-hidden="true">
+                {newMessageCount}
+              </b>
+              <span className="sr-only">
+                {t.nav.newMessages(newMessageCount)}
+              </span>
+            </>
+          )}
         </button>
       ))}
     </nav>

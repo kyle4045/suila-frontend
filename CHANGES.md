@@ -148,3 +148,31 @@ changed yet.
 - New confirmation message: a dark bar that appears just above the bottom
   navigation for 4 seconds after an action, for example 「已連結 LINE」. Other
   actions will use it as they are built.
+
+### Item 3: voice messages from family
+
+**家人**
+- New 語音留言 section at the top of the tab. Each message shows who sent it,
+  when, how long it is, and a large 播放 button (88px, with a play icon and
+  the word 播放).
+- Messages not yet listened to carry a red 「新」 tag. The tag clears when the
+  message is played.
+- While a message plays, its button changes to 停止. Starting another message
+  stops the first one.
+- If there are no messages, the section says 「還沒有語音留言」.
+
+**喝水 (home)**
+- A new row, for example 「有 2 則新的語音留言」, appears under the status line
+  when there are unplayed messages. Tapping it opens the 家人 tab. It
+  disappears once everything has been listened to.
+
+**Bottom navigation**
+- The 家人 tab shows a red number while there are unplayed messages. Screen
+  readers hear 「2 則新留言」.
+
+**About the sound**
+- There are no audio files yet. The browser's built-in voice reads each
+  message aloud. This needs a Chinese voice on the computer (Windows has one).
+  If the group records real clips later, they can replace the browser voice
+  with a small change.
+- Three sample messages: two new (女兒 雅婷, 兒子 志明) and one already played.

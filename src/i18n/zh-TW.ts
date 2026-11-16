@@ -3,6 +3,15 @@
 
 const pad2 = (value: number) => String(value).padStart(2, "0")
 
+// shortcut: anything not from today is labelled 昨天; the mock data only
+// covers two days. Needs real dates once older items are shown.
+const dayTime = (date: Date, isToday: boolean) => {
+  const hour = date.getHours()
+  const period = hour < 12 ? "上午" : hour === 12 ? "中午" : "下午"
+  const clock = `${period} ${hour % 12 || 12}:${pad2(date.getMinutes())}`
+  return isToday ? clock : `昨天 ${clock}`
+}
+
 export const zhTW = {
   brand: {
     name: "水啦",
@@ -14,12 +23,15 @@ export const zhTW = {
     water: "喝水",
     family: "家人",
     my: "我的",
+    newMessages: (count: number) => `${count} 則新留言`,
   },
   common: {
     save: "儲存",
     back: "返回",
     listSeparator: "、",
     mlShort: "ml",
+    dayTime,
+    speechLang: "zh-TW",
   },
   home: {
     aria: "飲水紀錄",
@@ -29,16 +41,9 @@ export const zhTW = {
     ringAria: (percent: number) =>
       `今天喝水目標已完成百分之${percent}，點擊額外補水`,
     percent: (percent: number) => `${percent}%`,
+    newMessages: (count: number) => `有 ${count} 則新的語音留言`,
     recentRecords: "最近紀錄",
     recordAmount: (ml: number) => `${ml} 毫升`,
-    // shortcut: anything not from today is labelled 昨天; the mock data only
-    // covers two days. Needs real dates once older records are shown.
-    recordTime: (date: Date, isToday: boolean) => {
-      const hour = date.getHours()
-      const period = hour < 12 ? "上午" : hour === 12 ? "中午" : "下午"
-      const clock = `${period} ${hour % 12 || 12}:${pad2(date.getMinutes())}`
-      return isToday ? clock : `昨天 ${clock}`
-    },
   },
   family: {
     aria: "家人",
@@ -47,6 +52,19 @@ export const zhTW = {
     joinLine: "加入 LINE",
     connectedToast: "已連結 LINE",
     connectedHeading: (count: number) => `已透過 LINE 連結 ${count} 位家人`,
+    voiceTitle: "語音留言",
+    noMessages: "還沒有語音留言",
+    play: "播放",
+    stop: "停止",
+    playAria: (name: string) => `播放${name}的留言`,
+    stopAria: (name: string) => `停止播放${name}的留言`,
+    newTag: "新",
+    duration: (seconds: number) => `${seconds} 秒`,
+    messageText: {
+      m1: "媽，今天天氣很熱，記得多喝水喔。",
+      m2: "媽，我週末回家看你，要記得喝水。",
+      m3: "媽，晚安，明天再打給你。",
+    },
     addMember: "新增家人",
     addMemberHint: (freeLimit: number) =>
       `免費版最多 ${freeLimit} 位，升級 Pro 可以新增更多`,

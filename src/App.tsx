@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { BottomNav, pageCount } from "./components/BottomNav"
+import { BottomNav, familyPage, pageCount } from "./components/BottomNav"
 import { Toast } from "./components/Toast"
 import {
   dailyGoalMl,
@@ -11,8 +11,10 @@ import {
   initialProfile,
   reminderDays,
   todayTotalMl,
+  voiceMessages,
 } from "./data/mock"
 import { useT } from "./i18n"
+import { useVoicePlayer } from "./lib/useVoicePlayer"
 import { AddWaterScreen } from "./screens/AddWaterScreen"
 import { CalendarScreen } from "./screens/CalendarScreen"
 import { FamilyScreen } from "./screens/FamilyScreen"
@@ -42,6 +44,12 @@ export default function App() {
     Math.round((todayWater / dailyGoalMl) * 100),
   )
   const [lineConnected, setLineConnected] = useState(initialLineConnected)
+  const [messages, setMessages] = useState(voiceMessages)
+  const voice = useVoicePlayer()
+  // New messages only count while LINE is linked.
+  const newMessageCount = lineConnected
+    ? messages.filter((message) => !message.played).length
+    : 0
   const [toast, setToast] = useState<string | null>(null)
   const closeOverlay = () => setOverlay(null)
 
@@ -89,12 +97,30 @@ export default function App() {
             <HomeScreen
               waterPercentage={waterPercentage}
               records={drinkRecords}
+              newMessageCount={newMessageCount}
               onOpenCalendar={() => setOverlay("calendar")}
+              onOpenMessages={() => moveToPage(familyPage)}
               onOpenAddWater={() => setOverlay("addWater")}
             />
             <FamilyScreen
               connected={lineConnected}
               members={familyMembers}
+              messages={messages}
+              playingId={voice.playingId}
+              onPlay={(message) => {
+                voice.play(
+                  message.id,
+                  t.family.messageText[message.id],
+                  t.common.speechLang,
+                  message.durationSec,
+                )
+                setMessages((current) =>
+                  current.map((item) =>
+                    item.id === message.id ? { ...item, played: true } : item,
+                  ),
+                )
+              }}
+              onStop={voice.stop}
               onConnect={() => {
                 setLineConnected(true)
                 setToast(t.family.connectedToast)
@@ -147,7 +173,11 @@ export default function App() {
         {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
 
         <Toast message={toast} />
-        <BottomNav currentPage={currentPage} onSelect={moveToPage} />
+        <BottomNav
+          currentPage={currentPage}
+          newMessageCount={newMessageCount}
+          onSelect={moveToPage}
+        />
       </div>
     </main>
   )

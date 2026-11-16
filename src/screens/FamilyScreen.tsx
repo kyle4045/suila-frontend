@@ -1,19 +1,37 @@
 import { Card } from "../components/Card"
-import { freeFamilyLimit, type FamilyMember } from "../data/mock"
+import { PlayIcon, StopIcon } from "../components/Icons"
+import {
+  freeFamilyLimit,
+  type FamilyMember,
+  type VoiceMessage,
+} from "../data/mock"
 import { useT } from "../i18n"
+import { isToday } from "../lib/date"
 
 export function FamilyScreen({
   connected,
   members,
+  messages,
+  playingId,
   onConnect,
   onAddMember,
+  onPlay,
+  onStop,
 }: {
   connected: boolean
   members: FamilyMember[]
+  messages: VoiceMessage[]
+  playingId: string | null
   onConnect: () => void
   onAddMember: () => void
+  onPlay: (message: VoiceMessage) => void
+  onStop: () => void
 }) {
   const t = useT()
+  const nameOf = (id: FamilyMember["id"]) => {
+    const person = t.family.people[id]
+    return t.family.personLabel(person.relation, person.name)
+  }
 
   if (!connected) {
     return (
@@ -30,6 +48,43 @@ export function FamilyScreen({
 
   return (
     <section className="swipe-page social-page" aria-label={t.family.aria}>
+      <Card className="voice-card">
+        <p className="card-label">{t.family.voiceTitle}</p>
+        {messages.length === 0 && (
+          <p className="voice-empty">{t.family.noMessages}</p>
+        )}
+        {messages.map((message) => {
+          const playing = playingId === message.id
+          const sender = nameOf(message.from)
+          const date = new Date(message.time)
+          return (
+            <div className="voice-row" key={message.id}>
+              <button
+                className="play-button"
+                type="button"
+                aria-label={
+                  playing ? t.family.stopAria(sender) : t.family.playAria(sender)
+                }
+                onClick={() => (playing ? onStop() : onPlay(message))}
+              >
+                {playing ? <StopIcon /> : <PlayIcon />}
+                {playing ? t.family.stop : t.family.play}
+              </button>
+              <div className="voice-info">
+                <strong>
+                  {sender}
+                  {!message.played && (
+                    <b className="new-tag">{t.family.newTag}</b>
+                  )}
+                </strong>
+                <span>{t.common.dayTime(date, isToday(date))}</span>
+                <span>{t.family.duration(message.durationSec)}</span>
+              </div>
+            </div>
+          )
+        })}
+      </Card>
+
       <Card className="line-connections-card">
         <div className="line-connected-heading">
           <span aria-hidden="true">✓</span>
@@ -38,22 +93,17 @@ export function FamilyScreen({
           </div>
         </div>
         <div className="connected-people-list">
-          {members.map((member) => {
-            const person = t.family.people[member.id]
-            return (
-              <div className="connected-person" key={member.id}>
-                <span
-                  className={`person-avatar ${member.color}`}
-                  aria-hidden="true"
-                >
-                  {person.initial}
-                </span>
-                <strong>
-                  {t.family.personLabel(person.relation, person.name)}
-                </strong>
-              </div>
-            )
-          })}
+          {members.map((member) => (
+            <div className="connected-person" key={member.id}>
+              <span
+                className={`person-avatar ${member.color}`}
+                aria-hidden="true"
+              >
+                {t.family.people[member.id].initial}
+              </span>
+              <strong>{nameOf(member.id)}</strong>
+            </div>
+          ))}
         </div>
       </Card>
 

@@ -87,6 +87,21 @@ export const familyMembers: FamilyMember[] = [
   { id: "son", color: "blue" },
 ]
 
+export type VoiceMessage = {
+  id: "m1" | "m2" | "m3"
+  from: FamilyMemberId
+  time: string
+  durationSec: number
+  played: boolean
+}
+
+// What each message says lives in the translation file, keyed by id.
+export const voiceMessages: VoiceMessage[] = [
+  { id: "m1", from: "daughter", time: at(0, "12:40"), durationSec: 6, played: false },
+  { id: "m2", from: "son", time: at(0, "09:05"), durationSec: 6, played: false },
+  { id: "m3", from: "daughter", time: at(1, "19:20"), durationSec: 5, played: true },
+]
+
 export type ConditionId = "hypertension" | "diabetes" | "heart" | "kidney" | "none" | "other"
 
 export const conditionOptions: ConditionId[] = [
