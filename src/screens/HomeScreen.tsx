@@ -1,9 +1,19 @@
 import { Card } from "../components/Card"
-import { CalendarIcon } from "../components/Icons"
-import type { DrinkRecord } from "../data/mock"
+import {
+  BatteryIcon,
+  CalendarIcon,
+  CheckCircleIcon,
+  WarningIcon,
+} from "../components/Icons"
+import {
+  lowBatteryPercent,
+  type DeviceStatus,
+  type DrinkRecord,
+} from "../data/mock"
 import { useT } from "../i18n"
 
 export function HomeScreen({
+  device,
   waterPercentage,
   todayRecords,
   newMessageCount,
@@ -12,6 +22,7 @@ export function HomeScreen({
   onOpenAddWater,
   onEditRecord,
 }: {
+  device: DeviceStatus
   waterPercentage: number
   todayRecords: DrinkRecord[]
   newMessageCount: number
@@ -21,20 +32,39 @@ export function HomeScreen({
   onEditRecord: (record: DrinkRecord) => void
 }) {
   const t = useT()
+  const batteryLow = device.batteryPercent <= lowBatteryPercent
 
   return (
     <section className="swipe-page water-page" aria-label={t.home.aria}>
-      <div className="today-summary-row">
-        <strong>{t.home.statusOk}</strong>
-        <button
-          className="calendar-button"
-          type="button"
-          aria-label={t.home.openCalendar}
-          onClick={onOpenCalendar}
-        >
-          <CalendarIcon />
-        </button>
-      </div>
+      <Card className="device-status">
+        {device.connected ? (
+          <p className="status-line is-ok">
+            <CheckCircleIcon />
+            {t.home.deviceConnected}
+          </p>
+        ) : (
+          <p className="status-line is-warn">
+            <WarningIcon />
+            {t.home.deviceDisconnected}
+          </p>
+        )}
+        {batteryLow ? (
+          <p className="status-line is-warn">
+            <WarningIcon />
+            {t.home.batteryLow(device.batteryPercent)}
+          </p>
+        ) : (
+          <p className="status-line">
+            <BatteryIcon />
+            {t.home.battery(device.batteryPercent)}
+          </p>
+        )}
+        {device.pendingSyncCount > 0 && (
+          <p className="status-line">
+            {t.home.pendingSync(device.pendingSyncCount)}
+          </p>
+        )}
+      </Card>
       {newMessageCount > 0 && (
         <button className="my-menu-row" type="button" onClick={onOpenMessages}>
           <strong>{t.home.newMessages(newMessageCount)}</strong>
@@ -58,9 +88,19 @@ export function HomeScreen({
         </button>
       </Card>
       <Card className="records-card drink-records-card">
-        <p className="card-label recent-records-label">
-          {t.home.todayRecords}
-        </p>
+        <div className="records-heading">
+          <p className="card-label recent-records-label">
+            {t.home.todayRecords}
+          </p>
+          <button
+            className="calendar-button"
+            type="button"
+            onClick={onOpenCalendar}
+          >
+            <CalendarIcon />
+            {t.home.calendar}
+          </button>
+        </div>
         {todayRecords.length === 0 && (
           <p className="records-empty">{t.home.noRecords}</p>
         )}

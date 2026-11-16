@@ -35,8 +35,12 @@ export const zhTW = {
   },
   home: {
     aria: "飲水紀錄",
-    statusOk: "一切正常",
-    openCalendar: "開啟日曆",
+    deviceConnected: "底座已連線",
+    deviceDisconnected: "底座未連線",
+    battery: (percent: number) => `電量 ${percent}%`,
+    batteryLow: (percent: number) => `電量偏低 ${percent}%，請充電`,
+    pendingSync: (count: number) => `${count} 筆紀錄等待同步`,
+    calendar: "日曆",
     todayWater: "今天喝水量",
     ringAria: (percent: number) =>
       `今天喝水目標已完成百分之${percent}，點擊額外補水`,

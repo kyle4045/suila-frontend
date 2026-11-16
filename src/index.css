@@ -260,41 +260,6 @@ button:focus-visible {
   box-shadow: var(--shadow-card);
 }
 
-.today-summary-row {
-  min-height: 64px;
-  display: flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 4px 2px;
-}
-
-.today-summary-row strong {
-  color: #168a68;
-  font-size: 28px;
-  font-weight: 800;
-}
-
-.calendar-button {
-  width: 50px;
-  height: 50px;
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  padding: 0;
-  border: 2px solid #b9d6e2;
-  border-radius: 12px;
-  color: #2866be;
-  background: #fff;
-  cursor: pointer;
-}
-
-.calendar-button svg {
-  width: 28px;
-  height: 28px;
-}
-
 .water-total-card .card-label {
   color: #cbdcf0;
   font-size: 28px;
@@ -1285,9 +1250,12 @@ body {
   font-size: 22px;
 }
 
+.my-menu-row {
+  text-align: left;
+}
+
 .my-menu-row > div {
   min-width: 0;
-  text-align: left;
 }
 
 .my-menu-row small {
@@ -1394,6 +1362,82 @@ body {
   font-size: 18px;
   font-weight: 800;
   line-height: 1;
+}
+
+/* Home: device status, and the calendar button beside the records title */
+.device-status {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px 20px;
+}
+
+.status-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: #17384f;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.status-line svg {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+}
+
+.status-line.is-ok {
+  color: #176a43;
+}
+
+.status-line.is-warn {
+  color: #b4381f;
+}
+
+.records-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.calendar-button {
+  min-height: 56px;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 2px solid #2866be;
+  border-radius: 16px;
+  color: #2866be;
+  background: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.calendar-button svg {
+  width: 30px;
+  height: 30px;
+}
+
+/* Keeps the records title and the calendar button on one line on narrow phones. */
+@media (max-width: 370px) {
+  .drink-records-card .recent-records-label {
+    font-size: 24px;
+  }
+
+  .calendar-button {
+    gap: 4px;
+    padding: 0 10px;
+  }
 }
 
 /* Drink records */

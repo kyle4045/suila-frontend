@@ -214,3 +214,26 @@ changed yet.
   times may look out of order if you present in the morning.
 - 基本資料 and 夜間靜音 still apply changes as you type, so they do not ask
   before leaving yet.
+
+### Item 5: device status on home
+
+**喝水 (home)**
+- 「一切正常」 is replaced by a status card at the top that says what is
+  normal: 「底座已連線」 with a green tick, and 「電量 82%」 with a battery icon.
+- When the base is offline the card says 「底座未連線」 with a warning icon,
+  and, if the base is holding records, 「3 筆紀錄等待同步」.
+- When the battery is at 20% or less it says 「電量偏低 15%，請充電」 with a
+  warning icon. (20% is an assumption; the group can change the number in one
+  place.)
+- Every state uses an icon and words, never color alone.
+- The demo starts in the normal state. Offline and low battery will be
+  switchable from the demo panel later.
+
+**日曆 button**
+- It used to be a small unlabeled icon (50px) next to 「一切正常」. It is now a
+  button with an icon and the word 「日曆」, 56px tall, beside the
+  「今天的紀錄」 title, since the calendar is where older records live.
+
+**Small fix**
+- Row buttons whose text wraps onto two lines (for example the new-messages
+  row on a 320px phone) now align left instead of centering.

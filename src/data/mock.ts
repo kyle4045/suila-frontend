@@ -10,6 +10,23 @@ const at = (daysAgo: number, time: string) => {
   return date.toISOString()
 }
 
+/** What the weighing base reports about itself. */
+export type DeviceStatus = {
+  connected: boolean
+  batteryPercent: number
+  /** Records stored on the base while offline, not yet sent to the phone. */
+  pendingSyncCount: number
+}
+
+export const deviceStatus: DeviceStatus = {
+  connected: true,
+  batteryPercent: 82,
+  pendingSyncCount: 0,
+}
+
+/** At or below this the app warns about the battery. */
+export const lowBatteryPercent = 20
+
 export type DrinkRecord = { id: string; time: string; amountMl: number }
 
 // Newest first. Today's six records add up to 1260 毫升.

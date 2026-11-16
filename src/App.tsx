@@ -3,6 +3,7 @@ import { BottomNav, familyPage, pageCount } from "./components/BottomNav"
 import { Toast } from "./components/Toast"
 import {
   dailyGoalMl,
+  deviceStatus,
   drinkRecords,
   type DrinkRecord,
   familyMembers,
@@ -111,6 +112,7 @@ export default function App() {
           >
             <HomeScreen
               waterPercentage={waterPercentage}
+              device={deviceStatus}
               todayRecords={todayRecords}
               onEditRecord={(record) => {
                 setEditingRecord(record)

@@ -96,3 +96,56 @@ export function StopIcon() {
     </svg>
   )
 }
+
+export function CheckCircleIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="currentColor" />
+      <path
+        d="M7.5 12.5l3 3 6-6.5"
+        stroke="#fff"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export function WarningIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <path
+        d="M12 3.5 2.5 20h19L12 3.5Z"
+        fill="currentColor"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 10v4.5M12 17.2v.1"
+        stroke="#fff"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+export function BatteryIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+      <rect
+        x="2.5"
+        y="7"
+        width="16.5"
+        height="10"
+        rx="2.5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path d="M21.5 10.5v3" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+      <rect x="5" y="9.5" width="9" height="5" rx="1" fill="currentColor" />
+    </svg>
+  )
+}
