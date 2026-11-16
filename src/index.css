@@ -448,7 +448,7 @@ button:focus-visible {
   cursor: pointer;
 }
 
-.my-menu-row > strong {
+.my-menu-row strong {
   font-size: 25px;
 }
 
@@ -579,10 +579,6 @@ button:focus-visible {
 
 .person-avatar.blue {
   background: #397eba;
-}
-
-.person-avatar.green {
-  background: #308b70;
 }
 
 .connected-person > strong {
@@ -1269,6 +1265,49 @@ body {
 .back-button svg {
   width: 26px;
   height: 26px;
+}
+
+/* Confirmation message: floats just above the bottom navigation */
+.toast {
+  position: absolute;
+  z-index: 60;
+  right: var(--float-gap);
+  bottom: calc(
+    var(--float-nav-height) + var(--float-gap) * 2 + env(safe-area-inset-bottom)
+  );
+  left: var(--float-gap);
+  padding: 16px 20px;
+  border-radius: 20px;
+  color: #fff;
+  background: #17384f;
+  box-shadow: var(--shadow-float);
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.toast:empty {
+  display: none;
+}
+
+/* 家人 tab */
+.family-intro-card p {
+  margin: 0;
+  color: #17384f;
+  font-size: 22px;
+}
+
+.my-menu-row > div {
+  min-width: 0;
+  text-align: left;
+}
+
+.my-menu-row small {
+  display: block;
+  margin-top: 4px;
+  color: #3e596b;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 /* Pro page */

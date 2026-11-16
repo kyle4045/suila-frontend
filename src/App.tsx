@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BottomNav, pageCount } from "./components/BottomNav"
+import { Toast } from "./components/Toast"
 import {
   dailyGoalMl,
   drinkRecords,
   familyMembers,
   initialCalendarSelection,
+  initialLineConnected,
   initialNightMute,
   initialProfile,
   reminderDays,
@@ -39,7 +41,16 @@ export default function App() {
     100,
     Math.round((todayWater / dailyGoalMl) * 100),
   )
+  const [lineConnected, setLineConnected] = useState(initialLineConnected)
+  const [toast, setToast] = useState<string | null>(null)
   const closeOverlay = () => setOverlay(null)
+
+  // Confirmation messages disappear on their own after a few seconds.
+  useEffect(() => {
+    if (toast === null) return
+    const timer = setTimeout(() => setToast(null), 4000)
+    return () => clearTimeout(timer)
+  }, [toast])
 
   const moveToPage = (page: number) => {
     setCurrentPage(Math.max(0, Math.min(pageCount - 1, page)))
@@ -81,7 +92,15 @@ export default function App() {
               onOpenCalendar={() => setOverlay("calendar")}
               onOpenAddWater={() => setOverlay("addWater")}
             />
-            <FamilyScreen members={familyMembers} />
+            <FamilyScreen
+              connected={lineConnected}
+              members={familyMembers}
+              onConnect={() => {
+                setLineConnected(true)
+                setToast(t.family.connectedToast)
+              }}
+              onAddMember={() => setOverlay("pro")}
+            />
             <MyScreen
               onOpenProfile={() => setOverlay("profile")}
               onOpenNightMute={() => setOverlay("nightMute")}
@@ -127,6 +146,7 @@ export default function App() {
 
         {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
 
+        <Toast message={toast} />
         <BottomNav currentPage={currentPage} onSelect={moveToPage} />
       </div>
     </main>

@@ -73,8 +73,11 @@ export const reminderDays: ReminderDay[] = [
 
 export const initialCalendarSelection = { month: 5, day: 22 }
 
-export type FamilyMemberId = "daughter" | "son" | "carer"
+export type FamilyMemberId = "daughter" | "son"
 export type FamilyMember = { id: FamilyMemberId; color: string }
+
+/** Whether the owner has linked LINE when the demo starts. */
+export const initialLineConnected = true
 
 /** Family members allowed without Pro. */
 export const freeFamilyLimit = 2
@@ -82,7 +85,6 @@ export const freeFamilyLimit = 2
 export const familyMembers: FamilyMember[] = [
   { id: "daughter", color: "coral" },
   { id: "son", color: "blue" },
-  { id: "carer", color: "green" },
 ]
 
 export type ConditionId = "hypertension" | "diabetes" | "heart" | "kidney" | "none" | "other"

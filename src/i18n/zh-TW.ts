@@ -12,7 +12,7 @@ export const zhTW = {
   nav: {
     aria: "主要分頁",
     water: "喝水",
-    family: "社交",
+    family: "家人",
     my: "我的",
   },
   common: {
@@ -41,14 +41,19 @@ export const zhTW = {
     },
   },
   family: {
-    aria: "社交",
+    aria: "家人",
+    notConnectedIntro:
+      "連結 LINE 後，家人可以看到你的喝水進度，也可以傳語音留言給你。",
     joinLine: "加入 LINE",
-    lineConnected: "你的 LINE 已連接",
+    connectedToast: "已連結 LINE",
+    connectedHeading: (count: number) => `已透過 LINE 連結 ${count} 位家人`,
+    addMember: "新增家人",
+    addMemberHint: (freeLimit: number) =>
+      `免費版最多 ${freeLimit} 位，升級 Pro 可以新增更多`,
     personLabel: (relation: string, name: string) => `${relation} ${name}`,
     people: {
       daughter: { relation: "女兒", name: "雅婷", initial: "雅" },
       son: { relation: "兒子", name: "志明", initial: "志" },
-      carer: { relation: "照護員", name: "林小姐", initial: "林" },
     },
   },
   my: {

@@ -124,3 +124,27 @@ changed yet.
   on the left where phone users expect it. It is 56px tall.
 - 日曆: the year and month picker moved from the header into the page, just
   above the calendar, so the header can hold the title like every other view.
+
+### Item 2: 家人 tab shows one state at a time
+
+**Bottom navigation**
+- The 社交 tab is renamed 家人.
+
+**家人**
+- Before, 「加入 LINE」 and 「你的 LINE 已連接」 were shown together, which
+  contradicted each other. Now only one state shows:
+  - Not connected: a short explanation of what linking LINE does, and the
+    「加入 LINE」 button.
+  - Connected: 「已透過 LINE 連結 2 位家人」 and the list of people. No join
+    button.
+- The sample family is now two people (女兒 雅婷, 兒子 志明) to match the free
+  limit of 2. 照護員 林小姐 was removed.
+- New 「新增家人」 row under the list. It says the free version allows 2 and
+  that Pro allows more, and opens the 水啦 Pro page.
+- The demo starts connected. The not-connected state will be switchable from
+  the demo panel later.
+
+**Whole app**
+- New confirmation message: a dark bar that appears just above the bottom
+  navigation for 4 seconds after an action, for example 「已連結 LINE」. Other
+  actions will use it as they are built.
