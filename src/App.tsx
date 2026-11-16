@@ -66,9 +66,7 @@ export default function App() {
         </header>
 
         <div
-          className={`swipe-window ${
-            currentPage === 0 ? "water-content-shift" : ""
-          }`}
+          className="swipe-window"
           onTouchStart={(event) => setTouchStart(event.touches[0].clientX)}
           onTouchEnd={handleTouchEnd}
         >

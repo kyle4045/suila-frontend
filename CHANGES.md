@@ -43,3 +43,31 @@ later changes are small and easy to explain.
 - At 320px the calendar header wraps onto two lines.
 - The `npm run format` command uses an early formatter that breaks some lines.
   Do not run it.
+
+## Phase 2b — floating layer sample (awaiting approval)
+
+Applied to the shared top bar, the bottom navigation and the three tab pages
+only. Full-screen views (calendar, add water, profile, night mute) are not
+changed yet.
+
+**Top bar (水啦 SuiLa)**
+- Now a solid white rounded bar with a 12px gap from the screen edges and a
+  soft shadow. Page content scrolls underneath it.
+- It is 64px tall instead of 115px, so more of the page is visible.
+
+**Bottom navigation**
+- Now a solid white rounded bar with the same 12px gap and shadow, instead of
+  a strip attached to the bottom edge.
+- It was 98% opaque before; it is now fully solid, as the design rules ask.
+
+**Tab pages**
+- Content now scrolls behind the two floating bars, with enough space at the
+  top and bottom that the first and last items are never hidden.
+- The home tab used to sit 18px higher than the other two tabs. All three now
+  start at the same height.
+
+**Shared tokens**
+- Two shadow levels are defined once in `index.css` (`--shadow-card` and
+  `--shadow-float`), plus the gap and bar heights. The floating bars and the
+  cards use them. Other screens still have their own older shadows until the
+  floating layer is rolled out.
