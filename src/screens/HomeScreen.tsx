@@ -6,6 +6,8 @@ import { useT } from "../i18n"
 
 export function HomeScreen({
   device,
+  todayWater,
+  goalMl,
   waterPercentage,
   todayRecords,
   newMessageCount,
@@ -16,6 +18,8 @@ export function HomeScreen({
   onPair,
 }: {
   device: DeviceStatus
+  todayWater: number
+  goalMl: number
   waterPercentage: number
   todayRecords: DrinkRecord[]
   newMessageCount: number
@@ -52,16 +56,23 @@ export function HomeScreen({
         <button
           className="water-ring"
           type="button"
-          aria-label={t.home.ringAria(waterPercentage)}
+          aria-label={t.home.ringAria(todayWater, goalMl, waterPercentage)}
           onClick={onOpenAddWater}
           style={{
             background: `conic-gradient(#69beff 0 ${waterPercentage}%, #fff ${waterPercentage}% 100%)`,
           }}
         >
           <div>
-            <strong>{t.home.percent(waterPercentage)}</strong>
+            <span>{t.home.drunkLabel}</span>
+            <strong>{todayWater}</strong>
+            <span>{t.home.goalLine(goalMl)}</span>
           </div>
         </button>
+        <p className="ring-percent">
+          {todayWater >= goalMl
+            ? t.home.goalMet(waterPercentage)
+            : t.home.percentDone(waterPercentage)}
+        </p>
       </Card>
       <Card className="records-card drink-records-card">
         <div className="records-heading">

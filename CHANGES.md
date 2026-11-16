@@ -299,3 +299,42 @@ changed yet.
   the demo panel later.
 
 Priority 1 is now complete.
+
+## Phase 4 — Priority 2
+
+Already done earlier: item 11 (no scrolling list inside the home page, done
+with Priority 1 item 4) and item 15 (neutral health note, done with the
+reminder settings).
+
+### Items 7 and 8: the ring in 毫升, and a visible 手動加水 button
+
+**喝水 (home) — ring**
+- The ring's center used to show only 「63%」. It now reads 「已喝 1260 / 2000
+  毫升」, with 1260 as the large number. The percentage moved below the ring as
+  「完成 63%」.
+- When the goal is reached, the line below reads 「今天已達標，完成 100%」.
+- The center of the ring is a slightly darker blue than the card, so the white
+  numbers meet the 7:1 contrast rule for key numbers (it was about 6:1).
+
+**喝水 (home) — 手動加水**
+- New 「手動加水」 button floating just above the bottom navigation, on the 喝水
+  tab only. Before, the only way to add water was to tap the ring, which
+  nothing on screen suggested. The ring can still be tapped.
+- The button has a white edge so it stays visible when the blue water card
+  scrolls behind it.
+- The page keeps enough space at the bottom that the last record is never
+  hidden behind the button.
+
+**手動加水 page (was 補水)**
+- Renamed 手動加水 to match the button.
+- Three quick buttons, 100 / 200 / 300 毫升. Tapping one fills in the amount;
+  the chosen one is filled in blue. 加入 then adds it.
+- The free-entry field is still there, labeled 「或自行輸入」.
+- "ml" is now 「毫升」 everywhere.
+- 加入 only works for a whole number from 1 to 2000, the same rule as 修改紀錄.
+- The keyboard no longer opens by itself when the page appears, so the quick
+  buttons are not hidden behind it.
+
+**Confirmation message**
+- It now appears at the top, just below the header, instead of above the
+  navigation, so it never covers the new 手動加水 button.

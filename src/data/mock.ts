@@ -69,6 +69,9 @@ export const initialReminderSettings: ReminderSettings = {
 /** Range and step of the daily goal, in 毫升. */
 export const goalLimits = { min: 500, max: 4000, step: 100 }
 
+/** One-tap amounts offered when adding water by hand, in 毫升. */
+export const quickAmountsMl = [100, 200, 300]
+
 /** Smallest and largest amount one drink record may hold. */
 export const drinkAmountLimits = { min: 1, max: 2000 }
 

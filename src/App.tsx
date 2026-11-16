@@ -126,6 +126,8 @@ export default function App() {
             style={{ transform: `translateX(-${currentPage * 100}%)` }}
           >
             <HomeScreen
+              todayWater={todayWater}
+              goalMl={reminders.dailyGoalMl}
               waterPercentage={waterPercentage}
               device={device}
               onPair={openPairing}
@@ -281,6 +283,17 @@ export default function App() {
         )}
 
         {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
+
+        {/* Home's main action. Floats above the navigation, on the 喝水 tab only. */}
+        {currentPage === 0 && (
+          <button
+            className="floating-action home-action"
+            type="button"
+            onClick={() => setOverlay("addWater")}
+          >
+            {t.home.addWater}
+          </button>
+        )}
 
         <Toast message={toast} />
         <BottomNav

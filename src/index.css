@@ -1220,14 +1220,12 @@ body {
   height: 26px;
 }
 
-/* Confirmation message: floats just above the bottom navigation */
+/* Confirmation message: floats just below the header */
 .toast {
   position: absolute;
   z-index: 60;
   right: var(--float-gap);
-  bottom: calc(
-    var(--float-nav-height) + var(--float-gap) * 2 + env(safe-area-inset-bottom)
-  );
+  top: var(--float-overlay-top);
   left: var(--float-gap);
   padding: 16px 20px;
   border-radius: 20px;
@@ -1749,6 +1747,95 @@ body {
 .pair-status svg {
   width: 64px;
   height: 64px;
+}
+
+/* Home ring: amount and goal in 毫升 */
+.water-ring > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Darker than the card so the white numbers reach 7:1 contrast. */
+  background: #1d4e96;
+}
+
+.water-ring strong {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.water-ring span {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.ring-percent {
+  margin: 14px 0 0;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+}
+
+/* Home's floating 手動加水 button sits just above the navigation */
+.floating-action.home-action {
+  /* A white edge keeps it visible while the blue water card scrolls behind it. */
+  border: 2px solid #fff;
+  bottom: calc(
+    var(--float-nav-height) + var(--float-gap) * 2 + env(safe-area-inset-bottom)
+  );
+}
+
+.water-page {
+  padding-bottom: calc(
+    var(--float-nav-height) + var(--float-action-height) + var(--float-gap) * 3 +
+      env(safe-area-inset-bottom)
+  );
+}
+
+/* 手動加水 page: quick amounts */
+.form-label {
+  margin: 0;
+  color: #2866be;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.quick-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 18px;
+}
+
+.quick-amount {
+  min-height: 76px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border: 2px solid #2866be;
+  border-radius: 14px;
+  color: #2866be;
+  background: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.quick-amount strong {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.quick-amount[aria-pressed="true"] {
+  color: #fff;
+  background: #2866be;
 }
 
 /* Pro page */
