@@ -1,15 +1,7 @@
 import { Card } from "../components/Card"
-import {
-  BatteryIcon,
-  CalendarIcon,
-  CheckCircleIcon,
-  WarningIcon,
-} from "../components/Icons"
-import {
-  lowBatteryPercent,
-  type DeviceStatus,
-  type DrinkRecord,
-} from "../data/mock"
+import { DeviceStatusLines } from "../components/DeviceStatusLines"
+import { CalendarIcon } from "../components/Icons"
+import type { DeviceStatus, DrinkRecord } from "../data/mock"
 import { useT } from "../i18n"
 
 export function HomeScreen({
@@ -21,6 +13,7 @@ export function HomeScreen({
   onOpenMessages,
   onOpenAddWater,
   onEditRecord,
+  onPair,
 }: {
   device: DeviceStatus
   waterPercentage: number
@@ -30,39 +23,22 @@ export function HomeScreen({
   onOpenMessages: () => void
   onOpenAddWater: () => void
   onEditRecord: (record: DrinkRecord) => void
+  onPair: () => void
 }) {
   const t = useT()
-  const batteryLow = device.batteryPercent <= lowBatteryPercent
 
   return (
     <section className="swipe-page water-page" aria-label={t.home.aria}>
       <Card className="device-status">
-        {device.connected ? (
-          <p className="status-line is-ok">
-            <CheckCircleIcon />
-            {t.home.deviceConnected}
-          </p>
-        ) : (
-          <p className="status-line is-warn">
-            <WarningIcon />
-            {t.home.deviceDisconnected}
-          </p>
-        )}
-        {batteryLow ? (
-          <p className="status-line is-warn">
-            <WarningIcon />
-            {t.home.batteryLow(device.batteryPercent)}
-          </p>
-        ) : (
-          <p className="status-line">
-            <BatteryIcon />
-            {t.home.battery(device.batteryPercent)}
-          </p>
-        )}
-        {device.pendingSyncCount > 0 && (
-          <p className="status-line">
-            {t.home.pendingSync(device.pendingSyncCount)}
-          </p>
+        <DeviceStatusLines device={device} />
+        {!device.paired && (
+          <button
+            className="outline-button is-wide"
+            type="button"
+            onClick={onPair}
+          >
+            {t.home.pairButton}
+          </button>
         )}
       </Card>
       {newMessageCount > 0 && (

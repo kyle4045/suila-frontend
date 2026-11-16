@@ -4,11 +4,13 @@ export function MyScreen({
   onOpenProfile,
   onOpenReminders,
   onOpenNightMute,
+  onOpenDevice,
   onOpenPro,
 }: {
   onOpenProfile: () => void
   onOpenReminders: () => void
   onOpenNightMute: () => void
+  onOpenDevice: () => void
   onOpenPro: () => void
 }) {
   const t = useT()
@@ -27,6 +29,11 @@ export function MyScreen({
 
       <button className="my-menu-row" type="button" onClick={onOpenNightMute}>
         <strong>{t.my.nightMute}</strong>
+        <span aria-hidden="true">＞</span>
+      </button>
+
+      <button className="my-menu-row" type="button" onClick={onOpenDevice}>
+        <strong>{t.my.device}</strong>
         <span aria-hidden="true">＞</span>
       </button>
 

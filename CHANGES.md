@@ -266,3 +266,36 @@ changed yet.
 **Small fix**
 - Times between midnight and 5:59 are now written 凌晨 (for example
   「凌晨 12:00」) instead of 上午, which could be confused with noon.
+
+### Item 6 (part 2): the base device page, pairing and the light legend
+
+**我的**
+- New 「底座裝置」 row above 關於我們.
+
+**底座裝置 (new page)**
+- Shows the same status as the home card (connection, battery, records
+  waiting to sync), plus 「已配對：水啦底座」.
+- 「重新配對」 button opens the pairing page.
+- 燈光顏色說明: what each color of the light on the base means. Each row has
+  a colored dot, the color's name in words, and the meaning:
+  - 藍色：該喝水了
+  - 白色：正在計算喝水量
+  - 紅色：電量偏低
+  (The colors were proposed by Claude and approved by Kyle; the hardware team
+  should confirm they match the real base.)
+
+**配對底座 (new page)**
+- Three numbered steps: 把底座開機, 把手機靠近底座, 按「開始配對」.
+- 「開始配對」 shows 「正在尋找底座…」 for two seconds, then 「配對成功」 with a
+  tick and a 「完成」 button.
+- This is a pretend flow: there is no real Bluetooth, and it always succeeds.
+- Pairing is free, as decided. Nothing on this page mentions Pro.
+
+**喝水 (home), first time**
+- If no base has been paired yet, the status card says 「尚未配對底座」 with a
+  「配對底座」 button that opens the pairing page. After pairing, the card
+  shows the normal connection and battery lines.
+- The demo starts already paired. The unpaired state will be switchable from
+  the demo panel later.
+
+Priority 1 is now complete.

@@ -1650,6 +1650,107 @@ body {
   background: #2866be;
 }
 
+/* Base device page and pairing */
+.outline-button.is-wide {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.legend-row {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 1px solid #dcebf0;
+}
+
+.legend-row:last-child {
+  border-bottom: 0;
+}
+
+.light-dot {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  border: 2px solid #5d7180;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.light-dot.blue {
+  border-color: #2866be;
+  background: #2866be;
+}
+
+.light-dot.red {
+  border-color: #b4381f;
+  background: #b4381f;
+}
+
+.legend-row strong {
+  flex: 0 0 auto;
+  color: #17384f;
+  font-size: 24px;
+}
+
+.legend-row span:last-child {
+  color: #17384f;
+  font-size: 22px;
+}
+
+.pair-steps {
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: pair-step;
+}
+
+.pair-steps li {
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #17384f;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.pair-steps li::before {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: #2866be;
+  font-weight: 800;
+  content: counter(pair-step);
+  counter-increment: pair-step;
+}
+
+.pair-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 20px 0;
+  color: #17384f;
+  font-size: 26px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.pair-status.is-ok {
+  color: #176a43;
+}
+
+.pair-status svg {
+  width: 64px;
+  height: 64px;
+}
+
 /* Pro page */
 .pro-feature h2 {
   margin: 0 0 8px;

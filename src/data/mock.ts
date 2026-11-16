@@ -12,6 +12,8 @@ const at = (daysAgo: number, time: string) => {
 
 /** What the weighing base reports about itself. */
 export type DeviceStatus = {
+  /** False until the owner pairs a base for the first time. */
+  paired: boolean
   connected: boolean
   batteryPercent: number
   /** Records stored on the base while offline, not yet sent to the phone. */
@@ -19,10 +21,14 @@ export type DeviceStatus = {
 }
 
 export const deviceStatus: DeviceStatus = {
+  paired: true,
   connected: true,
   batteryPercent: 82,
   pendingSyncCount: 0,
 }
+
+/** Colors the light on the base can show. Their meanings are in the translation file. */
+export const baseLightColors = ["blue", "white", "red"] as const
 
 /** At or below this the app warns about the battery. */
 export const lowBatteryPercent = 20

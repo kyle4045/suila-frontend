@@ -20,6 +20,8 @@ import { isToday } from "./lib/date"
 import { useVoicePlayer } from "./lib/useVoicePlayer"
 import { AddWaterScreen } from "./screens/AddWaterScreen"
 import { EditRecordScreen } from "./screens/EditRecordScreen"
+import { DeviceScreen } from "./screens/DeviceScreen"
+import { PairingScreen } from "./screens/PairingScreen"
 import { CalendarScreen } from "./screens/CalendarScreen"
 import { FamilyScreen } from "./screens/FamilyScreen"
 import { HomeScreen } from "./screens/HomeScreen"
@@ -36,6 +38,8 @@ type Overlay =
   | "profile"
   | "reminders"
   | "nightMute"
+  | "device"
+  | "pairing"
   | "pro"
   | null
 
@@ -55,6 +59,13 @@ export default function App() {
     initialProfile(t.profile.defaultName),
   )
   const [night, setNight] = useState(initialNightMute)
+  const [device, setDevice] = useState(deviceStatus)
+  // Where to go back to when the pairing page closes.
+  const [pairingBack, setPairingBack] = useState<Overlay>(null)
+  const openPairing = () => {
+    setPairingBack(overlay)
+    setOverlay("pairing")
+  }
   const [reminders, setReminders] = useState(initialReminderSettings)
   const [calendarSelection, setCalendarSelection] = useState(
     initialCalendarSelection,
@@ -116,7 +127,8 @@ export default function App() {
           >
             <HomeScreen
               waterPercentage={waterPercentage}
-              device={deviceStatus}
+              device={device}
+              onPair={openPairing}
               todayRecords={todayRecords}
               onEditRecord={(record) => {
                 setEditingRecord(record)
@@ -156,6 +168,7 @@ export default function App() {
               onOpenProfile={() => setOverlay("profile")}
               onOpenReminders={() => setOverlay("reminders")}
               onOpenNightMute={() => setOverlay("nightMute")}
+              onOpenDevice={() => setOverlay("device")}
               onOpenPro={() => setOverlay("pro")}
             />
           </div>
@@ -242,6 +255,28 @@ export default function App() {
             night={night}
             onChange={setNight}
             onClose={closeOverlay}
+          />
+        )}
+
+        {overlay === "device" && (
+          <DeviceScreen
+            device={device}
+            onPair={openPairing}
+            onClose={closeOverlay}
+          />
+        )}
+
+        {overlay === "pairing" && (
+          <PairingScreen
+            onPaired={() => {
+              setDevice((current) => ({
+                ...current,
+                paired: true,
+                connected: true,
+              }))
+              setOverlay(pairingBack)
+            }}
+            onClose={() => setOverlay(pairingBack)}
           />
         )}
 
