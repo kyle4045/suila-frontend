@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
+import { WaterBottle } from "../components/WaterBottle"
 import { drinkAmountLimits, quickAmountsMl } from "../data/mock"
 import { useT } from "../i18n"
+import { useCountUp } from "../lib/useCountUp"
 
 export function AddWaterScreen({
   onAdd,
@@ -18,23 +20,23 @@ export function AddWaterScreen({
     Number.isInteger(parsedAmount) &&
     parsedAmount >= drinkAmountLimits.min &&
     parsedAmount <= drinkAmountLimits.max
+  // The bottle on this page holds 500 毫升; more than that shows it full.
   const cupLevel = canAdd ? Math.min(100, (parsedAmount / 500) * 100) : 0
+  const readout = useCountUp(canAdd ? parsedAmount : 0)
 
   return (
-    <section className="extra-water-screen" aria-label={t.addWater.title}>
+    <section className="extra-water-screen is-techy" aria-label={t.addWater.title}>
       <ScreenHeader title={t.addWater.title} onBack={onClose} />
 
       <div className="extra-water-content">
         <div className="water-cup-area">
-          <div
-            className="water-cup"
-            role="img"
-            aria-label={t.addWater.cupAria(Math.round(cupLevel))}
-          >
-            <div className="water-cup-fill" style={{ height: `${cupLevel}%` }}>
-              <span />
-            </div>
+          <div role="img" aria-label={t.addWater.cupAria(Math.round(cupLevel))}>
+            <WaterBottle level={cupLevel / 100} className="is-large" />
           </div>
+          <p className="readout" aria-hidden="true">
+            <strong>{readout}</strong>
+            <span>{t.common.ml}</span>
+          </p>
           <p aria-live="polite">
             {canAdd ? t.addWater.ready(parsedAmount) : t.addWater.prompt}
           </p>

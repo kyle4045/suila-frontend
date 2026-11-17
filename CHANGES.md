@@ -656,3 +656,21 @@ top version shown in the comparison.
   one: the button reads 「升級水啦 Premium」 / 「Switch to SuiLa Premium」, the
   page is 「水啦 Premium」 / 「SuiLa Premium」, and small tags read 「Premium」.
 - The two language buttons now keep each name on one line on 320px phones.
+
+### 喝水: 「顯示水瓶」 switch
+
+- The blue area on home has a labelled switch, 「顯示水瓶」 / 「Show bottle」.
+  On, it shows a glowing bottle filled to today's amount beside the numbers;
+  off, it shows the progress bar instead. It starts on, and the choice is
+  remembered on that phone.
+
+### 手動加水: dark and glowing
+
+- The page is now deep navy. The cup is replaced by a glowing bottle with
+  measurement marks; the water is bright cyan with waves that keep moving.
+- Choosing 100 / 200 / 300 or typing an amount makes the water rise smoothly
+  (the bottle holds 500 毫升; more shows it full), and a large cyan readout
+  counts up to the amount.
+- Quick buttons, the input and the card use the same dark, glowing style.
+- Phones set to reduce motion: the waves stand still and the level and
+  number change without moving.

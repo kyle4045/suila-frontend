@@ -79,6 +79,7 @@ export const en: Translations = {
     statusOffline: (waiting: number) =>
       waiting > 0 ? `Offline · ${waiting} waiting to sync` : "Offline",
     weekMore: "See full analysis",
+    showBottle: "Show bottle",
     todayWater: "Today's water",
     ringAria: (drunk: number, goal: number, percent: number) =>
       `${drunk} ml so far today, goal ${goal} ml, ${percent} percent done. Tap to add water yourself.`,

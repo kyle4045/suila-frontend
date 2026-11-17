@@ -61,6 +61,7 @@ export const zhTW = {
     statusOffline: (waiting: number) =>
       waiting > 0 ? `未連線 · ${waiting} 筆待同步` : "未連線",
     weekMore: "看完整分析",
+    showBottle: "顯示水瓶",
     todayWater: "今天喝水量",
     ringAria: (drunk: number, goal: number, percent: number) =>
       `今天已喝 ${drunk} 毫升，目標 ${goal} 毫升，完成百分之 ${percent}。點一下可以手動加水`,

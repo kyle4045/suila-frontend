@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Card } from "../components/Card"
+import { WaterBottle } from "../components/WaterBottle"
 import {
   CalendarIcon,
   CheckCircleIcon,
@@ -52,6 +53,25 @@ export function HomeScreen({
   const [shown, setShown] = useState(0)
   useEffect(() => setShown(waterPercentage), [waterPercentage])
   const goalMet = todayWater >= goalMl
+
+  // The bottle picture can be switched off; the choice is kept on this phone.
+  const [showBottle, setShowBottle] = useState(() => {
+    try {
+      return localStorage.getItem("suila-show-bottle") !== "off"
+    } catch {
+      return true
+    }
+  })
+  const toggleBottle = () => {
+    setShowBottle((current) => {
+      try {
+        localStorage.setItem("suila-show-bottle", current ? "off" : "on")
+      } catch {
+        // Not remembered, but the switch still works for this visit.
+      }
+      return !current
+    })
+  }
 
   // The base in as few words as possible: one line when all is well.
   const batteryLow = device.batteryPercent <= lowBatteryPercent
@@ -143,12 +163,31 @@ export function HomeScreen({
   return (
     <section className="swipe-page water-page" aria-label={t.home.aria}>
       {/* One big blue area behind the header: today's water at a glance. */}
-      <div className="hero-blue">
+      <div className={`hero-blue ${showBottle ? "with-bottle" : ""}`.trim()}>
         <div className="hero-status">{statusLines}</div>
-        <p className="hero-label">{t.home.todayWater}</p>
-        {amount}
-        {progress}
-        <p className="hero-percent">{percentText}</p>
+        <div className="hero-head">
+          <p className="hero-label">{t.home.todayWater}</p>
+          <button
+            className="bottle-switch"
+            type="button"
+            role="switch"
+            aria-checked={showBottle}
+            onClick={toggleBottle}
+          >
+            {t.home.showBottle}
+            <span className="switch-track" aria-hidden="true">
+              <span />
+            </span>
+          </button>
+        </div>
+        <div className="hero-body">
+          {showBottle && <WaterBottle level={shown / 100} />}
+          <div className="hero-numbers">
+            {amount}
+            {!showBottle && progress}
+            <p className="hero-percent">{percentText}</p>
+          </div>
+        </div>
       </div>
       {messagesRow}
       {weekPeek}

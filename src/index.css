@@ -720,53 +720,6 @@ body {
   min-height: 300px;
 }
 
-.water-cup {
-  position: relative;
-  width: 190px;
-  height: 230px;
-  overflow: hidden;
-  border: 10px solid #2866be;
-  border-top-width: 7px;
-  border-radius: 16px 16px 48px 48px;
-  background: #edf7fc;
-  box-shadow:
-    inset 0 0 0 5px #fff,
-    var(--shadow-card);
-}
-
-.water-cup::before {
-  position: absolute;
-  z-index: 2;
-  top: 12px;
-  left: 20px;
-  width: 24px;
-  height: 150px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.55);
-  content: "";
-}
-
-.water-cup-fill {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  min-height: 0;
-  overflow: hidden;
-  background: #55bff4;
-  transition: height 240ms ease;
-}
-
-.water-cup-fill span {
-  position: absolute;
-  top: -8px;
-  left: -8%;
-  width: 116%;
-  height: 18px;
-  border-radius: 50%;
-  background: #8bddff;
-}
-
 .water-cup-area > p {
   min-height: 34px;
   margin: 24px 0 0;
