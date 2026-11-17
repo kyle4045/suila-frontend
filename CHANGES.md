@@ -635,3 +635,15 @@ spreads to the other screens.
 and calm versions were deleted, along with the 首頁樣式 switch in the demo
 panel and the old ring styles they replaced. Home looks exactly like the Blue
 top version shown in the comparison.
+
+## Changes after Kyle reviewed the Blue top home
+
+### Changing tab by sliding along the bottom bar
+
+- Dragging the page sideways no longer changes tab (this replaces the
+  page swipe and the trackpad swipe added earlier). Kyle meant sliding a
+  finger along the floating bottom bar.
+- Put a finger on the bottom bar and slide it: the highlight follows the
+  finger, and when the finger lets go the page changes to the tab under it.
+  A small slide that stays over the same tab changes nothing.
+- Tapping a tab works as before.

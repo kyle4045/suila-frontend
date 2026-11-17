@@ -154,7 +154,7 @@ export default function App() {
           </div>
         </header>
 
-        <div className="swipe-window" {...swipe}>
+        <div className="swipe-window">
           <div className="swipe-track">
             <HomeScreen
               records={records}
@@ -392,6 +392,7 @@ export default function App() {
 
         <Toast message={toast} />
         <BottomNav
+          slideHandlers={swipe}
           currentPage={currentPage}
           newMessageCount={newMessageCount}
           onSelect={moveToPage}

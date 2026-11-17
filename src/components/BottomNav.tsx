@@ -1,3 +1,4 @@
+import type { HTMLAttributes } from "react"
 import { useT } from "../i18n"
 import { NavigationIcon, type NavigationIconType } from "./Icons"
 
@@ -13,15 +14,18 @@ export const familyPage = items.findIndex((item) => item.key === "family")
 export function BottomNav({
   currentPage,
   newMessageCount,
+  slideHandlers,
   onSelect,
 }: {
   currentPage: number
   newMessageCount: number
+  /** Lets a finger slide along the bar to change tab. */
+  slideHandlers: HTMLAttributes<HTMLElement>
   onSelect: (page: number) => void
 }) {
   const t = useT()
   return (
-    <nav className="bottom-navigation" aria-label={t.nav.aria}>
+    <nav className="bottom-navigation" aria-label={t.nav.aria} {...slideHandlers}>
       <span className="nav-indicator" aria-hidden="true" />
       {items.map((item, index) => (
         <button

@@ -255,16 +255,15 @@ button:active:not(:disabled) {
 
 /* ---- Motion ---- */
 
-/* Tab pages follow the finger (--drag) and settle on a tab (--page). */
+/* Tab pages slide to the chosen tab (--page). */
 .swipe-track {
-  transform: translateX(calc(var(--page, 0) * -100% + var(--drag, 0px)));
+  transform: translateX(calc(var(--page, 0) * -100%));
   transition: transform 420ms var(--ease-out);
 }
 
-/* Sideways touches belong to the tab swipe; up and down still scroll the page. */
-.swipe-window,
-.swipe-page {
-  touch-action: pan-y;
+/* A finger sliding along the bottom bar changes tab; the bar must not scroll or zoom. */
+.bottom-navigation {
+  touch-action: none;
 }
 
 .is-dragging {
@@ -272,7 +271,7 @@ button:active:not(:disabled) {
   user-select: none;
 }
 
-.is-dragging .swipe-track,
+
 .is-dragging .nav-indicator,
 .is-dragging .home-action {
   transition: none;
