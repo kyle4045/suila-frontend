@@ -652,3 +652,10 @@ body {
     transition: none;
   }
 }
+
+/* Language buttons: each name stays on one line, even on 320px phones. */
+.language-card .choice-button {
+  padding: 0 4px;
+  font-size: 20px;
+  white-space: nowrap;
+}

@@ -133,7 +133,7 @@ export const en: Translations = {
     },
     addMember: "Add a family member",
     addMemberHint: (freeLimit: number) =>
-      `The free plan allows ${freeLimit}. Upgrade to Pro to add more.`,
+      `The free plan allows ${freeLimit}. Switch to SuiLa Premium to add more.`,
     personLabel: (relation: string, name: string) => `${name} (${relation})`,
     people: {
       daughter: { relation: "daughter", name: "Ya-Ting", initial: "Y" },
@@ -147,9 +147,9 @@ export const en: Translations = {
     nightMute: "Night mute",
     device: "Base",
     habits: "Habits",
-    proTag: "Pro",
+    proTag: "Premium",
     about: "About",
-    proTitle: "Upgrade to Pro",
+    proTitle: "Switch to SuiLa Premium",
     proSubtitle: "Unlock habit analysis and more family members",
     language: "語言 / Language",
     languageNames: { "zh-TW": "繁體中文", en: "English" },
@@ -231,19 +231,19 @@ export const en: Translations = {
     line: "LINE",
     lineOn: "Linked",
     lineOff: "Not linked",
-    pro: "Pro",
+    pro: "Premium",
     proOff: "Off",
     proOn: "On",
     reset: "Reset everything",
   },
   pro: {
-    title: "SuiLa Pro",
+    title: "SuiLa Premium",
     habitTitle: "Habit analysis",
     habitBody:
       "See your week of drinking and the time of day you most often forget.",
     familyTitle: "More family members",
     familyBody: (freeLimit: number) =>
-      `The free plan links ${plural(freeLimit, "family member", "family members")}. Pro links more.`,
+      `The free plan links ${plural(freeLimit, "family member", "family members")}. SuiLa Premium links more.`,
     bluetoothFree: "Pairing the base by Bluetooth is always free",
   },
   calendar: {

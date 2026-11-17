@@ -647,3 +647,12 @@ top version shown in the comparison.
   finger, and when the finger lets go the page changes to the tab under it.
   A small slide that stays over the same tab changes nothing.
 - Tapping a tab works as before.
+
+### 我的: language first, and Pro is now 水啦 Premium
+
+- The 語言 / Language card is now the first thing on 我的, followed by
+  基本資料, 提醒設定, 夜間靜音, 底座裝置, 習慣分析 and 關於我們.
+- Every "Pro" is renamed. Chinese uses the Chinese name, English the English
+  one: the button reads 「升級水啦 Premium」 / 「Switch to SuiLa Premium」, the
+  page is 「水啦 Premium」 / 「SuiLa Premium」, and small tags read 「Premium」.
+- The two language buttons now keep each name on one line on 320px phones.

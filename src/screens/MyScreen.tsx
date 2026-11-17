@@ -23,6 +23,26 @@ export function MyScreen({
 
   return (
     <section className="swipe-page my-page" aria-label={t.my.aria}>
+      {/* Both language names are always shown, each written in its own language. */}
+      <Card className="language-card">
+        <p className="card-label">{t.my.language}</p>
+        <div className="stepper-row">
+          {languages.map((option) => (
+            <button
+              className="choice-button"
+              type="button"
+              key={option}
+              lang={option}
+              aria-pressed={language === option}
+              onClick={() => setLanguage(option)}
+            >
+              {language === option && <span aria-hidden="true">✓ </span>}
+              {t.my.languageNames[option]}
+            </button>
+          ))}
+        </div>
+      </Card>
+
       <button className="my-menu-row" type="button" onClick={onOpenProfile}>
         <strong>{t.my.profile}</strong>
         <span aria-hidden="true">＞</span>
@@ -51,25 +71,6 @@ export function MyScreen({
         <span aria-hidden="true">＞</span>
       </button>
 
-      {/* Both language names are always shown, each written in its own language. */}
-      <Card className="language-card">
-        <p className="card-label">{t.my.language}</p>
-        <div className="stepper-row">
-          {languages.map((option) => (
-            <button
-              className="choice-button"
-              type="button"
-              key={option}
-              lang={option}
-              aria-pressed={language === option}
-              onClick={() => setLanguage(option)}
-            >
-              {language === option && <span aria-hidden="true">✓ </span>}
-              {t.my.languageNames[option]}
-            </button>
-          ))}
-        </div>
-      </Card>
 
       <button className="my-menu-row" type="button" onClick={onOpenAbout}>
         <strong>{t.my.about}</strong>

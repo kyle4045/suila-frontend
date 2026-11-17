@@ -112,7 +112,7 @@ export const zhTW = {
     },
     addMember: "新增家人",
     addMemberHint: (freeLimit: number) =>
-      `免費版最多 ${freeLimit} 位，升級 Pro 可以新增更多`,
+      `免費版最多 ${freeLimit} 位，升級水啦 Premium 可以新增更多`,
     personLabel: (relation: string, name: string) => `${relation} ${name}`,
     people: {
       daughter: { relation: "女兒", name: "雅婷", initial: "雅" },
@@ -126,9 +126,9 @@ export const zhTW = {
     nightMute: "夜間靜音",
     device: "底座裝置",
     habits: "習慣分析",
-    proTag: "Pro",
+    proTag: "Premium",
     about: "關於我們",
-    proTitle: "升級 Pro",
+    proTitle: "升級水啦 Premium",
     proSubtitle: "解鎖習慣分析、連結更多家人",
     // The language row always shows both languages, each in its own words.
     language: "語言 / Language",
@@ -204,18 +204,18 @@ export const zhTW = {
     line: "LINE",
     lineOn: "已連結",
     lineOff: "未連結",
-    pro: "Pro",
+    pro: "Premium",
     proOff: "關",
     proOn: "開",
     reset: "全部重設",
   },
   pro: {
-    title: "水啦 Pro",
+    title: "水啦 Premium",
     habitTitle: "習慣分析",
     habitBody: "查看每週喝水紀錄，以及最容易忘記喝水的時段。",
     familyTitle: "更多家人",
     familyBody: (freeLimit: number) =>
-      `免費版可連結 ${freeLimit} 位家人，Pro 可連結更多家人。`,
+      `免費版可連結 ${freeLimit} 位家人，水啦 Premium 可連結更多家人。`,
     bluetoothFree: "藍牙連結底座永遠免費",
   },
   calendar: {
