@@ -533,3 +533,51 @@ that nothing scrolls sideways, no button outside the calendar grid is under
 - The English voice depends on the computer, like the Chinese one.
 - A confirmation message that is on screen while the language is switched
   stays in the old language until it disappears.
+
+## Restyle sample (awaiting approval)
+
+Applied to the home tab, the top bar and the bottom navigation, plus motion
+everywhere. Layouts, the name and the blue stay; other screens keep their old
+styling until the sample is approved. The new styles live in
+`src/restyle.css` for now so they are easy to judge and undo.
+
+**Look**
+- Cards lose their outlines; space and one soft shadow separate them, with
+  rounder corners. The page background is a soft blue-grey.
+- Blue is kept for the water card, the main button and the current tab.
+  Secondary buttons (修改, 日曆) are pale-blue pills instead of white boxes
+  with outlines.
+- The status card is one compact line (「底座已連線　電量 82%」).
+- The new-messages row is pale blue with an arrow, so it reads as news.
+- The ring is drawn with a thick round-ended stroke and fills smoothly from
+  empty when the screen opens or water is added.
+- Record times use 18px, the amounts 24px bold, so the number stands out.
+
+**Swipe between tabs** (brought back at Kyle's request)
+- Drag sideways anywhere on a tab page: the page follows the finger, and the
+  highlight in the bottom bar slides along with it.
+- Let go past about a third of the screen, or flick, and it moves to the next
+  tab; otherwise it springs back. At the first and last tab it only gives a
+  little.
+- Scrolling up and down is not affected, and a swipe that ends on a button
+  does not press it. The tab buttons work as before.
+- The 手動加水 button fades and sinks as the 喝水 tab slides away.
+
+**Transitions**
+- Full-screen views slide in from the right and slide back out.
+- Yes/no questions fade in; the confirmation message eases in and out.
+- Buttons press in slightly when tapped.
+- Phones set to reduce motion get the changes without the movement.
+
+**Rules relaxed a little** (Kyle's decision): small labels and captions
+16–18px, minor buttons 48px. Main text, numbers and main buttons are unchanged.
+
+**How it was checked**
+- Simulated swipes at 320px and 390px: slow drag past a third, short drag
+  (springs back), quick flick, drag past the last tab, vertical scroll, and a
+  drag ending on a button. All behaved as described.
+- The ring shows exactly 63%, the highlight sits under the current tab after
+  every swipe and tap, and nothing scrolls sideways or hides behind the
+  floating bars.
+- Two bugs were found and fixed: the ring arc was drawn far too short in this
+  browser, and a "skip the next tap" flag after a swipe could linger.

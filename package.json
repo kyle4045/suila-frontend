@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "format": "oxfmt",
-    "test": "node src/lib/habits.test.ts"
+    "test": "node src/lib/habits.test.ts && node src/lib/swipe.test.ts"
   },
   "dependencies": {
     "react": "^19.0.0",

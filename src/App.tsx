@@ -17,6 +17,7 @@ import {
 } from "./data/mock"
 import { defaultNames, useT } from "./i18n"
 import { isToday } from "./lib/date"
+import { useTabSwipe } from "./lib/useTabSwipe"
 import { useVoicePlayer } from "./lib/useVoicePlayer"
 import { AboutScreen } from "./screens/AboutScreen"
 import { AddWaterScreen } from "./screens/AddWaterScreen"
@@ -109,7 +110,19 @@ export default function App() {
     ? messages.filter((message) => !message.played).length
     : 0
   const [toast, setToast] = useState<string | null>(null)
-  const closeOverlay = () => setOverlay(null)
+  // Full-screen views slide out before they are removed.
+  const [closing, setClosing] = useState(false)
+  const closeOverlay = () => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setOverlay(null)
+      return
+    }
+    setClosing(true)
+    window.setTimeout(() => {
+      setOverlay(null)
+      setClosing(false)
+    }, 200)
+  }
 
   // Confirmation messages disappear on their own after a few seconds.
   useEffect(() => {
@@ -122,9 +135,12 @@ export default function App() {
     setCurrentPage(Math.max(0, Math.min(pageCount - 1, page)))
   }
 
+  const shell = useRef<HTMLDivElement>(null)
+  const swipe = useTabSwipe(shell, currentPage, pageCount, moveToPage)
+
   return (
     <main className="app-shell">
-      <div className="page">
+      <div className={closing ? "page is-closing" : "page"} ref={shell}>
         <header className="topbar">
           <div
             className="brand"
@@ -138,11 +154,8 @@ export default function App() {
           </div>
         </header>
 
-        <div className="swipe-window">
-          <div
-            className="swipe-track"
-            style={{ transform: `translateX(-${currentPage * 100}%)` }}
-          >
+        <div className="swipe-window" {...swipe}>
+          <div className="swipe-track">
             <HomeScreen
               todayWater={todayWater}
               goalMl={reminders.dailyGoalMl}
@@ -365,15 +378,15 @@ export default function App() {
         {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
 
         {/* Home's main action. Floats above the navigation, on the 喝水 tab only. */}
-        {currentPage === 0 && (
-          <button
-            className="floating-action home-action"
-            type="button"
-            onClick={() => setOverlay("addWater")}
-          >
-            {t.home.addWater}
-          </button>
-        )}
+        <button
+          className={`floating-action home-action ${currentPage === 0 ? "" : "is-away"}`.trim()}
+          type="button"
+          tabIndex={currentPage === 0 ? undefined : -1}
+          aria-hidden={currentPage === 0 ? undefined : true}
+          onClick={() => setOverlay("addWater")}
+        >
+          {t.home.addWater}
+        </button>
 
         <Toast message={toast} />
         <BottomNav

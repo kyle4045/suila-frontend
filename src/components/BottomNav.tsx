@@ -22,6 +22,7 @@ export function BottomNav({
   const t = useT()
   return (
     <nav className="bottom-navigation" aria-label={t.nav.aria}>
+      <span className="nav-indicator" aria-hidden="true" />
       {items.map((item, index) => (
         <button
           className={currentPage === index ? "is-active" : ""}

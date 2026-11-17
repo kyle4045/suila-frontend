@@ -1,8 +1,12 @@
 import { Card } from "../components/Card"
 import { DeviceStatusLines } from "../components/DeviceStatusLines"
-import { CalendarIcon } from "../components/Icons"
+import { CalendarIcon, ChevronIcon } from "../components/Icons"
 import type { DeviceStatus, DrinkRecord } from "../data/mock"
+import { useEffect, useState } from "react"
 import { useT } from "../i18n"
+
+// Circumference of the ring (radius 103). pathLength is not honoured for dashes in every browser.
+const ringLength = 2 * Math.PI * 103
 
 export function HomeScreen({
   device,
@@ -30,6 +34,9 @@ export function HomeScreen({
   onPair: () => void
 }) {
   const t = useT()
+  // The ring starts empty and fills to the real value, so a change is seen to happen.
+  const [ringPercent, setRingPercent] = useState(0)
+  useEffect(() => setRingPercent(waterPercentage), [waterPercentage])
 
   return (
     <section className="swipe-page water-page" aria-label={t.home.aria}>
@@ -48,7 +55,7 @@ export function HomeScreen({
       {newMessageCount > 0 && (
         <button className="my-menu-row" type="button" onClick={onOpenMessages}>
           <strong>{t.home.newMessages(newMessageCount)}</strong>
-          <span aria-hidden="true">＞</span>
+          <ChevronIcon />
         </button>
       )}
       <Card className="water-total-card">
@@ -58,10 +65,18 @@ export function HomeScreen({
           type="button"
           aria-label={t.home.ringAria(todayWater, goalMl, waterPercentage)}
           onClick={onOpenAddWater}
-          style={{
-            background: `conic-gradient(#69beff 0 ${waterPercentage}%, #fff ${waterPercentage}% 100%)`,
-          }}
         >
+          <svg viewBox="0 0 224 224" aria-hidden="true">
+            <circle className="ring-track" cx="112" cy="112" r="103" />
+            <circle
+              className="ring-progress"
+              cx="112"
+              cy="112"
+              r="103"
+              strokeDasharray={ringLength}
+              strokeDashoffset={ringLength * (1 - ringPercent / 100)}
+            />
+          </svg>
           <div>
             <span>{t.home.drunkLabel}</span>
             <strong>{todayWater}</strong>

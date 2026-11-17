@@ -1,0 +1,431 @@
+/*
+ * Restyle sample (2026-11): the home tab, the top bar, the bottom navigation,
+ * the shared card and button styles, and motion.
+ *
+ * Loaded after index.css, so every rule here replaces the older one of the
+ * same name. shortcut: kept as a separate layer while Kyle judges the sample;
+ * fold into index.css (and delete what it replaces there) once approved.
+ */
+
+:root {
+  --ink: #14304d;
+  --ink-soft: #4a6178;
+  --blue: #2866be;
+  --blue-deep: #1d4e96;
+  --blue-tint: #e4edfb;
+  --paper: #eef3f8;
+  --line: #dde6ef;
+  /* Still only two shadow levels: resting cards, and things that float. */
+  --shadow-card: 0 1px 2px rgba(20, 48, 77, 0.04), 0 8px 24px rgba(20, 48, 77, 0.06);
+  --shadow-float: 0 2px 4px rgba(20, 48, 77, 0.06), 0 12px 32px rgba(20, 48, 77, 0.16);
+  --float-header-height: 60px;
+  --float-nav-height: 88px;
+  /* Quick start, soft landing. Used for everything that moves. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  color: var(--ink);
+  background: #e3eaf2;
+}
+
+body {
+  color: var(--ink);
+  background: #e3eaf2;
+}
+
+::selection {
+  color: var(--ink);
+  background: #c9dcf7;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ---- Shell ---- */
+
+/* Side padding moves onto each page so pages slide edge to edge when swiped. */
+.page {
+  padding-right: 0;
+  padding-left: 0;
+  background: var(--paper);
+  box-shadow: 0 0 48px rgba(20, 48, 77, 0.12);
+}
+
+.swipe-page {
+  gap: 16px;
+  padding-right: 18px;
+  padding-left: 18px;
+}
+
+@media (max-width: 370px) {
+  .swipe-page {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+}
+
+.topbar {
+  padding: 0 22px;
+  border: 0;
+  border-radius: 22px;
+}
+
+.brand {
+  font-size: 24px;
+}
+
+.brand-name small {
+  color: var(--ink-soft);
+  font-size: 17px;
+}
+
+/* ---- Shared pieces ---- */
+
+/* Cards: no outline. Space and one soft shadow separate them. */
+.info-card {
+  padding: 22px;
+  border: 0;
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.card-label {
+  color: var(--ink-soft);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Secondary actions: a pale-blue pill, so they read as buttons without outlines. */
+.outline-button,
+.edit-button,
+.calendar-button {
+  border: 0;
+  color: var(--blue-deep);
+  background: var(--blue-tint);
+}
+
+.outline-button {
+  border-radius: 18px;
+}
+
+.outline-button:disabled {
+  color: #5d7180;
+  background: #e9eef3;
+}
+
+.edit-button {
+  min-width: 72px;
+  min-height: 48px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.floating-action {
+  border-radius: 22px;
+}
+
+button {
+  transition:
+    transform 140ms var(--ease-out),
+    background-color 160ms,
+    color 160ms;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* ---- Home ---- */
+
+.device-status {
+  flex-flow: row wrap;
+  gap: 6px 18px;
+  padding: 14px 20px;
+}
+
+.device-status .outline-button.is-wide {
+  flex-basis: 100%;
+}
+
+.status-line {
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.status-line svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* The new-messages row: pale blue, so it reads as news, not as another card. */
+.water-page > .my-menu-row {
+  min-height: 64px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 20px;
+  color: var(--blue-deep);
+  background: var(--blue-tint);
+  box-shadow: none;
+}
+
+.water-page > .my-menu-row strong {
+  font-size: 20px;
+}
+
+.water-page > .my-menu-row svg {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+.water-total-card {
+  padding: 24px 22px 22px;
+  border-radius: 28px;
+  background: var(--blue);
+  box-shadow: var(--shadow-float);
+}
+
+.water-total-card .card-label {
+  color: #fff;
+  font-size: 20px;
+}
+
+.water-ring {
+  position: relative;
+  width: 224px;
+  height: 224px;
+  margin: 16px auto 0;
+  background: none;
+  box-shadow: none;
+}
+
+.water-ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ring-track,
+.ring-progress {
+  fill: none;
+  stroke-width: 18;
+}
+
+.ring-track {
+  stroke: #5b8fdc;
+}
+
+.ring-progress {
+  stroke: #fff;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 900ms var(--ease-out);
+}
+
+.water-ring > div {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  background: var(--blue-deep);
+}
+
+.ring-percent {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.records-heading {
+  margin-bottom: 4px;
+}
+
+.drink-records-card .recent-records-label {
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.calendar-button {
+  min-height: 48px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.calendar-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.record-row {
+  min-height: 68px;
+  border-bottom-color: var(--line);
+  color: var(--ink-soft);
+  font-size: 18px;
+}
+
+.record-row strong {
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* ---- Bottom navigation ---- */
+
+.bottom-navigation {
+  border: 0;
+  border-radius: 28px;
+}
+
+.bottom-navigation button {
+  z-index: 1;
+  border-radius: 20px;
+  color: var(--ink-soft);
+}
+
+.bottom-navigation button.is-active {
+  color: var(--blue-deep);
+  background: transparent;
+}
+
+.bottom-navigation button span {
+  font-size: 16px;
+}
+
+/* The highlight is one pill that travels between tabs, also under the finger. */
+.nav-indicator {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 10px;
+  /* one of three columns: bar width minus its side padding and the two gaps */
+  width: calc((100% - 20px - 16px) / 3);
+  border-radius: 20px;
+  background: var(--blue-tint);
+  transform: translateX(calc(var(--nav-progress, 0) * (100% + 8px)));
+  transition: transform 420ms var(--ease-out);
+}
+
+/* ---- Motion ---- */
+
+/* Tab pages follow the finger (--drag) and settle on a tab (--page). */
+.swipe-track {
+  transform: translateX(calc(var(--page, 0) * -100% + var(--drag, 0px)));
+  transition: transform 420ms var(--ease-out);
+}
+
+.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.is-dragging .swipe-track,
+.is-dragging .nav-indicator,
+.is-dragging .home-action {
+  transition: none;
+}
+
+/* The home button belongs to the first tab: it fades and sinks as that tab leaves. */
+.floating-action.home-action {
+  opacity: clamp(0, calc(1 - var(--nav-progress, 0) * 2), 1);
+  translate: 0 calc(clamp(0, var(--nav-progress, 0), 1) * 28px);
+  transition:
+    opacity 260ms var(--ease-out),
+    translate 420ms var(--ease-out),
+    transform 140ms var(--ease-out);
+}
+
+.home-action.is-away {
+  pointer-events: none;
+}
+
+/* Full-screen views slide in from the right and back out. */
+@keyframes screen-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes screen-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.settings-screen,
+.calendar-screen,
+.extra-water-screen {
+  animation: screen-in 380ms var(--ease-out);
+}
+
+.is-closing > .settings-screen,
+.is-closing > .calendar-screen,
+.is-closing > .extra-water-screen {
+  animation: screen-out 200ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+.confirm-screen {
+  animation: fade-in 160ms ease-out;
+}
+
+.confirm-card {
+  animation: pop-in 260ms var(--ease-out);
+}
+
+/* The confirmation message eases in, stays, and eases out over its four seconds. */
+@keyframes toast-life {
+  0% {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+
+  7%,
+  93% {
+    opacity: 1;
+    transform: none;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+.toast {
+  border-radius: 22px;
+  animation: toast-life 4s var(--ease-out) both;
+}
+
+/* Reduce-motion phones: things change state without travelling. */
+@media (prefers-reduced-motion: reduce) {
+  .settings-screen,
+  .calendar-screen,
+  .extra-water-screen,
+  .confirm-screen,
+  .confirm-card,
+  .toast {
+    animation: none;
+  }
+
+  button:active:not(:disabled) {
+    transform: none;
+  }
+}
