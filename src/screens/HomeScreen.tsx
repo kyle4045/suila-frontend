@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Card } from "../components/Card"
 import {
-  BatteryIcon,
   CalendarIcon,
   CheckCircleIcon,
   CheckIcon,
@@ -16,12 +15,10 @@ import {
 } from "../data/mock"
 import { useT } from "../i18n"
 import { lastSevenDays } from "../lib/habits"
-import type { HomeStyle } from "./DemoPanelScreen"
 
-type StatusLine = { tone: "ok" | "warn" | "plain"; text: string }
+type StatusLine = { tone: "ok" | "warn"; text: string }
 
 export function HomeScreen({
-  homeStyle,
   device,
   records,
   isPro,
@@ -33,11 +30,9 @@ export function HomeScreen({
   onOpenCalendar,
   onOpenMessages,
   onOpenHabits,
-  onOpenDevice,
   onEditRecord,
   onPair,
 }: {
-  homeStyle: HomeStyle
   device: DeviceStatus
   records: DrinkRecord[]
   isPro: boolean
@@ -49,7 +44,6 @@ export function HomeScreen({
   onOpenCalendar: () => void
   onOpenMessages: () => void
   onOpenHabits: () => void
-  onOpenDevice: () => void
   onEditRecord: (record: DrinkRecord) => void
   onPair: () => void
 }) {
@@ -74,7 +68,7 @@ export function HomeScreen({
           : []),
       ]
   const statusIcon = (line: StatusLine) =>
-    line.tone === "warn" ? <WarningIcon /> : line.tone === "ok" ? <CheckCircleIcon /> : <BatteryIcon />
+    line.tone === "warn" ? <WarningIcon /> : <CheckCircleIcon />
   const statusLines = (
     <>
       {status.map((line) => (
@@ -146,9 +140,9 @@ export function HomeScreen({
     </button>
   )
 
-  const glassLevel = Math.min(1, shown / 100)
-  const hero: Record<HomeStyle, React.ReactNode> = {
-    blueTop: (
+  return (
+    <section className="swipe-page water-page" aria-label={t.home.aria}>
+      {/* One big blue area behind the header: today's water at a glance. */}
       <div className="hero-blue">
         <div className="hero-status">{statusLines}</div>
         <p className="hero-label">{t.home.todayWater}</p>
@@ -156,85 +150,7 @@ export function HomeScreen({
         {progress}
         <p className="hero-percent">{percentText}</p>
       </div>
-    ),
-    glass: (
-      <>
-        <div className="status-strip">{statusLines}</div>
-        <Card className="glass-card">
-          <svg className="glass" viewBox="0 0 120 160" aria-hidden="true">
-            <defs>
-              <clipPath id="glass-shape">
-                <path d="M12 10 H108 L97 150 H23 Z" />
-              </clipPath>
-            </defs>
-            <g clipPath="url(#glass-shape)">
-              <rect className="glass-empty" x="0" y="0" width="120" height="160" />
-              <rect
-                className="glass-water"
-                x="0"
-                y="10"
-                width="120"
-                height="140"
-                style={{ transform: `scaleY(${glassLevel})` }}
-              />
-            </g>
-            <path className="glass-edge" d="M12 10 H108 L97 150 H23 Z" />
-          </svg>
-          <div className="glass-text">
-            <p className="hero-label">{t.home.drunkLabel}</p>
-            {amount}
-            <p className="glass-left">
-              {goalMet ? t.home.goalMet(waterPercentage) : t.home.remaining(goalMl - todayWater)}
-            </p>
-          </div>
-        </Card>
-      </>
-    ),
-    tiles: (
-      <>
-        <Card className="tile tile-water">
-          <p className="hero-label">{t.home.todayWater}</p>
-          {amount}
-          {progress}
-          <p className="hero-percent">{percentText}</p>
-        </Card>
-        <div className="tile-row">
-          <button className="tile tile-family" type="button" onClick={onOpenMessages}>
-            <NavigationIcon type="social" />
-            <strong>{t.nav.family}</strong>
-            <span>
-              {newMessageCount > 0 ? t.nav.newMessages(newMessageCount) : t.home.noNewMessages}
-            </span>
-          </button>
-          <button
-            className={`tile tile-base ${status.some((line) => line.tone === "warn") ? "is-warn" : ""}`.trim()}
-            type="button"
-            onClick={device.paired ? onOpenDevice : onPair}
-          >
-            {status.some((line) => line.tone === "warn") ? <WarningIcon /> : <BatteryIcon />}
-            <strong>{t.home.baseTitle}</strong>
-            {status.map((line) => (
-              <span key={line.text}>{line.text}</span>
-            ))}
-          </button>
-        </div>
-      </>
-    ),
-    calm: (
-      <div className="hero-calm">
-        <div className="status-strip">{statusLines}</div>
-        <p className="hero-label">{t.home.todayWater}</p>
-        {amount}
-        {progress}
-        <p className="hero-percent">{percentText}</p>
-      </div>
-    ),
-  }
-
-  return (
-    <section className={`swipe-page water-page home-${homeStyle}`} aria-label={t.home.aria}>
-      {hero[homeStyle]}
-      {homeStyle !== "tiles" && messagesRow}
+      {messagesRow}
       {weekPeek}
       <Card className="records-card drink-records-card">
         <div className="records-heading">

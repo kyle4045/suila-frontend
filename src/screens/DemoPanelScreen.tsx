@@ -5,8 +5,6 @@ import { useT } from "../i18n"
 
 export type DemoData = "normal" | "dayOne"
 export type DemoDevice = "connected" | "offline" | "unpaired"
-export type HomeStyle = "blueTop" | "glass" | "tiles" | "calm"
-const homeStyles: HomeStyle[] = ["blueTop", "glass", "tiles", "calm"]
 
 /** One group of either/or choices. The current one is filled in and ticked. */
 function Choices<Value extends string | boolean>({
@@ -54,8 +52,6 @@ export function DemoPanelScreen({
   batteryLow,
   lineConnected,
   isPro,
-  homeStyle,
-  onHomeStyle,
   onData,
   onDevice,
   onBatteryLow,
@@ -69,8 +65,6 @@ export function DemoPanelScreen({
   batteryLow: boolean
   lineConnected: boolean
   isPro: boolean
-  homeStyle: HomeStyle
-  onHomeStyle: (value: HomeStyle) => void
   onData: (value: DemoData) => void
   onDevice: (value: DemoDevice) => void
   onBatteryLow: (value: boolean) => void
@@ -87,15 +81,6 @@ export function DemoPanelScreen({
 
       <div className="settings-content">
         <p className="demo-hint">{t.demo.hint}</p>
-        <Choices
-          label={t.demo.homeStyle}
-          value={homeStyle}
-          onChange={onHomeStyle}
-          options={homeStyles.map((style) => ({
-            value: style,
-            label: t.demo.homeStyles[style],
-          }))}
-        />
         <Choices
           label={t.demo.data}
           value={data}

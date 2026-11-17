@@ -78,14 +78,10 @@ export const en: Translations = {
     statusOk: (percent: number) => `Connected · ${percent}% battery`,
     statusOffline: (waiting: number) =>
       waiting > 0 ? `Offline · ${waiting} waiting to sync` : "Offline",
-    baseTitle: "Base",
-    noNewMessages: "No new messages",
-    remaining: (ml: number) => `${ml} ml to go`,
     weekMore: "See full analysis",
     todayWater: "Today's water",
     ringAria: (drunk: number, goal: number, percent: number) =>
       `${drunk} ml so far today, goal ${goal} ml, ${percent} percent done. Tap to add water yourself.`,
-    drunkLabel: "So far",
     goalLine: (goal: number) => `of ${goal} ml`,
     percentDone: (percent: number) => `${percent}% of your goal`,
     goalMet: (percent: number) => `Goal reached: ${percent}%`,
@@ -238,13 +234,6 @@ export const en: Translations = {
     pro: "Pro",
     proOff: "Off",
     proOn: "On",
-    homeStyle: "Home style",
-    homeStyles: {
-      blueTop: "Blue top",
-      glass: "Water glass",
-      tiles: "Colour tiles",
-      calm: "Clean and calm",
-    },
     reset: "Reset everything",
   },
   pro: {

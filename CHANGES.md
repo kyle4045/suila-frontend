@@ -589,7 +589,7 @@ styling until the sample is approved. The new styles live in
 - On phones, sideways touches on a tab page now go to the swipe instead of the
   browser, while up-and-down still scrolls.
 
-## Four home versions to compare (awaiting Kyle's pick)
+## Four home versions to compare (Kyle picked 藍色頂部 / Blue top)
 
 Kyle found the first restyle too plain (one controlled blue), with too many
 boxes and too many words, and asked for warm and friendly. Four versions of
@@ -630,3 +630,8 @@ clears the floating buttons.
 
 **After the pick:** the other three versions are deleted, and the chosen look
 spreads to the other screens.
+
+**Kyle picked 藍色頂部 (Blue top).** The water glass, colour tiles and clean
+and calm versions were deleted, along with the 首頁樣式 switch in the demo
+panel and the old ring styles they replaced. Home looks exactly like the Blue
+top version shown in the comparison.

@@ -231,48 +231,6 @@ button:focus-visible {
   line-height: 60px;
 }
 
-.water-total-card {
-  padding-top: 28px;
-  padding-bottom: 28px;
-  color: #fff;
-  border: 0;
-  background: #2866be;
-  box-shadow: var(--shadow-card);
-}
-
-.water-total-card .card-label {
-  color: #cbdcf0;
-  font-size: 28px;
-}
-
-.water-ring {
-  width: 210px;
-  height: 210px;
-  display: grid;
-  place-items: center;
-  margin: 24px auto 4px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: conic-gradient(#69beff 0 63%, #fff 63% 100%);
-  cursor: pointer;
-}
-
-.water-ring > div {
-  width: 164px;
-  height: 164px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  background: #2866be;
-}
-
-.water-ring strong {
-  color: #fff;
-  font-size: 52px;
-  font-weight: 700;
-}
-
 .records-card {
   padding-top: 20px;
   padding-bottom: 12px;
@@ -652,31 +610,8 @@ body {
   line-height: 64px;
 }
 
-.water-total-card {
-  position: relative;
-  flex: 0 0 auto;
-  isolation: isolate;
-  overflow: hidden;
-  border: 0;
-  background: #2866be;
-  box-shadow: var(--shadow-card);
-}
-
 .drink-records-card {
   flex: 0 0 auto;
-}
-
-.water-total-card .card-label {
-  color: #fff;
-}
-
-.water-ring {
-  background: conic-gradient(#6ed7ff 0 63%, #fff 63% 100%);
-  box-shadow: var(--shadow-card);
-}
-
-.water-ring > div {
-  background: #2866be;
 }
 
 .record-row {
@@ -1562,36 +1497,6 @@ body {
 }
 
 /* Home ring: amount and goal in 毫升 */
-.water-ring > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* Darker than the card so the white numbers reach 7:1 contrast. */
-  background: #1d4e96;
-}
-
-.water-ring strong {
-  font-size: 48px;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.water-ring span {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.ring-percent {
-  margin: 14px 0 0;
-  color: #fff;
-  font-size: 24px;
-  font-weight: 800;
-  text-align: center;
-}
-
 /* Home's floating 手動加水 button sits just above the navigation */
 .floating-action.home-action {
   /* A white edge keeps it visible while the blue water card scrolls behind it. */

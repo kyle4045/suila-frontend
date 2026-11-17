@@ -60,14 +60,10 @@ export const zhTW = {
     statusOk: (percent: number) => `已連線 · 電量 ${percent}%`,
     statusOffline: (waiting: number) =>
       waiting > 0 ? `未連線 · ${waiting} 筆待同步` : "未連線",
-    baseTitle: "底座",
-    noNewMessages: "沒有新留言",
-    remaining: (ml: number) => `還差 ${ml} 毫升`,
     weekMore: "看完整分析",
     todayWater: "今天喝水量",
     ringAria: (drunk: number, goal: number, percent: number) =>
       `今天已喝 ${drunk} 毫升，目標 ${goal} 毫升，完成百分之 ${percent}。點一下可以手動加水`,
-    drunkLabel: "已喝",
     goalLine: (goal: number) => `/ ${goal} 毫升`,
     percentDone: (percent: number) => `完成 ${percent}%`,
     goalMet: (percent: number) => `今天已達標，完成 ${percent}%`,
@@ -211,13 +207,6 @@ export const zhTW = {
     pro: "Pro",
     proOff: "關",
     proOn: "開",
-    homeStyle: "首頁樣式",
-    homeStyles: {
-      blueTop: "藍色頂部",
-      glass: "水杯",
-      tiles: "彩色方塊",
-      calm: "簡潔",
-    },
     reset: "全部重設",
   },
   pro: {
