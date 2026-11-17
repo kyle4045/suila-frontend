@@ -2469,7 +2469,7 @@ body {
 
 .week-more .pro-tag {
   margin-left: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .week-more svg {
@@ -2537,7 +2537,8 @@ body {
   padding: calc(var(--page-top) + 6px) calc(var(--page-pad) + 6px) 26px;
   border-radius: 0 0 34px 34px;
   color: #fff;
-  background: var(--blue);
+  /* The deeper brand blue: white key numbers reach 8.1:1 (the brand blue gives 5.6:1). */
+  background: var(--blue-deep);
 }
 
 .hero-blue .hero-status {
@@ -2555,7 +2556,7 @@ body {
 
 /* The icons' inner tick and "!" are drawn in white; on blue they need the blue instead. */
 .hero-blue .status-line svg path:last-child {
-  stroke: var(--blue);
+  stroke: var(--blue-deep);
 }
 
 .hero-blue .outline-button {
@@ -2564,7 +2565,7 @@ body {
 }
 
 .hero-blue .progress {
-  background: var(--blue-deep);
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .hero-blue .progress span {
@@ -2814,7 +2815,7 @@ body {
 }
 
 .is-techy .extra-water-input input::placeholder {
-  color: #7f97b3;
+  color: #a3b9d2;
 }
 
 .is-techy .extra-water-input strong {
@@ -3087,4 +3088,43 @@ body {
 
 .load-screen .outline-button {
   min-width: 180px;
+}
+
+/* ---- The confirmation message makes room instead of covering the page ---- */
+
+/* --toast-space is set by the Toast component to the message's own height. */
+.toast {
+  top: var(--page-top);
+}
+
+.page:has(.screen-header) .toast {
+  top: var(--float-overlay-top);
+}
+
+.swipe-page {
+  padding-top: calc(var(--page-top) + var(--toast-space, 0px));
+  transition: padding-top 300ms var(--ease-out);
+}
+
+.hero-blue {
+  margin-top: calc(-1 * (var(--page-top) + var(--toast-space, 0px)));
+  padding-top: calc(var(--page-top) + var(--toast-space, 0px) + 6px);
+  transition: padding-top 300ms var(--ease-out), margin-top 300ms var(--ease-out);
+}
+
+.settings-content,
+.calendar-content,
+.extra-water-content {
+  padding-top: calc(var(--float-overlay-top) + var(--toast-space, 0px));
+  transition: padding-top 300ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swipe-page,
+  .hero-blue,
+  .settings-content,
+  .calendar-content,
+  .extra-water-content {
+    transition: none;
+  }
 }

@@ -876,3 +876,28 @@ was changed in this step; this is the list of what still fails.
 - On a real phone (touch, the bottom-bar slide, sound, the share sheet).
 - With a screen reader.
 - Against the teammate's real backend (only a stand-in written to BACKEND.md).
+
+### Fixes after the final check
+
+1. **Key numbers are easier to read.** The blue band (home, 家人, 我的) now
+   uses the deeper brand blue, so the white amount reaches 8.1:1 instead of
+   5.6:1. The progress bar's empty part is a soft white instead of dark blue.
+2. **基本資料 works like the other settings pages.** Changes stay on the page
+   until 儲存; pressing 返回 with changes asks 「還沒有儲存，要離開嗎？」; saving
+   shows 「已儲存基本資料」.
+3. **The 「Premium」 tag on the home chart** is now 16px.
+4. **The 手動加水 input's placeholder** is lighter on the dark page (6.2:1).
+5. **The confirmation message no longer covers the page.** It still appears
+   just below the header, but the page moves down by the message's height
+   while it shows, and back afterwards.
+6. **手動加水 asks before leaving** when an amount has been chosen or typed
+   but not added: 「還沒有加入，要離開嗎？」. With nothing typed it closes as
+   before.
+
+Checked at 320px: contrast measured at 8.13:1; the message sits below the
+header and above the first line of content on a tab and after saving; both
+pages ask, and 「繼續修改」 keeps what was typed.
+
+Still open from the final check: the font loading from Google (needs Wi-Fi at
+the presentation), duplicate old style rules, typed 「＞」 / 「✓」 characters,
+the decorative glow and frame shadows, and the Chinese page description.

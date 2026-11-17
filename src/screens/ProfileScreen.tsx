@@ -1,5 +1,6 @@
-import { useState, type Dispatch, type SetStateAction } from "react"
+import { useState } from "react"
 import { Card } from "../components/Card"
+import { ConfirmDialog } from "../components/ConfirmDialog"
 import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
 import { conditionOptions, type ConditionId, type Profile } from "../data/mock"
@@ -7,18 +8,21 @@ import { useT } from "../i18n"
 
 export function ProfileScreen({
   profile,
-  onChange,
   onSave,
   onClose,
 }: {
   profile: Profile
-  onChange: Dispatch<SetStateAction<Profile>>
-  onSave: () => void
+  onSave: (profile: Profile) => void
   onClose: () => void
 }) {
   const t = useT()
   const [conditionMenuOpen, setConditionMenuOpen] = useState(false)
-  const { conditions } = profile
+  // Changes stay on this page until 儲存; leaving with changes asks first.
+  const [draft, setDraft] = useState(profile)
+  const [asking, setAsking] = useState(false)
+  const changed = JSON.stringify(draft) !== JSON.stringify(profile)
+  const onChange = setDraft
+  const { conditions } = draft
 
   const toggleCondition = (condition: ConditionId) => {
     onChange((current) => {
@@ -41,7 +45,10 @@ export function ProfileScreen({
 
   return (
     <section className="settings-screen" aria-label={t.profile.aria}>
-      <ScreenHeader title={t.profile.title} onBack={onClose} />
+      <ScreenHeader
+        title={t.profile.title}
+        onBack={() => (changed ? setAsking(true) : onClose())}
+      />
 
       <div className="settings-content">
         <Card className="settings-profile-card">
@@ -49,7 +56,7 @@ export function ProfileScreen({
             <label>
               <span>{t.profile.name}</span>
               <input
-                value={profile.name}
+                value={draft.name}
                 onChange={(event) =>
                   onChange((current) => ({
                     ...current,
@@ -65,7 +72,7 @@ export function ProfileScreen({
                 <input
                   type="number"
                   inputMode="numeric"
-                  value={profile.heightCm}
+                  value={draft.heightCm}
                   onChange={(event) =>
                     onChange((current) => ({
                       ...current,
@@ -79,7 +86,7 @@ export function ProfileScreen({
                 <input
                   type="number"
                   inputMode="decimal"
-                  value={profile.weightKg}
+                  value={draft.weightKg}
                   onChange={(event) =>
                     onChange((current) => ({
                       ...current,
@@ -129,7 +136,17 @@ export function ProfileScreen({
         </Card>
       </div>
 
-      <FloatingButton onClick={onSave}>{t.common.save}</FloatingButton>
+      <FloatingButton onClick={() => onSave(draft)}>{t.common.save}</FloatingButton>
+
+      {asking && (
+        <ConfirmDialog
+          message={t.common.unsaved}
+          confirmLabel={t.common.leave}
+          cancelLabel={t.common.stay}
+          onConfirm={onClose}
+          onCancel={() => setAsking(false)}
+        />
+      )}
     </section>
   )
 }

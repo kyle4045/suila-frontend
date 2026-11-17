@@ -333,6 +333,7 @@ export const en: Translations = {
     inputLabel: "Or type an amount",
     placeholder: "0",
     add: "Add",
+    unsaved: "This amount hasn't been added. Leave anyway?",
   },
   profile: {
     aria: "Profile",
@@ -344,6 +345,7 @@ export const en: Translations = {
     weight: "Weight (kg)",
     conditions: "Long-term health conditions",
     choose: "Please choose",
+    savedToast: "Profile saved",
     conditionLabels: {
       hypertension: "High blood pressure",
       diabetes: "Diabetes",

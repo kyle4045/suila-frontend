@@ -297,6 +297,7 @@ export const zhTW = {
     inputLabel: "或自行輸入",
     placeholder: "＿＿",
     add: "加入",
+    unsaved: "還沒有加入，要離開嗎？",
   },
   profile: {
     aria: "基本資料",
@@ -308,6 +309,7 @@ export const zhTW = {
     weight: "體重（公斤）",
     conditions: "慢性病或健康狀況",
     choose: "請選擇",
+    savedToast: "已儲存基本資料",
     conditionLabels: {
       hypertension: "高血壓",
       diabetes: "糖尿病",

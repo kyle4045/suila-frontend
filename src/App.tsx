@@ -357,12 +357,12 @@ function LoadedApp({ initial }: { initial: AppData }) {
         {overlay === "profile" && (
           <ProfileScreen
             profile={profile}
-            onChange={setProfile}
-            onSave={() =>
+            onSave={(changed) =>
               save(
-                () => api.saveProfile(profile),
+                () => api.saveProfile(changed),
                 (saved) => {
                   setProfile(saved)
+                  setToast(t.profile.savedToast)
                   closeOverlay()
                 },
               )

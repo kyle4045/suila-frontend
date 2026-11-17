@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { ConfirmDialog } from "../components/ConfirmDialog"
 import { FloatingButton } from "../components/FloatingButton"
 import { ScreenHeader } from "../components/ScreenHeader"
 import { WaterBottle } from "../components/WaterBottle"
@@ -15,6 +16,7 @@ export function AddWaterScreen({
 }) {
   const t = useT()
   const [amount, setAmount] = useState("")
+  const [asking, setAsking] = useState(false)
   const parsedAmount = Number(amount)
   const canAdd =
     Number.isInteger(parsedAmount) &&
@@ -26,7 +28,10 @@ export function AddWaterScreen({
 
   return (
     <section className="extra-water-screen is-techy" aria-label={t.addWater.title}>
-      <ScreenHeader title={t.addWater.title} onBack={onClose} />
+      <ScreenHeader
+        title={t.addWater.title}
+        onBack={() => (amount !== "" ? setAsking(true) : onClose())}
+      />
 
       <div className="extra-water-content">
         <div className="water-cup-area">
@@ -84,6 +89,15 @@ export function AddWaterScreen({
       >
         {t.addWater.add}
       </FloatingButton>
+      {asking && (
+        <ConfirmDialog
+          message={t.addWater.unsaved}
+          confirmLabel={t.common.leave}
+          cancelLabel={t.common.stay}
+          onConfirm={onClose}
+          onCancel={() => setAsking(false)}
+        />
+      )}
     </section>
   )
 }
