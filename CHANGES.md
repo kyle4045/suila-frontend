@@ -805,3 +805,74 @@ does not change anything stored on the backend.
 **Not tested:** a real voice recording playing (the hidden preview blocks
 sound that is not started by a real tap), LINE login, and the teammate's
 actual backend.
+
+## Phase 6 — final check (2026-11-17)
+
+Every screen was walked against the design rules (CLAUDE.md sections 6, 6a,
+6b and the later decisions in section 9), in 繁體中文 and English, at 390px and
+320px. Text size, button size and contrast were measured on every screen and
+state; the code was searched for hard-coded text and stray styles. Nothing
+was changed in this step; this is the list of what still fails.
+
+### Passes
+
+- Every full-screen view has a title and a labelled 返回 button.
+- One scroll area per screen; nothing hides behind the floating bars; nothing
+  overflows or is cut off, in either language, at 390px or 320px.
+- Ordinary text contrast: no failures on any light screen (all at least
+  4.5:1). On the dark 手動加水 page the readout and labels are 7.5:1 or
+  better.
+- Main buttons are 56px or taller; the four smaller ones (顯示水瓶, 日曆, and
+  the two 修改 / 移除 buttons) are 48px, which the relaxed rule allows.
+- Nothing relies on colour alone: goal ticks, status icons, chosen options
+  marked with ✓, and words beside every colour.
+- No gesture-only action: sliding along the bottom bar is a shortcut; tapping
+  a tab still works.
+- Every number has a unit and a meaning; every state (normal, day one,
+  offline, low battery, unpaired, LINE not linked) is handled.
+- All visible text lives in the two translation files; nothing is written in
+  the screens.
+- Unsaved changes ask before leaving on 修改紀錄, 提醒設定 and 夜間靜音.
+- No styles left that no screen uses.
+
+### Still failing
+
+1. **Key number contrast on home.** The big amount 「1260 / 2000 毫升」 is
+   white on the brand blue: 5.6:1. The rule asks 7:1 for key numbers. Fix:
+   a slightly deeper blue behind the numbers (#1d4e96 gives 8.1:1), or a
+   darker band.
+2. **基本資料 applies changes as you type.** Leaving with 返回 after editing
+   does not ask first and the edits stay on screen without being saved; 儲存
+   gives no 「已儲存」 confirmation either. Fix: edit a copy, ask before
+   leaving, and confirm on save, like 提醒設定.
+3. **The 「Premium」 tag on the home chart is 14px**, below the 16px floor for
+   small labels.
+4. **The placeholder in the 手動加水 input is 4.2:1** on the dark page (needs
+   4.5:1).
+5. **The confirmation message briefly covers the top of the page** for its
+   four seconds. The rule says floating elements never cover text being read.
+6. **Typing an amount on 手動加水 and pressing 返回 does not ask first.** Low
+   stakes (nothing is saved yet), but it breaks the unsaved-changes rule.
+
+### Housekeeping (not visible to users)
+
+7. **The font loads from Google over the internet.** Without Wi-Fi at the
+   presentation, the app falls back to a system font. Fix: save the font into
+   the project.
+8. **Old style rules remain in `index.css`.** About 60 selectors are defined
+   twice; the later (restyle) one wins, so nothing looks wrong, but the file is
+   longer than it needs to be (about 3,090 lines).
+9. **A few text glyphs stand in for icons:** 「＞」 on the 新增家人 row and
+   「✓」 on chosen options, while the rest of the app uses drawn icons.
+10. **Two decorative shadows outside the two shared levels:** the frame around
+    the app on a computer screen, and the cyan glow on the chosen quick amount
+    on 手動加水 (deliberate, part of the glowing look).
+11. **`index.html` still has a Chinese page description.** The tab title
+    switches with the language, but the description used by link previews does
+    not.
+
+### Not checked
+
+- On a real phone (touch, the bottom-bar slide, sound, the share sheet).
+- With a screen reader.
+- Against the teammate's real backend (only a stand-in written to BACKEND.md).
