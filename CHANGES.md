@@ -588,3 +588,45 @@ styling until the sample is approved. The new styles live in
   as a drag, so it was ignored before.
 - On phones, sideways touches on a tab page now go to the swipe instead of the
   browser, while up-and-down still scrolls.
+
+## Four home versions to compare (awaiting Kyle's pick)
+
+Kyle found the first restyle too plain (one controlled blue), with too many
+boxes and too many words, and asked for warm and friendly. Four versions of
+the home screen were built so he can compare them in the app.
+
+**How to switch:** tap 水啦 SuiLa five times, then 「首頁樣式」 at the top of
+the demo panel. The app starts on 藍色頂部.
+
+1. **藍色頂部 (Blue top):** the top of home is one big blue area behind the
+   header, with the base status, today's amount as a large number, a white
+   progress bar and the percentage.
+2. **水杯 (Water glass):** a drawn glass that fills with water, with 「已喝
+   1260 / 2000 毫升」 and 「還差 740 毫升」 beside it.
+3. **彩色方塊 (Colour tiles):** a blue water tile, then two tiles side by side:
+   a coral 家人 tile (new messages, opens the 家人 tab) and a green 底座 tile
+   (status, opens 底座裝置). The 底座 tile turns amber when something needs
+   attention.
+4. **簡潔 (Clean and calm):** almost no boxes; a very large number, a thin
+   progress line, and thin dividers between sections.
+
+**In all four**
+- A warm cream background instead of grey-blue, and two new soft colours
+  beside the blue: coral for family and green for the base (amber for
+  warnings).
+- Fewer words: the base status is one short line, for example
+  「已連線 · 電量 82%」, and the new-message row says 「2 則新留言」.
+- **New weekly sneak peek:** seven small bars for the past seven days, with a
+  tick on days that met the goal. Free for everyone. Tapping it opens the full
+  習慣分析 with Pro, or the 水啦 Pro page without it; it is labelled
+  「看完整分析」 with a Pro tag.
+- The ring is replaced by a number and a progress bar (or the glass).
+- The records list, 手動加水, swipe and transitions are unchanged.
+
+**How it was checked:** every version at 320px in both languages, in the
+normal, offline + low battery, unpaired and day-one states: nothing overflows
+or scrolls sideways, every button is at least 48px tall, and the last record
+clears the floating buttons.
+
+**After the pick:** the other three versions are deleted, and the chosen look
+spreads to the other screens.

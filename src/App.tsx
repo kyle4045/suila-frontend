@@ -25,6 +25,7 @@ import { EditRecordScreen } from "./screens/EditRecordScreen"
 import {
   DemoPanelScreen,
   type DemoData,
+  type HomeStyle,
 } from "./screens/DemoPanelScreen"
 import { DeviceScreen } from "./screens/DeviceScreen"
 import { PairingScreen } from "./screens/PairingScreen"
@@ -91,6 +92,8 @@ export default function App() {
   const [lineConnected, setLineConnected] = useState(initialLineConnected)
   const [isPro, setIsPro] = useState(initialIsPro)
   const [demoData, setDemoData] = useState<DemoData>("normal")
+  // shortcut: four home versions to compare; remove the losers once Kyle picks one.
+  const [homeStyle, setHomeStyle] = useState<HomeStyle>("blueTop")
   // Hidden way into the demo panel: five quick taps on the app name.
   const brandTaps = useRef({ count: 0, last: 0 })
   const handleBrandTap = () => {
@@ -157,6 +160,11 @@ export default function App() {
         <div className="swipe-window" {...swipe}>
           <div className="swipe-track">
             <HomeScreen
+              homeStyle={homeStyle}
+              records={records}
+              isPro={isPro}
+              onOpenHabits={() => setOverlay(isPro ? "habits" : "pro")}
+              onOpenDevice={() => setOverlay("device")}
               todayWater={todayWater}
               goalMl={reminders.dailyGoalMl}
               waterPercentage={waterPercentage}
@@ -170,7 +178,6 @@ export default function App() {
               newMessageCount={newMessageCount}
               onOpenCalendar={() => setOverlay("calendar")}
               onOpenMessages={() => moveToPage(familyPage)}
-              onOpenAddWater={() => setOverlay("addWater")}
             />
             <FamilyScreen
               connected={lineConnected}
@@ -344,6 +351,8 @@ export default function App() {
             }
             lineConnected={lineConnected}
             isPro={isPro}
+            homeStyle={homeStyle}
+            onHomeStyle={setHomeStyle}
             onData={(value) => {
               voice.stop()
               setDemoData(value)
