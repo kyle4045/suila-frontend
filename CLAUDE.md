@@ -211,3 +211,32 @@ Throughout:
   rather than choosing.
 - Do not report a phase as done until you have looked at the result in the
   browser.
+
+## 9. Decisions made later (these override the sections above)
+
+Recorded 2026-11-17. Where this section and an earlier one disagree, this one
+wins. Product facts are also kept in `PRODUCT.md`.
+
+- **Restyle.** Kyle asked for a redesign using the impeccable skill. Scope:
+  keep the 水啦 SuiLa name, the blue (#2866be) and the current screen layouts;
+  the styling may change (surfaces, spacing, type, icons, buttons, motion).
+  This replaces "this is an improvement pass, not a redesign" in section 4.
+- **The elderly rules are relaxed a little** (sections 4 and 6). Main text and
+  numbers stay 20px or more and main controls 56px or more. Small labels and
+  captions may go down to about 16px, and minor controls to about 48px.
+  Contrast stays strong.
+- **Floating bars stay solid.** No glass, translucency or blur (unchanged).
+- **Swiping between tabs is back** (replaces fix 10 in section 7). The page
+  follows the finger and the highlight in the bottom navigation slides with
+  it. The tab buttons still work, so it is not a gesture-only action.
+- **Smooth transitions** are wanted: views slide in and out, the ring fills,
+  messages ease in. The phone's reduce-motion setting must be honoured.
+- **A backend exists** (replaces "there is no backend" in section 3). A
+  teammate built it. The frontend must become functional once connected.
+  Claude does not build the backend; it builds a connection layer in the
+  frontend that the backend can match, and keeps the sample data working
+  behind it until then. LINE linking, voice messages from LINE and phone
+  notifications are the backend's job.
+- **Delivery:** a website on the phone that feels like an app, not an
+  app-store app.
+- The approval rule in section 8 still applies to every step.
