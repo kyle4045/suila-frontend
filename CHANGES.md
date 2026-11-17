@@ -712,3 +712,34 @@ locked state, cancel, subscribe, the active state, the unlocked analysis, the
 invite page and the home chart opening the analysis once Premium is on.
 Sharing could not be completed in the hidden preview (no share sheet or
 clipboard there), so it showed its "try again" message as designed.
+
+### The Blue top look on every other screen
+
+**家人 and 我的**
+- Both tabs now start with a shorter blue band behind the header, like home:
+  家人 shows 「已透過 LINE 連結 2 位家人」 (or 「還沒有連結 LINE」), and 我的
+  shows the owner's name and 「免費版」 or 「水啦 Premium 已啟用」. Swiping
+  between the three tabs now feels like one app.
+- 家人: the family list loses its green heading box (the band says it now)
+  and is titled 「已連結的家人」; the 新增家人 row has no outline.
+- 我的: the separate outlined boxes are grouped into two white cards with
+  thin dividers. Each row has a small coloured icon: 基本資料, 提醒設定,
+  夜間靜音 and 底座裝置 in the first card; 習慣分析 and 關於我們 in the second.
+  The language card stays first and the Premium button last.
+
+**Every full-screen view** (日曆, 修改紀錄, 基本資料, 提醒設定, 夜間靜音,
+底座裝置, 配對, 習慣分析, 水啦 Premium, 邀請家人, 關於我們, questions)
+- The same warm cream background as the tabs, cards without outlines, and
+  input fields and choices on a warm white with a soft border.
+- 手動加水 keeps its dark glowing style on purpose.
+
+**One stylesheet again**
+- `src/restyle.css` was merged into `src/index.css`, and styles no screen
+  uses any more were removed. Older rules that the restyle overrides are
+  still in the file further up; they do no harm but could be tidied later.
+
+**How it was checked:** a script opened 26 screens and states (every tab and
+full-screen view, the Premium flow, questions, and the offline, low-battery,
+unpaired, LINE-not-linked and day-one states) in both languages at 320px and
+390px. Nothing sticks out, scrolls sideways or hides behind a floating bar,
+and every button is at least 48px tall.

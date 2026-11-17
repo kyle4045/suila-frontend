@@ -96,6 +96,8 @@ export const zhTW = {
     notConnectedIntro:
       "連結 LINE 後，家人可以看到你的喝水進度，也可以傳語音留言給你。",
     joinLine: "加入 LINE",
+    bandNotConnected: "還沒有連結 LINE",
+    listTitle: "已連結的家人",
     connectedToast: "已連結 LINE",
     connectedHeading: (count: number) => `已透過 LINE 連結 ${count} 位家人`,
     voiceTitle: "語音留言",
@@ -132,6 +134,7 @@ export const zhTW = {
     about: "關於我們",
     proTitle: "升級水啦 Premium",
     proSubtitle: "解鎖習慣分析、連結更多家人",
+    freePlan: "免費版",
     // The language row always shows both languages, each in its own words.
     language: "語言 / Language",
     languageNames: { "zh-TW": "繁體中文", en: "English" },

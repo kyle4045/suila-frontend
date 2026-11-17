@@ -116,6 +116,8 @@ export const en: Translations = {
     notConnectedIntro:
       "Link LINE so your family can see how much you drink and send you voice messages.",
     joinLine: "Link LINE",
+    bandNotConnected: "LINE not linked yet",
+    listTitle: "Linked family",
     connectedToast: "LINE linked",
     connectedHeading: (count: number) =>
       `${plural(count, "family member", "family members")} linked through LINE`,
@@ -153,6 +155,7 @@ export const en: Translations = {
     about: "About",
     proTitle: "Switch to SuiLa Premium",
     proSubtitle: "Unlock habit analysis and more family members",
+    freePlan: "Free plan",
     language: "語言 / Language",
     languageNames: { "zh-TW": "繁體中文", en: "English" },
   },

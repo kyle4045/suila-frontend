@@ -38,6 +38,10 @@ export function FamilyScreen({
   if (!connected) {
     return (
       <section className="swipe-page social-page" aria-label={t.family.aria}>
+        <div className="hero-blue tab-band">
+          <p className="band-title">{t.nav.family}</p>
+          <p className="band-sub">{t.family.bandNotConnected}</p>
+        </div>
         <Card className="family-intro-card">
           <p>{t.family.notConnectedIntro}</p>
         </Card>
@@ -50,6 +54,10 @@ export function FamilyScreen({
 
   return (
     <section className="swipe-page social-page" aria-label={t.family.aria}>
+      <div className="hero-blue tab-band">
+        <p className="band-title">{t.nav.family}</p>
+        <p className="band-sub">{t.family.connectedHeading(members.length)}</p>
+      </div>
       <Card className="voice-card">
         <p className="card-label">{t.family.voiceTitle}</p>
         {messages.length === 0 && (
@@ -88,12 +96,7 @@ export function FamilyScreen({
       </Card>
 
       <Card className="line-connections-card">
-        <div className="line-connected-heading">
-          <span aria-hidden="true">✓</span>
-          <div>
-            <strong>{t.family.connectedHeading(members.length)}</strong>
-          </div>
-        </div>
+        <p className="card-label">{t.family.listTitle}</p>
         <div className="connected-people-list">
           {members.map((member) => (
             <div className="connected-person" key={member.id}>

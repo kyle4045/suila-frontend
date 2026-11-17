@@ -203,6 +203,7 @@ export default function App() {
               onAddMember={() => setOverlay(isPro ? "invite" : "pro")}
             />
             <MyScreen
+              ownerName={profile.name}
               onOpenProfile={() => setOverlay("profile")}
               onOpenReminders={() => setOverlay("reminders")}
               onOpenNightMute={() => setOverlay("nightMute")}
