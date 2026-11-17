@@ -479,3 +479,57 @@ A script switched through every state and opened every screen in each one
 (home, calendar, 家人, 我的, 底座裝置, 習慣分析) at 390px and 320px, checking
 that nothing scrolls sideways, no button outside the calendar grid is under
 56px tall, and nothing scrolls inside a page. No problems were found.
+
+## Phase 5b — English and the language switch
+
+### The switch
+
+**我的**
+- New 「語言 / Language」 card above 關於我們 with two buttons, 「繁體中文」 and
+  「English」. Both names are always shown, each written in its own language.
+  The current one is filled in and ticked.
+- Tapping a button changes the whole app at once, with no reload.
+- The choice is remembered on that phone or browser for the next visit.
+  繁體中文 is the default.
+- The browser tab title and the page's language setting (used by screen
+  readers) change with it.
+
+### What is translated
+
+- Every screen, button, message and screen-reader label, including the hidden
+  demo panel. All English text is in one file, `src/i18n/en.ts`, with the same
+  structure as the Chinese file.
+- Times read 「2:10 PM」 instead of 「下午 2:10」, dates read
+  「Tue, Nov 17 (today)」 and 「November 2026」, and the unit is 「ml」.
+- Sample names become Mei-Ling, Ya-Ting (daughter) and Chih-Ming (son). The
+  owner's name follows the language unless the user has typed their own.
+- The three sample voice messages are spoken in English with an English voice.
+- The English is written as product copy, not word for word. Examples:
+  已喝 → 「So far」, 手動加水 → 「Add water」, 底座裝置 → 「Base」,
+  習慣分析 → 「Habits」, 示範控制 → 「Demo」.
+- The 水啦 SuiLa name in the top bar is the same in both languages.
+
+### Layout fixes made for English
+
+- Two-button rows (上個月 / 下個月, 前一天 / 後一天, － 100 / ＋ 100) now let a
+  longer label wrap onto two lines instead of overflowing
+  (「Previous month」).
+- 提醒設定 on 320px phones: the time list and its 新增 button stack on two
+  lines, and the time rows use slightly smaller text (22px and 20px), so
+  「10:00 AM」 and 「Remove」 fit on one line.
+- The brightness choice reads Low / Mid / High.
+
+### How it was checked
+
+- A script opened 32 screens and states in each language at 390px and 320px,
+  looking for text that is cut off, anything sticking out sideways, buttons
+  under 56px and content hidden behind floating bars. None found after the
+  fixes above.
+- Switching language, reloading (the choice is kept) and switching back were
+  tested, including the owner's name following the language.
+
+### Known limits
+
+- The English voice depends on the computer, like the Chinese one.
+- A confirmation message that is on screen while the language is switched
+  stays in the old language until it disappears.

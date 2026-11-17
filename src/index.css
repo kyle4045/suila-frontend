@@ -1933,6 +1933,53 @@ body {
   text-align: left;
 }
 
+/* Language switch under 我的 */
+.language-card {
+  flex: 0 0 auto;
+  padding: 20px 22px;
+}
+
+.language-card .stepper-row {
+  margin-top: 10px;
+}
+
+/* Two-button rows: let longer (English) labels wrap instead of overflowing. */
+.stepper-row .outline-button,
+.stepper-row .choice-button {
+  padding: 6px 8px;
+  line-height: 1.2;
+}
+
+/* Room for longer (English) text on narrow phones */
+.time-row strong {
+  white-space: nowrap;
+}
+
+.time-row .edit-button {
+  padding: 0 12px;
+}
+
+.choice-row .choice-button {
+  padding: 0 2px;
+  font-size: 22px;
+}
+
+@media (max-width: 370px) {
+  /* The time list and its 新增 button stack instead of sharing one line. */
+  .add-time-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .time-row strong {
+    font-size: 22px;
+  }
+
+  .time-row .edit-button {
+    padding: 0 8px;
+    font-size: 20px;
+  }
+}
+
 /* Pro page */
 .pro-feature h2 {
   margin: 0 0 8px;

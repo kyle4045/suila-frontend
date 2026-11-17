@@ -17,6 +17,10 @@ const dayTime = (date: Date, isToday: boolean) => {
 }
 
 export const zhTW = {
+  meta: {
+    htmlLang: "zh-Hant",
+    documentTitle: "水啦 SuiLa｜每日喝水提醒",
+  },
   brand: {
     name: "水啦",
     latin: "SuiLa",
@@ -123,6 +127,9 @@ export const zhTW = {
     about: "關於我們",
     proTitle: "升級 Pro",
     proSubtitle: "解鎖習慣分析、連結更多家人",
+    // The language row always shows both languages, each in its own words.
+    language: "語言 / Language",
+    languageNames: { "zh-TW": "繁體中文", en: "English" },
   },
   reminders: {
     title: "提醒設定",

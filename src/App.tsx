@@ -15,7 +15,7 @@ import {
   initialReminderSettings,
   voiceMessages,
 } from "./data/mock"
-import { useT } from "./i18n"
+import { defaultNames, useT } from "./i18n"
 import { isToday } from "./lib/date"
 import { useVoicePlayer } from "./lib/useVoicePlayer"
 import { AboutScreen } from "./screens/AboutScreen"
@@ -66,6 +66,14 @@ export default function App() {
   const [profile, setProfile] = useState(() =>
     initialProfile(t.profile.defaultName),
   )
+  // The sample owner's name follows the language, unless the user typed their own.
+  useEffect(() => {
+    setProfile((current) =>
+      defaultNames.includes(current.name)
+        ? { ...current, name: t.profile.defaultName }
+        : current,
+    )
+  }, [t])
   const [night, setNight] = useState(initialNightMute)
   const [device, setDevice] = useState(deviceStatus)
   // Where to go back to when the pairing page closes.
