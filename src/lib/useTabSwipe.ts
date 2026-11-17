@@ -1,10 +1,18 @@
-import { useLayoutEffect, useRef, type PointerEvent, type RefObject } from "react"
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  type PointerEvent,
+  type RefObject,
+} from "react"
 import { swipeTarget } from "./swipe"
 
 /** Pixels the finger must move sideways before it counts as a swipe, not a tap. */
 const startPx = 10
 /** At the first and last tab the page only follows a quarter of the way. */
 const edgeResistance = 0.25
+/** A trackpad swipe is over once no scroll event arrives for this long. */
+const wheelIdleMs = 140
 
 /**
  * Lets the tab pages follow a sideways drag. It drives two CSS variables on
@@ -35,27 +43,81 @@ export function useTabSwipe(
     shell.current?.style.setProperty("--nav-progress", String(page))
   }, [shell, page])
 
+  /** Moves the pages and the navigation highlight to follow a pull of dx px. */
+  const follow = (element: HTMLElement, dx: number, width: number) => {
+    const atEdge = (page === 0 && dx > 0) || (page === count - 1 && dx < 0)
+    const shown = atEdge ? dx * edgeResistance : dx
+    element.style.setProperty("--drag", `${shown}px`)
+    element.style.setProperty("--nav-progress", String(page - shown / width))
+  }
+
+  /** Clears the pull and settles on the tab the gesture earned. */
+  const settle = (element: HTMLElement, target: number) => {
+    element.classList.remove("is-dragging")
+    element.style.removeProperty("--drag")
+    element.style.setProperty("--nav-progress", String(target))
+    if (target !== page) onChange(target)
+  }
+
+  // Laptop trackpads send a two-finger swipe as sideways scroll events, not as a drag.
+  const latest = useRef({ follow, settle, page, count })
+  latest.current = { follow, settle, page, count }
+  useEffect(() => {
+    const element = shell.current
+    const area = element?.querySelector<HTMLElement>(".swipe-window")
+    if (!element || !area) return
+    let wheel: { dx: number; start: number; last: number; timer: number } | null = null
+    const onWheel = (event: WheelEvent) => {
+      if (!wheel && Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return
+      event.preventDefault()
+      const now = event.timeStamp
+      wheel ??= { dx: 0, start: now, last: now, timer: 0 }
+      wheel.dx -= event.deltaX
+      wheel.last = now
+      element.classList.add("is-dragging")
+      latest.current.follow(element, wheel.dx, area.clientWidth)
+      window.clearTimeout(wheel.timer)
+      wheel.timer = window.setTimeout(() => {
+        const done = wheel
+        wheel = null
+        if (!done) return
+        const { page, count } = latest.current
+        latest.current.settle(
+          element,
+          swipeTarget({
+            dx: done.dx,
+            width: area.clientWidth,
+            ms: done.last - done.start,
+            page,
+            count,
+          }),
+        )
+      }, wheelIdleMs)
+    }
+    area.addEventListener("wheel", onWheel, { passive: false })
+    return () => area.removeEventListener("wheel", onWheel)
+  }, [shell])
+
   const finish = (event: PointerEvent<HTMLElement>, cancelled: boolean) => {
     const state = drag.current
     drag.current = null
     const element = shell.current
     if (!state || !element || event.pointerId !== state.id) return
-    element.classList.remove("is-dragging")
-    element.style.removeProperty("--drag")
     if (!state.active) return
     // Only the click that ends this very drag is swallowed, never a later tap.
     window.setTimeout(() => (swallowClick.current = false), 0)
-    const target = cancelled
-      ? page
-      : swipeTarget({
-          dx: event.clientX - state.x,
-          width: state.width,
-          ms: event.timeStamp - state.time,
-          page,
-          count,
-        })
-    element.style.setProperty("--nav-progress", String(target))
-    if (target !== page) onChange(target)
+    settle(
+      element,
+      cancelled
+        ? page
+        : swipeTarget({
+            dx: event.clientX - state.x,
+            width: state.width,
+            ms: event.timeStamp - state.time,
+            page,
+            count,
+          }),
+    )
   }
 
   return {
@@ -94,10 +156,7 @@ export function useTabSwipe(
           // The pointer is already gone; the drag simply ends on the next event.
         }
       }
-      const atEdge = (page === 0 && dx > 0) || (page === count - 1 && dx < 0)
-      const shown = atEdge ? dx * edgeResistance : dx
-      element.style.setProperty("--drag", `${shown}px`)
-      element.style.setProperty("--nav-progress", String(page - shown / state.width))
+      follow(element, dx, state.width)
     },
     onPointerUp: (event: PointerEvent<HTMLElement>) => finish(event, false),
     // The browser takes over (for example to scroll): put the pages back.

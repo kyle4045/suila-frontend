@@ -319,6 +319,12 @@ button:active:not(:disabled) {
   transition: transform 420ms var(--ease-out);
 }
 
+/* Sideways touches belong to the tab swipe; up and down still scroll the page. */
+.swipe-window,
+.swipe-page {
+  touch-action: pan-y;
+}
+
 .is-dragging {
   cursor: grabbing;
   user-select: none;

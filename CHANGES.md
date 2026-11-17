@@ -581,3 +581,10 @@ styling until the sample is approved. The new styles live in
   floating bars.
 - Two bugs were found and fixed: the ring arc was drawn far too short in this
   browser, and a "skip the next tap" flag after a swipe could linger.
+
+**Swipe fix (after Kyle reported it did not work)**
+- A two-finger swipe on a laptop trackpad now changes tab too, with the page
+  and the highlight following. Trackpads send this as sideways scrolling, not
+  as a drag, so it was ignored before.
+- On phones, sideways touches on a tab page now go to the swipe instead of the
+  browser, while up-and-down still scrolls.
