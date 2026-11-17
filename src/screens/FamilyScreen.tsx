@@ -30,9 +30,18 @@ export function FamilyScreen({
   onStop: () => void
 }) {
   const t = useT()
-  const nameOf = (id: FamilyMember["id"]) => {
-    const person = t.family.people[id]
-    return t.family.personLabel(person.relation, person.name)
+  const samples: Record<string, { relation: string; name: string; initial: string }> =
+    t.family.people
+  const personOf = (id: string) => {
+    const sample = samples[id]
+    if (sample) return sample
+    const member = members.find((item) => item.id === id)
+    const name = member?.name ?? ""
+    return { relation: member?.relation ?? "", name, initial: name.slice(0, 1) }
+  }
+  const nameOf = (id: string) => {
+    const person = personOf(id)
+    return person.relation ? t.family.personLabel(person.relation, person.name) : person.name
   }
 
   if (!connected) {
@@ -104,7 +113,7 @@ export function FamilyScreen({
                 className={`person-avatar ${member.color}`}
                 aria-hidden="true"
               >
-                {t.family.people[member.id].initial}
+                {personOf(member.id).initial}
               </span>
               <strong>{nameOf(member.id)}</strong>
             </div>

@@ -743,3 +743,65 @@ full-screen view, the Premium flow, questions, and the offline, low-battery,
 unpaired, LINE-not-linked and day-one states) in both languages at 320px and
 390px. Nothing sticks out, scrolls sideways or hides behind a floating bar,
 and every button is at least 48px tall.
+
+## Backend connection
+
+The app can now run on the teammate's real backend. Nothing changes on
+screen while it runs on sample data.
+
+**How it works**
+- Everything the app loads or saves goes through one file,
+  `src/api/index.ts`. No screen talks to the server by itself.
+- If a backend address is set (copy `.env.example` to `.env.local` and fill in
+  `VITE_API_URL`), the app uses the backend. If not, the same file answers from
+  the sample data, so the presentation demo keeps working with no backend.
+- `BACKEND.md` is written for the backend teammate: every call the app makes,
+  what it sends and what it expects back, and what the backend must allow
+  (CORS, login cookie).
+
+**What is now saved through the backend**
+- Adding, changing and deleting drink records.
+- 基本資料 (its 儲存 now really saves), 提醒設定 and 夜間靜音.
+- Pairing the base, linking LINE (the backend may send the owner to LINE's
+  own page), the family invite link, marking a voice message as played, and
+  upgrading to 水啦 Premium.
+- On opening, the app loads records, base status, settings, profile, family,
+  voice messages, Premium status and the analysis text.
+
+**New screens and messages**
+- While loading: 「水啦 SuiLa」 and 「載入中…」.
+- If the first loading fails: 「連線失敗，請再試一次。」 with a 「再試一次」
+  button.
+- If a save fails: 「沒有成功，請再試一次」, and the page stays open so nothing
+  typed is lost.
+- The invite page shows 「載入中…」 on its button until the backend has made
+  the link.
+- While the app is open it checks for new voice messages once a minute and
+  shows 「收到 1 則新的語音留言」 when one arrives.
+
+**Real data from the backend**
+- Family members can have real names and relations from the backend; the
+  sample members keep their translated names.
+- Voice messages with a real recording (`audioUrl`) play that recording;
+  sample messages are still read by the browser's voice.
+- The analysis text from the backend is shown under 分析建議 with the
+  「僅供提醒，不是醫療建議。」 label, even when there are too few records for
+  the app's own sample.
+
+**The demo panel** still works, but it only changes what the screen shows; it
+does not change anything stored on the backend.
+
+**How it was checked**
+- Sample mode: adding and editing water, saving profile and reminders, playing
+  a message, upgrading, and the invite page waiting for its link.
+- Real-backend mode, against a stand-in backend written to BACKEND.md: the
+  failure screen with no backend running, then 再試一次 once it started;
+  loading the backend's own data (its owner, goal, battery, records, family
+  member and voice message); a save that the backend rejects; adding and
+  deleting a record; marking a message played; upgrading (still on after a
+  reload); saving night mute; the backend's analysis text. The stand-in
+  backend logged every call the app made, matching BACKEND.md.
+
+**Not tested:** a real voice recording playing (the hidden preview blocks
+sound that is not started by a real tap), LINE login, and the teammate's
+actual backend.

@@ -41,6 +41,17 @@ export function HabitsScreen({
             <p className="card-label">{t.habits.weekTitle}</p>
             <p className="records-empty">{t.habits.notEnough}</p>
           </Card>
+          {/* Too few records for our own sample, but the backend may still have something to say. */}
+          {advice && (
+            <Card className="advice-card">
+              <p className="card-label">{t.habits.adviceTitle}</p>
+              <p className="habit-body">{advice}</p>
+              {hasSensitiveCondition && (
+                <p className="health-note">{t.habits.adviceCondition}</p>
+              )}
+              <p className="advice-label">{t.habits.adviceLabel}</p>
+            </Card>
+          )}
         </div>
       </section>
     )

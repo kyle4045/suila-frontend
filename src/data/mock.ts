@@ -103,8 +103,13 @@ export const quickAmountsMl = [100, 200, 300]
 /** Smallest and largest amount one drink record may hold. */
 export const drinkAmountLimits = { min: 1, max: 2000 }
 
-export type FamilyMemberId = "daughter" | "son"
-export type FamilyMember = { id: FamilyMemberId; color: string }
+export type FamilyMember = {
+  id: string
+  /** From the backend. The sample members have none: their names are in the translation files. */
+  name?: string
+  relation?: string
+  color: string
+}
 
 /** Whether the owner has linked LINE when the demo starts. */
 export const initialLineConnected = true
@@ -127,8 +132,11 @@ export const familyMembers: FamilyMember[] = [
 ]
 
 export type VoiceMessage = {
-  id: "m1" | "m2" | "m3"
-  from: FamilyMemberId
+  id: string
+  /** The id of the family member who sent it. */
+  from: string
+  /** Address of the recording, from the backend. Sample messages have none and are read aloud. */
+  audioUrl?: string
   time: string
   durationSec: number
   played: boolean

@@ -8,10 +8,12 @@ import { useT } from "../i18n"
 export function ProfileScreen({
   profile,
   onChange,
+  onSave,
   onClose,
 }: {
   profile: Profile
   onChange: Dispatch<SetStateAction<Profile>>
+  onSave: () => void
   onClose: () => void
 }) {
   const t = useT()
@@ -127,7 +129,7 @@ export function ProfileScreen({
         </Card>
       </div>
 
-      <FloatingButton onClick={onClose}>{t.common.save}</FloatingButton>
+      <FloatingButton onClick={onSave}>{t.common.save}</FloatingButton>
     </section>
   )
 }

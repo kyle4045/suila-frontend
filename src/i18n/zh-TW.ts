@@ -45,6 +45,10 @@ export const zhTW = {
     unsaved: "還沒有儲存，要離開嗎？",
     leave: "離開不儲存",
     stay: "繼續修改",
+    loading: "載入中…",
+    loadFailed: "連線失敗，請再試一次。",
+    retry: "再試一次",
+    actionFailed: "沒有成功，請再試一次",
     speechLang: "zh-TW",
   },
   home: {
@@ -99,6 +103,7 @@ export const zhTW = {
     bandNotConnected: "還沒有連結 LINE",
     listTitle: "已連結的家人",
     connectedToast: "已連結 LINE",
+    newMessageToast: (count: number) => `收到 ${count} 則新的語音留言`,
     connectedHeading: (count: number) => `已透過 LINE 連結 ${count} 位家人`,
     voiceTitle: "語音留言",
     noMessages: "還沒有語音留言",

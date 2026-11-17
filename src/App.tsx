@@ -1,18 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
+import { api, type AppData } from "./api"
 import { BottomNav, familyPage, pageCount } from "./components/BottomNav"
 import { Toast } from "./components/Toast"
 import {
   demoValues,
-  deviceStatus,
   drinkRecords,
   type DrinkRecord,
-  familyMembers,
   fluidSensitiveConditions,
-  initialIsPro,
-  initialLineConnected,
-  initialNightMute,
-  initialProfile,
-  initialReminderSettings,
   voiceMessages,
 } from "./data/mock"
 import { defaultNames, useT } from "./i18n"
@@ -55,20 +49,53 @@ type Overlay =
   | "pro"
   | null
 
+/** How often to ask the backend for new voice messages while the app is open. */
+const messageCheckMs = 60_000
+
+/** Loads everything from the backend first, then shows the app. */
 export default function App() {
+  const t = useT()
+  const [data, setData] = useState<AppData | null>(null)
+  const [failed, setFailed] = useState(false)
+
+  const load = useCallback(() => {
+    setFailed(false)
+    api.loadAll().then(setData, () => setFailed(true))
+  }, [])
+  useEffect(load, [load])
+
+  if (!data) {
+    return (
+      <main className="app-shell">
+        <div className="page load-screen" role="status" aria-live="polite">
+          <p className="load-brand">
+            {t.brand.name} <small>{t.brand.latin}</small>
+          </p>
+          <p>{failed ? t.common.loadFailed : t.common.loading}</p>
+          {failed && (
+            <button className="outline-button" type="button" onClick={load}>
+              {t.common.retry}
+            </button>
+          )}
+        </div>
+      </main>
+    )
+  }
+  return <LoadedApp initial={data} />
+}
+
+function LoadedApp({ initial }: { initial: AppData }) {
   const t = useT()
   const [currentPage, setCurrentPage] = useState(0)
   const [overlay, setOverlay] = useState<Overlay>(null)
-  const [records, setRecords] = useState(drinkRecords)
+  const [records, setRecords] = useState(initial.records)
   const [editingRecord, setEditingRecord] = useState<DrinkRecord | null>(null)
   const todayRecords = records.filter((record) => isToday(new Date(record.time)))
   const todayWater = todayRecords.reduce(
     (total, record) => total + record.amountMl,
     0,
   )
-  const [profile, setProfile] = useState(() =>
-    initialProfile(t.profile.defaultName),
-  )
+  const [profile, setProfile] = useState(initial.profile)
   // The sample owner's name follows the language, unless the user typed their own.
   useEffect(() => {
     setProfile((current) =>
@@ -77,21 +104,24 @@ export default function App() {
         : current,
     )
   }, [t])
-  const [night, setNight] = useState(initialNightMute)
-  const [device, setDevice] = useState(deviceStatus)
+  const [night, setNight] = useState(initial.nightMute)
+  const [device, setDevice] = useState(initial.device)
   // Where to go back to when the pairing page closes.
   const [pairingBack, setPairingBack] = useState<Overlay>(null)
   const openPairing = () => {
     setPairingBack(overlay)
     setOverlay("pairing")
   }
-  const [reminders, setReminders] = useState(initialReminderSettings)
+  const [reminders, setReminders] = useState(initial.reminders)
   const waterPercentage = Math.min(
     100,
     Math.round((todayWater / reminders.dailyGoalMl) * 100),
   )
-  const [lineConnected, setLineConnected] = useState(initialLineConnected)
-  const [isPro, setIsPro] = useState(initialIsPro)
+  const [lineConnected, setLineConnected] = useState(initial.lineConnected)
+  const [members] = useState(initial.members)
+  const [isPro, setIsPro] = useState(initial.isPro)
+  const [advice] = useState(initial.advice)
+  const [inviteLink, setInviteLink] = useState<string | null>(null)
   const [demoData, setDemoData] = useState<DemoData>("normal")
   // Hidden way into the demo panel: five quick taps on the app name.
   const brandTaps = useRef({ count: 0, last: 0 })
@@ -105,7 +135,7 @@ export default function App() {
       setOverlay("demo")
     }
   }
-  const [messages, setMessages] = useState(voiceMessages)
+  const [messages, setMessages] = useState(initial.messages)
   const voice = useVoicePlayer()
   // New messages only count while LINE is linked.
   const newMessageCount = lineConnected
@@ -126,6 +156,15 @@ export default function App() {
     }, 200)
   }
 
+  /** Runs a backend call; on failure the screen stays open and says so. */
+  const save = async <T,>(work: () => Promise<T>, done: (result: T) => void) => {
+    try {
+      done(await work())
+    } catch {
+      setToast(t.common.actionFailed)
+    }
+  }
+
   // Confirmation messages disappear on their own after a few seconds.
   useEffect(() => {
     if (toast === null) return
@@ -133,12 +172,35 @@ export default function App() {
     return () => clearTimeout(timer)
   }, [toast])
 
+  // While the app is open, ask now and then whether family sent something new.
+  const unplayedRef = useRef(newMessageCount)
+  unplayedRef.current = newMessageCount
+  useEffect(() => {
+    if (!lineConnected) return
+    const timer = window.setInterval(() => {
+      api.getMessages().then((latest) => {
+        const unplayed = latest.filter((message) => !message.played).length
+        if (unplayed > unplayedRef.current) {
+          setToast(t.family.newMessageToast(unplayed - unplayedRef.current))
+        }
+        setMessages(latest)
+      }, () => {
+        // A missed check is retried on the next round; nothing to tell the owner.
+      })
+    }, messageCheckMs)
+    return () => window.clearInterval(timer)
+  }, [lineConnected, t])
+
   const moveToPage = (page: number) => {
     setCurrentPage(Math.max(0, Math.min(pageCount - 1, page)))
   }
 
   const shell = useRef<HTMLDivElement>(null)
   const swipe = useTabSwipe(shell, currentPage, pageCount, moveToPage)
+  const hasSensitiveCondition = profile.conditions.some((condition) =>
+    fluidSensitiveConditions.includes(condition),
+  )
+  const sampleText: Record<string, string> = t.family.messageText
 
   return (
     <main className="app-shell">
@@ -178,29 +240,47 @@ export default function App() {
             />
             <FamilyScreen
               connected={lineConnected}
-              members={familyMembers}
+              members={members}
               messages={messages}
               playingId={voice.playingId}
               onPlay={(message) => {
                 voice.play(
                   message.id,
-                  t.family.messageText[message.id],
+                  sampleText[message.id] ?? "",
                   t.common.speechLang,
                   message.durationSec,
+                  message.audioUrl,
                 )
                 setMessages((current) =>
                   current.map((item) =>
                     item.id === message.id ? { ...item, played: true } : item,
                   ),
                 )
+                // If this fails the message shows as new again after the next check; harmless.
+                api.markPlayed(message.id).catch(() => {})
               }}
               onStop={voice.stop}
-              onConnect={() => {
-                setLineConnected(true)
-                setToast(t.family.connectedToast)
-              }}
+              onConnect={() =>
+                save(api.linkLine, (result) => {
+                  // Linking happens on LINE's own page; the backend says where to send the owner.
+                  if (result.url) {
+                    window.location.href = result.url
+                    return
+                  }
+                  setLineConnected(result.connected)
+                  setToast(t.family.connectedToast)
+                })
+              }
               isPro={isPro}
-              onAddMember={() => setOverlay(isPro ? "invite" : "pro")}
+              onAddMember={() => {
+                if (!isPro) {
+                  setOverlay("pro")
+                  return
+                }
+                setInviteLink(null)
+                setOverlay("invite")
+                save(api.createInvite, setInviteLink)
+              }}
             />
             <MyScreen
               ownerName={profile.name}
@@ -226,19 +306,17 @@ export default function App() {
 
         {overlay === "addWater" && (
           <AddWaterScreen
-            onAdd={(amountMl) => {
-              // shortcut: new records go on top without re-sorting by time.
-              setRecords((current) => [
-                {
-                  id: `r${Date.now()}`,
-                  time: new Date().toISOString(),
-                  amountMl,
+            onAdd={(amountMl) =>
+              save(
+                () => api.addRecord(amountMl),
+                (record) => {
+                  // shortcut: new records go on top without re-sorting by time.
+                  setRecords((current) => [record, ...current])
+                  setToast(t.home.addedToast(amountMl))
+                  closeOverlay()
                 },
-                ...current,
-              ])
-              setToast(t.home.addedToast(amountMl))
-              closeOverlay()
-            }}
+              )
+            }
             onClose={closeOverlay}
           />
         )}
@@ -246,24 +324,32 @@ export default function App() {
         {overlay === "editRecord" && editingRecord && (
           <EditRecordScreen
             record={editingRecord}
-            onSave={(amountMl) => {
-              setRecords((current) =>
-                current.map((record) =>
-                  record.id === editingRecord.id
-                    ? { ...record, amountMl }
-                    : record,
-                ),
+            onSave={(amountMl) =>
+              save(
+                () => api.updateRecord(editingRecord.id, amountMl),
+                (updated) => {
+                  setRecords((current) =>
+                    current.map((record) =>
+                      record.id === updated.id ? updated : record,
+                    ),
+                  )
+                  setToast(t.editRecord.updatedToast)
+                  closeOverlay()
+                },
               )
-              setToast(t.editRecord.updatedToast)
-              closeOverlay()
-            }}
-            onDelete={() => {
-              setRecords((current) =>
-                current.filter((record) => record.id !== editingRecord.id),
+            }
+            onDelete={() =>
+              save(
+                () => api.deleteRecord(editingRecord.id),
+                () => {
+                  setRecords((current) =>
+                    current.filter((record) => record.id !== editingRecord.id),
+                  )
+                  setToast(t.editRecord.deletedToast)
+                  closeOverlay()
+                },
               )
-              setToast(t.editRecord.deletedToast)
-              closeOverlay()
-            }}
+            }
             onClose={closeOverlay}
           />
         )}
@@ -272,6 +358,15 @@ export default function App() {
           <ProfileScreen
             profile={profile}
             onChange={setProfile}
+            onSave={() =>
+              save(
+                () => api.saveProfile(profile),
+                (saved) => {
+                  setProfile(saved)
+                  closeOverlay()
+                },
+              )
+            }
             onClose={closeOverlay}
           />
         )}
@@ -279,14 +374,17 @@ export default function App() {
         {overlay === "reminders" && (
           <ReminderSettingsScreen
             settings={reminders}
-            showHealthNote={profile.conditions.some((condition) =>
-              fluidSensitiveConditions.includes(condition),
-            )}
-            onSave={(settings) => {
-              setReminders(settings)
-              setToast(t.reminders.savedToast)
-              closeOverlay()
-            }}
+            showHealthNote={hasSensitiveCondition}
+            onSave={(settings) =>
+              save(
+                () => api.saveReminders(settings),
+                (saved) => {
+                  setReminders(saved)
+                  setToast(t.reminders.savedToast)
+                  closeOverlay()
+                },
+              )
+            }
             onClose={closeOverlay}
           />
         )}
@@ -294,11 +392,16 @@ export default function App() {
         {overlay === "nightMute" && (
           <NightMuteScreen
             night={night}
-            onSave={(saved) => {
-              setNight(saved)
-              setToast(t.night.savedToast)
-              closeOverlay()
-            }}
+            onSave={(changed) =>
+              save(
+                () => api.saveNightMute(changed),
+                (saved) => {
+                  setNight(saved)
+                  setToast(t.night.savedToast)
+                  closeOverlay()
+                },
+              )
+            }
             onClose={closeOverlay}
           />
         )}
@@ -313,14 +416,12 @@ export default function App() {
 
         {overlay === "pairing" && (
           <PairingScreen
-            onPaired={() => {
-              setDevice((current) => ({
-                ...current,
-                paired: true,
-                connected: true,
-              }))
-              setOverlay(pairingBack)
-            }}
+            onPaired={() =>
+              save(api.pairDevice, (paired) => {
+                setDevice(paired)
+                setOverlay(pairingBack)
+              })
+            }
             onClose={() => setOverlay(pairingBack)}
           />
         )}
@@ -329,10 +430,8 @@ export default function App() {
           <HabitsScreen
             records={records}
             goalMl={reminders.dailyGoalMl}
-            advice={null}
-            hasSensitiveCondition={profile.conditions.some((condition) =>
-              fluidSensitiveConditions.includes(condition),
-            )}
+            advice={advice}
+            hasSensitiveCondition={hasSensitiveCondition}
             onAddReminder={() => setOverlay("reminders")}
             onClose={closeOverlay}
           />
@@ -340,6 +439,7 @@ export default function App() {
 
         {overlay === "about" && <AboutScreen onClose={closeOverlay} />}
 
+        {/* The demo panel changes what this screen shows, not what the backend stores. */}
         {overlay === "demo" && (
           <DemoPanelScreen
             data={demoData}
@@ -380,7 +480,7 @@ export default function App() {
             }
             onLine={setLineConnected}
             onPro={setIsPro}
-            // Nothing is stored, so reloading puts every screen back to the start.
+            // Reloading fetches everything again, so every screen goes back to the start.
             onReset={() => window.location.reload()}
             onClose={closeOverlay}
           />
@@ -389,16 +489,25 @@ export default function App() {
         {overlay === "pro" && (
           <ProScreen
             isPro={isPro}
-            onSubscribe={() => {
-              setIsPro(true)
-              setToast(t.pro.upgradedToast)
-            }}
+            onSubscribe={(plan) =>
+              save(
+                () => api.subscribe(plan),
+                (result) => {
+                  setIsPro(result.isPro)
+                  if (result.isPro) setToast(t.pro.upgradedToast)
+                },
+              )
+            }
             onClose={closeOverlay}
           />
         )}
 
         {overlay === "invite" && (
-          <InviteScreen onShared={setToast} onClose={closeOverlay} />
+          <InviteScreen
+            link={inviteLink}
+            onShared={setToast}
+            onClose={closeOverlay}
+          />
         )}
 
         {/* Home's main action. Floats above the navigation, on the 喝水 tab only. */}

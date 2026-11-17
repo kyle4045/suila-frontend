@@ -3056,3 +3056,35 @@ body {
   border: 0;
   background: var(--green-tint);
 }
+
+/* ---- Loading, and the first connection failing ---- */
+
+.load-screen {
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  color: var(--ink);
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.load-screen p {
+  margin: 0;
+}
+
+.load-brand {
+  color: var(--blue);
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.load-brand small {
+  color: var(--ink-soft);
+  font-size: 20px;
+}
+
+.load-screen .outline-button {
+  min-width: 180px;
+}

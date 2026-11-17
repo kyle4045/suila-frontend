@@ -62,6 +62,10 @@ export const en: Translations = {
     unsaved: "You haven't saved. Leave anyway?",
     leave: "Leave without saving",
     stay: "Keep editing",
+    loading: "Loading…",
+    loadFailed: "Couldn't connect. Please try again.",
+    retry: "Try again",
+    actionFailed: "That didn't work. Please try again.",
     speechLang: "en-US",
   },
   home: {
@@ -119,6 +123,8 @@ export const en: Translations = {
     bandNotConnected: "LINE not linked yet",
     listTitle: "Linked family",
     connectedToast: "LINE linked",
+    newMessageToast: (count: number) =>
+      count === 1 ? "1 new voice message" : `${count} new voice messages`,
     connectedHeading: (count: number) =>
       `${plural(count, "family member", "family members")} linked through LINE`,
     voiceTitle: "Voice messages",
