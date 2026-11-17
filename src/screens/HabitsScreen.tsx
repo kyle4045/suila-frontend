@@ -8,11 +8,16 @@ import { forgetfulPeriod, lastSevenDays } from "../lib/habits"
 export function HabitsScreen({
   records,
   goalMl,
+  advice,
+  hasSensitiveCondition,
   onAddReminder,
   onClose,
 }: {
   records: DrinkRecord[]
   goalMl: number
+  /** Analysis text from the backend (and its AI). Null until it sends one. */
+  advice: string | null
+  hasSensitiveCondition: boolean
   onAddReminder: () => void
   onClose: () => void
 }) {
@@ -107,6 +112,31 @@ export function HabitsScreen({
           >
             {t.habits.addReminder}
           </button>
+        </Card>
+
+        <Card className="advice-card">
+          <p className="card-label">{t.habits.adviceTitle}</p>
+          {/* shortcut: until the backend sends its analysis, a plain sample built from the owner's own goal. */}
+          <p className="habit-body">
+            {advice ??
+              (metCount === week.length
+                ? t.habits.adviceAllMet(week.length)
+                : t.habits.adviceMissed(week.length - metCount, week.length, goalMl))}
+          </p>
+          {!advice && (
+            <p className="habit-body">
+              {t.habits.adviceTip(
+                t.habits.period(
+                  t.common.clock(period.from, 0),
+                  t.common.clock(period.to, 0),
+                ),
+              )}
+            </p>
+          )}
+          {hasSensitiveCondition && (
+            <p className="health-note">{t.habits.adviceCondition}</p>
+          )}
+          <p className="advice-label">{t.habits.adviceLabel}</p>
         </Card>
       </div>
     </section>

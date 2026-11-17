@@ -112,6 +112,12 @@ export const initialLineConnected = true
 /** Whether the owner has Pro when the demo starts. */
 export const initialIsPro = false
 
+export type PremiumPlan = "monthly" | "yearly"
+export const premiumPlans: PremiumPlan[] = ["monthly", "yearly"]
+
+// shortcut: a placeholder; the backend creates the real LINE invite link.
+export const familyInviteLink = "https://example.com/suila/invite/demo"
+
 /** Family members allowed without Pro. */
 export const freeFamilyLimit = 2
 

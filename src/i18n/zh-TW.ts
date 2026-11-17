@@ -114,6 +114,7 @@ export const zhTW = {
     addMember: "新增家人",
     addMemberHint: (freeLimit: number) =>
       `免費版最多 ${freeLimit} 位，升級水啦 Premium 可以新增更多`,
+    addMemberHintPro: "用 LINE 邀請更多家人",
     personLabel: (relation: string, name: string) => `${relation} ${name}`,
     people: {
       daughter: { relation: "女兒", name: "雅婷", initial: "雅" },
@@ -188,6 +189,14 @@ export const zhTW = {
     forgetBody: "過去 7 天，這個時段的喝水紀錄最少。",
     addReminder: "新增提醒時間",
     notEnough: "紀錄還不夠，過幾天再來看看。",
+    adviceTitle: "分析建議",
+    adviceLabel: "僅供提醒，不是醫療建議。",
+    adviceMissed: (missed: number, days: number, goal: number) =>
+      `過去 ${days} 天，有 ${missed} 天沒有達到你自己設定的目標（${goal} 毫升）。`,
+    adviceAllMet: (days: number) => `過去 ${days} 天每天都達到你設定的目標，繼續保持！`,
+    adviceTip: (period: string) => `${period} 之間最容易忘記喝水，可以在這段時間加一個提醒。`,
+    adviceCondition:
+      "你在基本資料選了需要注意喝水量的健康狀況，請和醫護人員確認你的每日目標。",
   },
   demo: {
     title: "示範控制",
@@ -210,6 +219,15 @@ export const zhTW = {
     proOn: "開",
     reset: "全部重設",
   },
+  invite: {
+    title: "邀請家人",
+    stepsLabel: "怎麼邀請",
+    steps: ["按下方「分享邀請連結」", "用 LINE 傳給家人", "家人點開連結加入後，就會出現在家人頁"],
+    share: "分享邀請連結",
+    sharedToast: "已分享邀請連結",
+    copiedToast: "已複製邀請連結",
+    failedToast: "沒有分享，請再試一次",
+  },
   pro: {
     title: "水啦 Premium",
     habitTitle: "習慣分析",
@@ -218,6 +236,16 @@ export const zhTW = {
     familyBody: (freeLimit: number) =>
       `免費版可連結 ${freeLimit} 位家人，水啦 Premium 可連結更多家人。`,
     bluetoothFree: "藍牙連結底座永遠免費",
+    choosePlan: "選擇方案",
+    plans: { monthly: "每月", yearly: "每年" },
+    priceTbd: "價格待定",
+    demoNote: "示範版：不會真的付款。",
+    confirm: (plan: string) => `確定升級水啦 Premium（${plan}）嗎？`,
+    confirmYes: "確認升級",
+    confirmNo: "取消",
+    upgradedToast: "已升級水啦 Premium",
+    activeTitle: "水啦 Premium 已啟用",
+    activeBody: "可以使用習慣分析，也可以邀請更多家人",
   },
   calendar: {
     aria: "喝水日曆",

@@ -135,6 +135,7 @@ export const en: Translations = {
     addMember: "Add a family member",
     addMemberHint: (freeLimit: number) =>
       `The free plan allows ${freeLimit}. Switch to SuiLa Premium to add more.`,
+    addMemberHintPro: "Invite more family through LINE",
     personLabel: (relation: string, name: string) => `${name} (${relation})`,
     people: {
       daughter: { relation: "daughter", name: "Ya-Ting", initial: "Y" },
@@ -214,6 +215,16 @@ export const en: Translations = {
       "Over the last 7 days, this is when the fewest drinks were logged.",
     addReminder: "Add a reminder time",
     notEnough: "Not enough records yet. Check back in a few days.",
+    adviceTitle: "Insights",
+    adviceLabel: "A reminder only, not medical advice.",
+    adviceMissed: (missed: number, days: number, goal: number) =>
+      `On ${missed} of the last ${days} days you didn't reach the goal you set (${goal} ml).`,
+    adviceAllMet: (days: number) =>
+      `You reached the goal you set on every one of the last ${days} days. Keep it up!`,
+    adviceTip: (period: string) =>
+      `You most often forget from ${period}. A reminder then may help.`,
+    adviceCondition:
+      "Your profile lists a condition where the amount you drink matters. Please confirm your daily goal with your doctor or nurse.",
   },
   demo: {
     title: "Demo",
@@ -237,6 +248,19 @@ export const en: Translations = {
     proOn: "On",
     reset: "Reset everything",
   },
+  invite: {
+    title: "Invite family",
+    stepsLabel: "How to invite",
+    steps: [
+      "Tap “Share invite link” below",
+      "Send it to your family in LINE",
+      "Once they open the link and join, they appear on the Family tab",
+    ],
+    share: "Share invite link",
+    sharedToast: "Invite link shared",
+    copiedToast: "Invite link copied",
+    failedToast: "Not shared. Please try again.",
+  },
   pro: {
     title: "SuiLa Premium",
     habitTitle: "Habit analysis",
@@ -246,6 +270,16 @@ export const en: Translations = {
     familyBody: (freeLimit: number) =>
       `The free plan links ${plural(freeLimit, "family member", "family members")}. SuiLa Premium links more.`,
     bluetoothFree: "Pairing the base by Bluetooth is always free",
+    choosePlan: "Choose a plan",
+    plans: { monthly: "Monthly", yearly: "Yearly" },
+    priceTbd: "Price to be announced",
+    demoNote: "Demo: no real payment is taken.",
+    confirm: (plan: string) => `Switch to SuiLa Premium (${plan})?`,
+    confirmYes: "Switch now",
+    confirmNo: "Cancel",
+    upgradedToast: "Switched to SuiLa Premium",
+    activeTitle: "SuiLa Premium is on",
+    activeBody: "Habit analysis and more family members are unlocked",
   },
   calendar: {
     aria: "Water calendar",

@@ -911,3 +911,60 @@ body {
     transition: none;
   }
 }
+
+/* ---- SuiLa Premium: plans, active state, analysis ---- */
+
+.plan-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0 12px;
+}
+
+.plan-option {
+  min-height: 84px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 14px;
+  border: 2px solid var(--blue);
+  border-radius: 18px;
+  color: var(--blue-deep);
+  background: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.plan-option strong {
+  font-size: 22px;
+}
+
+.plan-option span {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.plan-option[aria-pressed="true"] {
+  color: #fff;
+  background: var(--blue);
+}
+
+.pro-note svg {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+}
+
+.advice-card .habit-body + .habit-body {
+  margin-top: 10px;
+}
+
+.advice-label {
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: 16px;
+  font-weight: 700;
+}

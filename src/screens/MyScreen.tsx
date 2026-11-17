@@ -9,6 +9,7 @@ export function MyScreen({
   onOpenHabits,
   onOpenAbout,
   onOpenPro,
+  isPro,
 }: {
   onOpenProfile: () => void
   onOpenReminders: () => void
@@ -17,6 +18,7 @@ export function MyScreen({
   onOpenHabits: () => void
   onOpenAbout: () => void
   onOpenPro: () => void
+  isPro: boolean
 }) {
   const t = useT()
   const language = useLanguage()
@@ -78,8 +80,8 @@ export function MyScreen({
       </button>
 
       <button className="pro-upgrade-button" type="button" onClick={onOpenPro}>
-        <span>{t.my.proTitle}</span>
-        <strong>{t.my.proSubtitle}</strong>
+        <span>{isPro ? t.pro.activeTitle : t.my.proTitle}</span>
+        <strong>{isPro ? t.pro.activeBody : t.my.proSubtitle}</strong>
       </button>
     </section>
   )

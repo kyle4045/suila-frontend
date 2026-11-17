@@ -31,6 +31,7 @@ import { PairingScreen } from "./screens/PairingScreen"
 import { CalendarScreen } from "./screens/CalendarScreen"
 import { FamilyScreen } from "./screens/FamilyScreen"
 import { HabitsScreen } from "./screens/HabitsScreen"
+import { InviteScreen } from "./screens/InviteScreen"
 import { HomeScreen } from "./screens/HomeScreen"
 import { MyScreen } from "./screens/MyScreen"
 import { NightMuteScreen } from "./screens/NightMuteScreen"
@@ -49,6 +50,7 @@ type Overlay =
   | "pairing"
   | "about"
   | "habits"
+  | "invite"
   | "demo"
   | "pro"
   | null
@@ -197,7 +199,8 @@ export default function App() {
                 setLineConnected(true)
                 setToast(t.family.connectedToast)
               }}
-              onAddMember={() => setOverlay("pro")}
+              isPro={isPro}
+              onAddMember={() => setOverlay(isPro ? "invite" : "pro")}
             />
             <MyScreen
               onOpenProfile={() => setOverlay("profile")}
@@ -207,6 +210,7 @@ export default function App() {
               onOpenHabits={() => setOverlay(isPro ? "habits" : "pro")}
               onOpenAbout={() => setOverlay("about")}
               onOpenPro={() => setOverlay("pro")}
+              isPro={isPro}
             />
           </div>
         </div>
@@ -324,6 +328,10 @@ export default function App() {
           <HabitsScreen
             records={records}
             goalMl={reminders.dailyGoalMl}
+            advice={null}
+            hasSensitiveCondition={profile.conditions.some((condition) =>
+              fluidSensitiveConditions.includes(condition),
+            )}
             onAddReminder={() => setOverlay("reminders")}
             onClose={closeOverlay}
           />
@@ -377,7 +385,20 @@ export default function App() {
           />
         )}
 
-        {overlay === "pro" && <ProScreen onClose={closeOverlay} />}
+        {overlay === "pro" && (
+          <ProScreen
+            isPro={isPro}
+            onSubscribe={() => {
+              setIsPro(true)
+              setToast(t.pro.upgradedToast)
+            }}
+            onClose={closeOverlay}
+          />
+        )}
+
+        {overlay === "invite" && (
+          <InviteScreen onShared={setToast} onClose={closeOverlay} />
+        )}
 
         {/* Home's main action. Floats above the navigation, on the 喝水 tab only. */}
         <button

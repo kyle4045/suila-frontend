@@ -674,3 +674,41 @@ top version shown in the comparison.
 - Quick buttons, the input and the card use the same dark, glowing style.
 - Phones set to reduce motion: the waves stand still and the level and
   number change without moving.
+
+### SuiLa Premium works in the demo
+
+**水啦 Premium page**
+- Below what Premium adds, a 「選擇方案」 card offers 每月 and 每年, both
+  showing 「價格待定」 (prices to be filled in later), and the note
+  「示範版：不會真的付款。」.
+- 「升級水啦 Premium」 asks 「確定升級水啦 Premium（每年）嗎？」 with 確認升級 and
+  取消. Confirming shows 「已升級水啦 Premium」, and the page then shows
+  「水啦 Premium 已啟用」 instead of the plans and the button.
+- 我的: once upgraded, the Premium button reads 「水啦 Premium 已啟用」.
+- The demo panel's Premium switch still turns it on and off directly.
+
+**More family members (Premium)**
+- With Premium, 新增家人 says 「用 LINE 邀請更多家人」 and opens a new
+  邀請家人 page: three steps and a 「分享邀請連結」 button that opens the
+  phone's share sheet (or copies the link on a computer).
+- Without Premium it still says the free plan allows 2 and opens the
+  Premium page.
+- The link is a placeholder; the real invite and LINE linking come from the
+  backend.
+
+**習慣分析: 分析建議**
+- A new 「分析建議」 section at the bottom. Kyle decided the analysis text
+  comes from the backend (and its AI); the app only shows it, always with the
+  label 「僅供提醒，不是醫療建議。」.
+- Until the backend sends text, it shows a plain sample built from the owner's
+  own goal, for example 「過去 7 天，有 4 天沒有達到你自己設定的目標（2000 毫升）。」
+  and when they most often forget.
+- If 心臟病 or 腎臟病 is selected in 基本資料, it adds 「你在基本資料選了需要
+  注意喝水量的健康狀況，請和醫護人員確認你的每日目標。」. It never suggests an
+  amount by itself.
+
+**How it was checked:** the full flow at 320px and 390px in both languages:
+locked state, cancel, subscribe, the active state, the unlocked analysis, the
+invite page and the home chart opening the analysis once Premium is on.
+Sharing could not be completed in the hidden preview (no share sheet or
+clipboard there), so it showed its "try again" message as designed.

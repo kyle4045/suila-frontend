@@ -240,3 +240,14 @@ wins. Product facts are also kept in `PRODUCT.md`.
 - **Delivery:** a website on the phone that feels like an app, not an
   app-store app.
 - The approval rule in section 8 still applies to every step.
+- **Premium is named 水啦 Premium / SuiLa Premium** (replaces "Pro"). It
+  unlocks habit analysis and more than 2 family members. The subscribe step is
+  pretend until the backend provides one; prices are not decided.
+- **Habit analysis text comes from the backend** (Kyle's decision,
+  2026-11-17). This relaxes the rule in section 5: the backend (and any AI it
+  uses) may write analysis that mentions health, but the app always labels it
+  「僅供提醒，不是醫療建議」. The frontend itself never suggests an amount from a
+  health condition; its own sample text only compares the owner's drinking
+  with the goal they set.
+- **Changing tab:** sliding a finger along the bottom bar (highlight follows,
+  page changes on release) or tapping a tab. Dragging the page does nothing.

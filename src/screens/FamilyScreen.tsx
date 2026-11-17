@@ -14,6 +14,7 @@ export function FamilyScreen({
   messages,
   playingId,
   onConnect,
+  isPro,
   onAddMember,
   onPlay,
   onStop,
@@ -23,6 +24,7 @@ export function FamilyScreen({
   messages: VoiceMessage[]
   playingId: string | null
   onConnect: () => void
+  isPro: boolean
   onAddMember: () => void
   onPlay: (message: VoiceMessage) => void
   onStop: () => void
@@ -110,7 +112,9 @@ export function FamilyScreen({
       <button className="my-menu-row" type="button" onClick={onAddMember}>
         <div>
           <strong>{t.family.addMember}</strong>
-          <small>{t.family.addMemberHint(freeFamilyLimit)}</small>
+          <small>
+            {isPro ? t.family.addMemberHintPro : t.family.addMemberHint(freeFamilyLimit)}
+          </small>
         </div>
         <span aria-hidden="true">＞</span>
       </button>
