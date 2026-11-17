@@ -901,3 +901,15 @@ pages ask, and 「繼續修改」 keeps what was typed.
 Still open from the final check: the font loading from Google (needs Wi-Fi at
 the presentation), duplicate old style rules, typed 「＞」 / 「✓」 characters,
 the decorative glow and frame shadows, and the Chinese page description.
+
+### The font works without internet
+
+- Noto Sans TC is now part of the app instead of being loaded from Google's
+  servers, so the app looks the same with no Wi-Fi at the presentation.
+- It comes from the `@fontsource-variable/noto-sans-tc` package (version
+  5.3.1, free OFL licence that allows bundling). One "variable" font covers
+  every weight the app uses; the whole built app is about 4.8 MB.
+- The font is split into small pieces by character, and the phone only loads
+  the pieces for characters on screen.
+- Checked: the page makes no requests outside the app, and all text uses the
+  bundled font.
